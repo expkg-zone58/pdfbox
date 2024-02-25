@@ -1,2 +1,2 @@
-# pdfbox
-BaseX (10+) interface to Pdfbox 3
+# Pdfbox
+BaseX (10+) interface to [Pdfbox](https://pdfbox.apache.org/) 3

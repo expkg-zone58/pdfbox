@@ -22,4 +22,4 @@ declare variable $PDF:= $samples?climate=>file:resolve-path($base);
 
 let $doc:=pdfbox:open($PDF)
 return pdfbox:outline($doc)
-(: return pdfbox:extract($doc,"c:\tmp\junk2.pdf",50,100) :)
+(: return pdfbox:extract($doc,"c:\tmp\junk3.pdf",1,pdfbox:page-count($doc)) :)

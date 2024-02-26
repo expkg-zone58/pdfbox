@@ -41,10 +41,11 @@ declare namespace PDOutlineItem="java:org.apache.pdfbox.pdmodel.interactive.docu
 declare namespace File ="java:java.io.File";
 declare namespace RandomAccessReadBufferedFile = "java:org.apache.pdfbox.io.RandomAccessReadBufferedFile";
 
+(:~ open pdf, returns handle :)
 declare function pdfbox:open($pdfpath as xs:string){
   Loader:loadPDF( RandomAccessReadBufferedFile:new($pdfpath))
 };
-
+(:~ save pdf $doc to $savepath , returns $savepath :)
 declare function pdfbox:save($doc,$savepath as xs:string)
 as xs:string{
    PDDocument:save($doc,File:new($savepath)),$savepath
@@ -70,28 +71,53 @@ as xs:integer{
     }
 :)
 declare function pdfbox:siblings($acc as item()*,$outlineItem ,$doc as item())
-{
-  (# db:wrapjava all #) {
-  if(empty($outlineItem))
+as map(*)*{
+   if(empty($outlineItem))
   then $acc
   else let $next:=  PDOutlineItem:getNextSibling($outlineItem)=>trace("next: ")
        return pdfbox:siblings($acc,pdfbox:bookmark($outlineItem ,$doc),
                       $next
                     )
-   }
+  
+};
+
+(: return bookmark info for children of $outlineItem :)
+declare function pdfbox:sibs($outlineItem,$doc )
+as map(*)*
+{
+  hof:until(
+    function($output) { empty($output?this) },
+    function($input ) { map{
+                       "list":($input?list,pdfbox:bookmark($input?this,$doc)),
+                       "this":  PDOutlineItem:getNextSibling($input?this)}
+                            },
+    map{"list":(),"this":$outlineItem}
+  )
 };
 
 declare function pdfbox:outline($doc as item())
-as item()*{
-  let $bookmark:=(# db:wrapjava all #) {
+as map(*)*{
+  (# db:wrapjava some #) {
+  let $bookmark:=
                 PDDocument:getDocumentCatalog($doc)
                 =>PDDocumentCatalog:getDocumentOutline()
                 =>PDOutlineItem:getFirstChild()=>trace("cur")
-}
-  (: return hof:until(empty#1,pdfbox:outx(?,$doc),()) :)
-  let $bk:=pdfbox:siblings((),$bookmark ,$doc)
+
  
-  return $bk
+  (: let $bk:=pdfbox:siblings((),$bookmark ,$doc) :)
+let $bk:=pdfbox:sibs($bookmark ,$doc)?list
+  (: let $bookmark := PDOutlineItem:getNextSibling($bookmark)
+  let $bk := ($bk, pdfbox:bookmark($bookmark, $doc))
+  let $bookmark := PDOutlineItem:getNextSibling($bookmark)
+  let $bk := ($bk, pdfbox:bookmark($bookmark, $doc))
+  let $bookmark := PDOutlineItem:getNextSibling($bookmark)
+  let $bk := ($bk, pdfbox:bookmark($bookmark, $doc))
+  let $bookmark := PDOutlineItem:getNextSibling($bookmark) 
+  let $bk := ($bk, pdfbox:bookmark($bookmark, $doc))
+let $bookmark := PDOutlineItem:getNextSibling($bookmark) => trace("EMP")
+  let $bk := ($bk, if(exists($bookmark)) then pdfbox:bookmark($bookmark, $doc)) :)
+  return  $bk
+  }
 };
 
 declare function pdfbox:bookmark($bookmark as item(),$doc as item())
@@ -100,7 +126,8 @@ as map(*){
   (: return hof:until(empty#1,pdfbox:outx(?,$doc),()) :)
   return map{ 
   "index":  pdfbox:pageIndex($currentPage,$doc),
-  "title": PDOutlineItem:getTitle($bookmark)
+  "title": PDOutlineItem:getTitle($bookmark),
+  "hasChildren": PDOutlineItem:hasChildren($bookmark)
   }
 };
 
@@ -110,14 +137,14 @@ declare function pdfbox:outx($page,$document){
   return $pageNumber
 };
 
-(: pageIndex of $page in $document :)
+(:~ pageIndex of $page in $document :)
 declare function pdfbox:pageIndex(
    $page (: as java:org.apache.pdfbox.pdmodel.PDPage :),
    $document)
 {
- PDDocument:getDocumentCatalog($document)
- =>PDDocumentCatalog:getPages()
- =>PDPageTree:indexOf($page)
+  PDDocument:getDocumentCatalog($document)
+  =>PDDocumentCatalog:getPages()
+  =>PDPageTree:indexOf($page)
 };            
 
 

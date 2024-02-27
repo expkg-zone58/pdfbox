@@ -1,7 +1,7 @@
 (: PDFBOX experiments
 :)
 
-import module namespace pdfbox="urn:expkg-zone58:pdfbox:3" at "../lib/pdfbox-lib.xqm";
+import module namespace pdfbox="urn:expkg-zone58:pdfbox:3" at "../lib/pdfbox3.xqm";
 
 
 declare variable $samples:= map{
@@ -15,11 +15,8 @@ declare variable $base:= "C:\Users\mrwhe\git\bloomsbury\content-architecture\xqu
 (:~ resolve :)
 declare variable $PDF:= $samples?climate=>file:resolve-path($base);
 
-(: women pdfs :)
-(: let $pdfdoc:="data\drop-01d\set\2-6-1\A6229C_1\outputs\9798216172628\2798216172625\pdfs\chunks-docbook.xml"
-=>file:resolve-path(file:base-dir())
-=>doc() :)
+
 
 let $doc:=pdfbox:open($PDF)
-return pdfbox:outline($doc)
+return pdfbox:outline($doc)=>pdfbox:outline-XML()
 (: return pdfbox:extract($doc,"c:\tmp\junk3.pdf",1,pdfbox:page-count($doc)) :)

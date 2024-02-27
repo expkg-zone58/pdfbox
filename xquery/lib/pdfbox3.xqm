@@ -1,5 +1,6 @@
 xquery version '3.1';
-(:~ pdfbox 3.0 https://pdfbox.apache.org/ interface library, 
+(:~ 
+pdfbox 3.0 https://pdfbox.apache.org/ interface library, 
 requires pdfbox jar on classpath
 3.02 required tested with pdfbox-app-3.0.2-20240121.184204-66.jar
 @see https://lists.apache.org/list?users@pdfbox.apache.org:lte=1M:loader
@@ -60,41 +61,8 @@ as xs:integer{
   PDDocument:getNumberOfPages($doc)
 };
 
-(:~ @TODO 
-  PDOutlineItem current = bookmark.getFirstChild();
-    while (current != null) {
-        PDPage currentPage = current.findDestinationPage(document);
-        Integer pageNumber = document.getDocumentCatalog().getPages().indexOf(currentPage) + 1;
-        System.out.println(current.getTitle() + "-------->" + pageNumber);
-        getOutlines(document, current, indentation);
-        current = current.getNextSibling();
-    }
-:)
-declare function pdfbox:siblings($acc as item()*,$outlineItem ,$doc as item())
-as map(*)*{
-   if(empty($outlineItem))
-  then $acc
-  else let $next:=  PDOutlineItem:getNextSibling($outlineItem)=>trace("next: ")
-       return pdfbox:siblings($acc,pdfbox:bookmark($outlineItem ,$doc),
-                      $next
-                    )
-  
-};
 
-(: return bookmark info for children of $outlineItem :)
-declare function pdfbox:sibs($outlineItem,$doc )
-as map(*)*
-{
-  hof:until(
-    function($output) { empty($output?this) },
-    function($input ) { map{
-                       "list":($input?list,pdfbox:bookmark($input?this,$doc)),
-                       "this":  PDOutlineItem:getNextSibling($input?this)}
-                            },
-    map{"list":(),"this":$outlineItem}
-  )
-};
-
+(:~ outline for $doc as map()* :)
 declare function pdfbox:outline($doc as item())
 as map(*)*{
   (# db:wrapjava some #) {
@@ -103,29 +71,47 @@ as map(*)*{
                 =>PDDocumentCatalog:getDocumentOutline()
                 =>PDOutlineItem:getFirstChild()=>trace("cur")
 
- 
-  (: let $bk:=pdfbox:siblings((),$bookmark ,$doc) :)
-let $bk:=pdfbox:sibs($bookmark ,$doc)?list
-  (: let $bookmark := PDOutlineItem:getNextSibling($bookmark)
-  let $bk := ($bk, pdfbox:bookmark($bookmark, $doc))
-  let $bookmark := PDOutlineItem:getNextSibling($bookmark)
-  let $bk := ($bk, pdfbox:bookmark($bookmark, $doc))
-  let $bookmark := PDOutlineItem:getNextSibling($bookmark)
-  let $bk := ($bk, pdfbox:bookmark($bookmark, $doc))
-  let $bookmark := PDOutlineItem:getNextSibling($bookmark) 
-  let $bk := ($bk, pdfbox:bookmark($bookmark, $doc))
-let $bookmark := PDOutlineItem:getNextSibling($bookmark) => trace("EMP")
-  let $bk := ($bk, if(exists($bookmark)) then pdfbox:bookmark($bookmark, $doc)) :)
+  let $bk:=pdfbox:outline($bookmark ,$doc) 
   return  $bk
   }
 };
 
+(: return bookmark info for children of $outlineItem :)
+declare function pdfbox:outline($outlineItem,$doc )
+as map(*)*
+{
+  let $find:=hof:until(
+            function($output) { empty($output?this) },
+            function($input ) { 
+                      let $bk:= pdfbox:bookmark($input?this,$doc)
+                      let $bk:= if($bk?hasChildren)
+                                then let $kids:=pdfbox:outline(PDOutlineItem:getFirstChild($input?this), $doc)
+                                     return map:merge(($bk,map:entry("children",$kids)))
+                                else $bk 
+                      return map{
+                            "list": ($input?list, $bk),
+                            "this":  PDOutlineItem:getNextSibling($input?this)}
+                          },
+            map{"list":(),"this":$outlineItem}
+        )
+  return $find?list      
+};
+
+declare function pdfbox:outline-XML($outline as map(*)*)
+as element(*){
+ element outline { 
+  for $bookmark in $outline
+  return <bookmark title="{$bookmark?title}" index="{$bookmark?index}">
+    {$bookmark?children!pdfbox:outline-XML(.)}
+  </bookmark>
+ }
+};
+
+(: return bookmark info for children of $outlineItem :)
 declare function pdfbox:bookmark($bookmark as item(),$doc as item())
 as map(*){
-  let $currentPage := PDOutlineItem:findDestinationPage($bookmark,$doc)
-  (: return hof:until(empty#1,pdfbox:outx(?,$doc),()) :)
-  return map{ 
-  "index":  pdfbox:pageIndex($currentPage,$doc),
+ map{ 
+  "index":  PDOutlineItem:findDestinationPage($bookmark,$doc)=>pdfbox:pageIndex($doc),
   "title": PDOutlineItem:getTitle($bookmark),
   "hasChildren": PDOutlineItem:hasChildren($bookmark)
   }

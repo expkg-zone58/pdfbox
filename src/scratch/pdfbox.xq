@@ -13,10 +13,10 @@ declare variable $samples:= map{
 };
 declare variable $base:= "C:\Users\mrwhe\git\bloomsbury\content-architecture\xquery\ABC-CLIO\data";
 (:~ resolve :)
-declare variable $PDF:= $samples?climate=>file:resolve-path($base);
+declare variable $PDF:= $samples?women=>file:resolve-path($base);
 
 
 
 let $doc:=pdfbox:open($PDF)
-return pdfbox:outline($doc)=>pdfbox:outline-XML()
+return pdfbox:outline($doc)=>pdfbox:outline-xml()
 (: return pdfbox:extract($doc,"c:\tmp\junk3.pdf",1,pdfbox:page-count($doc)) :)

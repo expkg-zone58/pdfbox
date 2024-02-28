@@ -1,6 +1,6 @@
 xquery version '3.1';
 (:~ 
-pdfbox 3.0 https://pdfbox.apache.org/ interface library, 
+pdfbox 3.0 https://pdfbox.apache.org/ BaseX 10+ interface library, 
 requires pdfbox jar on classpath
 3.02 required tested with pdfbox-app-3.0.2-20240121.184204-66.jar
 @see https://lists.apache.org/list?users@pdfbox.apache.org:lte=1M:loader
@@ -52,8 +52,11 @@ as xs:string{
    PDDocument:save($doc,File:new($savepath)),$savepath
 };
 
-declare function pdfbox:close($doc){
-  PDDocument:close($doc)
+declare function pdfbox:close($doc)
+as empty-sequence(){
+  (# db:wrapjava void #) {
+     PDDocument:close($doc)
+  }
 };
 
 declare function pdfbox:page-count($doc as item())
@@ -69,15 +72,15 @@ as map(*)*{
   let $bookmark:=
                 PDDocument:getDocumentCatalog($doc)
                 =>PDDocumentCatalog:getDocumentOutline()
-                =>PDOutlineItem:getFirstChild()=>trace("cur")
+                =>PDOutlineItem:getFirstChild()
 
-  let $bk:=pdfbox:outline($bookmark ,$doc) 
+  let $bk:=pdfbox:outline($doc,$bookmark) 
   return  $bk
   }
 };
 
 (: return bookmark info for children of $outlineItem :)
-declare function pdfbox:outline($outlineItem,$doc )
+declare function pdfbox:outline($doc,$outlineItem )
 as map(*)*
 {
   let $find:=hof:until(
@@ -85,7 +88,7 @@ as map(*)*
             function($input ) { 
                       let $bk:= pdfbox:bookmark($input?this,$doc)
                       let $bk:= if($bk?hasChildren)
-                                then let $kids:=pdfbox:outline(PDOutlineItem:getFirstChild($input?this), $doc)
+                                then let $kids:=pdfbox:outline($doc,PDOutlineItem:getFirstChild($input?this))
                                      return map:merge(($bk,map:entry("children",$kids)))
                                 else $bk 
                       return map{
@@ -97,14 +100,20 @@ as map(*)*
   return $find?list      
 };
 
-declare function pdfbox:outline-XML($outline as map(*)*)
-as element(*){
+declare function pdfbox:outline-xml($outline as map(*)*)
+as element(outline){
  element outline { 
-  for $bookmark in $outline
-  return <bookmark title="{$bookmark?title}" index="{$bookmark?index}">
-    {$bookmark?children!pdfbox:outline-XML(.)}
-  </bookmark>
+   $outline!pdfbox:bookmark-xml(.)
  }
+};
+
+declare function pdfbox:bookmark-xml($outline as map(*)*)
+as element(bookmark)*
+{
+  $outline!
+  <bookmark title="{?title}" index="{?index}">
+    {?children!pdfbox:bookmark-xml(.)}
+  </bookmark>
 };
 
 (: return bookmark info for children of $outlineItem :)
@@ -135,13 +144,14 @@ declare function pdfbox:pageIndex(
 
 
 
-(:~ new PDF doc from 1 based page range :)
-declare function pdfbox:extract($doc as item(),$target as xs:string, 
-             $start as xs:integer,$end as xs:integer)
+(:~ new PDF doc from 1 based page range 
+@return save path :)
+declare function pdfbox:extract($doc as item(), 
+             $start as xs:integer,$end as xs:integer,$target as xs:string)
+as xs:string
 {
     let $a:=PageExtractor:new($doc, $start, $end) =>PageExtractor:extract()
-    let $map:=pdfbox:save($a,$target)
-    return pdfbox:close($a) 
+    return (pdfbox:save($a,$target),pdfbox:close($a)) 
 };
 
 
@@ -154,9 +164,6 @@ as item()*{
   =>PDDocumentCatalog:getPageLabels()
   =>PDPageLabels:getLabelsByPageIndices()
 };
-(:~  @TODO 
-@see https://codereview.stackexchange.com/questions/286078/java-code-showing-page-labels-from-pdf-files
-:)
 
 (: text on $pageNo :)
 declare function pdfbox:getText($doc as item(), $pageNo as xs:integer)

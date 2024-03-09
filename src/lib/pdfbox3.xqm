@@ -1,9 +1,10 @@
 xquery version '3.1';
 (:~ 
-pdfbox 3.0 https://pdfbox.apache.org/ BaseX 10+ interface library, 
+pdfbox 3.0 https://pdfbox.apache.org/ BaseX 10.7+ interface library, 
 requires pdfbox jar on classpath
 3.02 required tested with pdfbox-app-3.0.2-20240121.184204-66.jar
-@see https://lists.apache.org/list?users@pdfbox.apache.org:lte=1M:loader
+@see https://repository.apache.org/content/groups/snapshots/org/apache/pdfbox/pdfbox-app/3.0.2-SNAPSHOT/
+@javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.0/
 :)
 module namespace pdfbox="urn:expkg-zone58:pdfbox:3";
 
@@ -39,9 +40,14 @@ declare namespace PDDocumentOutline ="java:org.apache.pdfbox.pdmodel.interactive
 :)
 declare namespace PDOutlineItem="java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem";
 
-declare namespace File ="java:java.io.File";
 declare namespace RandomAccessReadBufferedFile = "java:org.apache.pdfbox.io.RandomAccessReadBufferedFile";
+declare namespace File ="java:java.io.File";
 
+(:~ version of pdfbox:)
+declare function pdfbox:version()
+as xs:string{
+  Q{java:org.apache.pdfbox.util.Version}getVersion()
+};
 (:~ open pdf, returns handle :)
 declare function pdfbox:open($pdfpath as xs:string){
   Loader:loadPDF( RandomAccessReadBufferedFile:new($pdfpath))
@@ -79,7 +85,7 @@ as map(*)*{
   }
 };
 
-(: return bookmark info for children of $outlineItem :)
+(: return bookmark info for children of $outlineItem as seq of maps :)
 declare function pdfbox:outline($doc,$outlineItem )
 as map(*)*
 {
@@ -118,15 +124,17 @@ as element(bookmark)*
 
 (: return bookmark info for children of $outlineItem :)
 declare function pdfbox:bookmark($bookmark as item(),$doc as item())
-as map(*){
+as map(*)
+{
  map{ 
   "index":  PDOutlineItem:findDestinationPage($bookmark,$doc)=>pdfbox:pageIndex($doc),
-  "title": PDOutlineItem:getTitle($bookmark),
+  "title":  (# db:checkstrings #) {PDOutlineItem:getTitle($bookmark)},
   "hasChildren": PDOutlineItem:hasChildren($bookmark)
   }
 };
 
-declare function pdfbox:outx($page,$document){
+declare function pdfbox:outx($page,$document)
+{
   let $currentPage := PDOutlineItem:findDestinationPage($page,$document)
   let $pageNumber := pdfbox:pageIndex($currentPage,$document)
   return $pageNumber
@@ -134,17 +142,19 @@ declare function pdfbox:outx($page,$document){
 
 (:~ pageIndex of $page in $document :)
 declare function pdfbox:pageIndex(
-   $page (: as java:org.apache.pdfbox.pdmodel.PDPage :),
+   $page as item()? (: as java:org.apache.pdfbox.pdmodel.PDPage :),
    $document)
+as item()?
 {
-  PDDocument:getDocumentCatalog($document)
-  =>PDDocumentCatalog:getPages()
-  =>PDPageTree:indexOf($page)
+  if(exists($page))
+  then PDDocument:getDocumentCatalog($document)
+      =>PDDocumentCatalog:getPages()
+      =>PDPageTree:indexOf($page)
 };            
 
 
 
-(:~ new PDF doc from 1 based page range 
+(:~ save new PDF doc from 1 based page range 
 @return save path :)
 declare function pdfbox:extract($doc as item(), 
              $start as xs:integer,$end as xs:integer,$target as xs:string)

@@ -5,6 +5,7 @@ requires pdfbox jar on classpath
 3.02 required tested with pdfbox-app-3.0.2-20240121.184204-66.jar
 @see https://repository.apache.org/content/groups/snapshots/org/apache/pdfbox/pdfbox-app/3.0.2-SNAPSHOT/
 @javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.0/
+
 :)
 module namespace pdfbox="urn:expkg-zone58:pdfbox:3";
 
@@ -48,17 +49,26 @@ declare function pdfbox:version()
 as xs:string{
   Q{java:org.apache.pdfbox.util.Version}getVersion()
 };
+
 (:~ open pdf, returns handle :)
-declare function pdfbox:open($pdfpath as xs:string){
+declare function pdfbox:open($pdfpath as xs:string)
+as item(){
   Loader:loadPDF( RandomAccessReadBufferedFile:new($pdfpath))
 };
+
+(:~ the PDF specification version this document conforms to.:)
+declare function pdfbox:pdfVersion($doc as item())
+as xs:float{
+  PDDocument:getVersion($doc)
+};
+
 (:~ save pdf $doc to $savepath , returns $savepath :)
-declare function pdfbox:save($doc,$savepath as xs:string)
+declare function pdfbox:save($doc as item(),$savepath as xs:string)
 as xs:string{
    PDDocument:save($doc,File:new($savepath)),$savepath
 };
 
-declare function pdfbox:close($doc)
+declare function pdfbox:close($doc as item())
 as empty-sequence(){
   (# db:wrapjava void #) {
      PDDocument:close($doc)
@@ -103,7 +113,7 @@ as map(*)*
                           },
             map{"list":(),"this":$outlineItem}
         )
-  return $find?list      
+  return $find?list
 };
 
 declare function pdfbox:outline-xml($outline as map(*)*)
@@ -128,7 +138,7 @@ as map(*)
 {
  map{ 
   "index":  PDOutlineItem:findDestinationPage($bookmark,$doc)=>pdfbox:pageIndex($doc),
-  "title":  (# db:checkstrings #) {PDOutlineItem:getTitle($bookmark)},
+  "title":  (# db:checkstrings #) {PDOutlineItem:getTitle($bookmark)}=>translate("�",""),
   "hasChildren": PDOutlineItem:hasChildren($bookmark)
   }
 };
@@ -165,11 +175,13 @@ as xs:string
 };
 
 
-(:~  @TODO 
+(:~   pageLabel for every page
+@see https://www.w3.org/TR/WCAG20-TECHS/PDF17.html#PDF17-examples
 @see https://codereview.stackexchange.com/questions/286078/java-code-showing-page-labels-from-pdf-files
 :)
 declare function pdfbox:getPageLabels($doc as item())
-as item()*{
+as xs:string*
+{
   PDDocument:getDocumentCatalog($doc)
   =>PDDocumentCatalog:getPageLabels()
   =>PDPageLabels:getLabelsByPageIndices()

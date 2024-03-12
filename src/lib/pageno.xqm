@@ -13,8 +13,8 @@ import module namespace pdfbox="urn:expkg-zone58:pdfbox:3" at "pdfbox3.xqm";
 declare variable $pagenos:pats:=map{
     "DL": "^([1-9][0-9]*).*",
     "DR": ".*[^0-9]([1-9][0-9]*)$",
-    "RL": "^([ivxc]+).*",
-    "RR": ".*[^ivxc]([ivxc]+)$"
+    "RL": "^([ivxlc]+).*",
+    "RR": ".*[^ivxlc]([ivxlc]+)$"
 };
 
 (: page-reports for all pages :)

@@ -2,12 +2,12 @@ xquery version '3.1';
 (:~ 
 pdfbox 3.0 https://pdfbox.apache.org/ BaseX 10.7+ interface library, 
 requires pdfbox jar on classpath
-3.02 required tested with pdfbox-app-3.0.2-20240121.184204-66.jar
+3.02+ required tested with pdfbox-app-3.0.2.jar
 @see https://repository.apache.org/content/groups/snapshots/org/apache/pdfbox/pdfbox-app/3.0.2-SNAPSHOT/
 @javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.0/
 
 :)
-module namespace pdfbox="urn:expkg-zone58:pdfbox:3";
+module namespace pdfbox="urn:expkg-zone58:pdfbox3";
 
 declare namespace Loader ="java:org.apache.pdfbox.Loader"; 
 declare namespace PDFTextStripper = "java:org.apache.pdfbox.text.PDFTextStripper";
@@ -96,7 +96,7 @@ as map(*)*{
 };
 
 (: return bookmark info for children of $outlineItem as seq of maps :)
-declare function pdfbox:outline($doc,$outlineItem )
+declare function pdfbox:outline($doc as item(),$outlineItem as item()?)
 as map(*)*
 {
   let $find:=hof:until(
@@ -143,7 +143,7 @@ as map(*)
   }
 };
 
-declare function pdfbox:outx($page,$document)
+declare function pdfbox:outx($page ,$document)
 {
   let $currentPage := PDOutlineItem:findDestinationPage($page,$document)
   let $pageNumber := pdfbox:pageIndex($currentPage,$document)

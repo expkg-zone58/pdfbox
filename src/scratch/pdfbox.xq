@@ -1,7 +1,7 @@
 (: PDFBOX experiments
 :)
 
-import module namespace pdfbox="urn:expkg-zone58:pdfbox:3" at "../lib/pdfbox3.xqm";
+import module namespace pdfbox="urn:expkg-zone58:pdfbox3" at "../lib/pdfbox3.xqm";
 
 
 declare variable $samples:= map{

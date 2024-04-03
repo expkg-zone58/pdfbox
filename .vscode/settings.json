@@ -1,3 +1,5 @@
 {
-    "basexTools.xquery.profile": "basex-10"
+    "basexTools.xquery.profile": "basex-10",
+    "basexTools.xquery.showHovers": "false",
+   
 }

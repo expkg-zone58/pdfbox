@@ -1,5 +1,7 @@
 Uses
-* https://www.npmjs.com/package/slick-router
+* https://github.com/blikblum/slick-router#readme
+* https://dev.to/blikblum/slick-router-a-powerful-router-for-web-components-3fck
+## random html in markdown
 <style>table, th, td {
   border: 1px solid black;
   border-collapse: collapse;

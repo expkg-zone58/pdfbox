@@ -19,8 +19,10 @@ const router = new Router({
 // in this particular case we configure components by its tag name
 
 router.map(route => {
-  route('application', { path: '/pdf/', component: 'application-view' }, () => {
-    route('home', { path: '', component: 'home-view' })
+  route('application', { path: '/pdf/', 
+                         component: 'application-view' }, () => {
+    route('home', { path: '', component: 'home-view' })                      
+    route('tweets', { component: 'tweet-view' })
     route('messages', { component: 'messages-view' })
     route('status', { path: ':user/status/:id' })
     route('profile', { path: 'profile/:user', component: 'profile-view' }, () => {

@@ -1,28 +1,57 @@
 import { withRouterLinks } from 'https://unpkg.com/slick-router@2.5.0/middlewares/router-links.js'
 
-class ApplicationView extends withRouterLinks(HTMLElement) {
-  constructor() {
-    super()
-    this.addEventListener('change', e => {
-      if (e.target.matches('#animation-type')) {
-        const animation = e.target.value
-        if (animation) {
-          this.outlet.setAttribute('animation', e.target.value)
-        } else {
-          this.outlet.removeAttribute('animation')
+customElements.define('application-view',
+  class ApplicationView extends withRouterLinks(HTMLElement) {
+    constructor() {
+      super()
+      this.addEventListener('change', e => {
+        if (e.target.matches('#animation-type')) {
+          const animation = e.target.value
+          if (animation) {
+            this.outlet.setAttribute('animation', e.target.value)
+          } else {
+            this.outlet.removeAttribute('animation')
+          }
         }
-      }
-    })
-  }
+      })
+      // Custom function to emit toast notifications
+      function notify(message, variant = 'primary', icon = 'info-circle', duration = 3000) {
+        const alert = Object.assign(document.createElement('sl-alert'), {
+          variant,
+          closable: true,
+          duration: duration,
+          innerHTML: `
+        <sl-icon name="${icon}" slot="icon"></sl-icon>
+        ${message}
+      `
+        });
 
-  connectedCallback() {
-    super.connectedCallback()
-    this.innerHTML = `
+        document.body.append(alert);
+        return alert.toast();
+      }
+      // Always escape HTML for text arguments!
+      function escapeHtml(html) {
+        const div = document.createElement('div');
+        div.textContent = html;
+        return div.innerHTML;
+      }
+      this.addEventListener('click', e => {
+        if (e.target.matches('#more-toast')) {
+          const alert = this.querySelector('#toaster')
+          notify(`This is custom toast `);
+        }
+      })
+    }
+
+    connectedCallback() {
+      super.connectedCallback()
+      this.innerHTML = `
       <div class='App'>
         <div class='App-header'>
           <h1>Application</h1>
           <ul class='Nav' routerlinks>
             <li class='Nav-item'><a route="home" >Home</a></li>
+            <li class='Nav-item'><a route="tweets" >Tweets</a></li>
             <li class='Nav-item'><a route="messages">Messages</a></li>
             <li class='Nav-item'><a route="profile.index" param-user="scrobblemuch">Profile</a></li>
             <li class='Nav-item'><a route="settings" >Settings</a></li>
@@ -40,22 +69,54 @@ class ApplicationView extends withRouterLinks(HTMLElement) {
               <option value="fade" selected>Fade</option>
               <option value="slide-fade">Slide Fade</option>
               <option value="bounce">Bounce</option>
-            </select>            
+            </select>
+            <button id="more-toast">toast</button>
+                    
           </div>        
         </div> 
-      
+        
       </div>
     `
-    this.outlet = this.querySelector('router-outlet')
+      this.outlet = this.querySelector('router-outlet')
+    }
   }
-}
+)
+customElements.define('home-view',
+  class HomeView extends withRouterLinks(HTMLElement) {
 
-customElements.define('application-view', ApplicationView)
+    connectedCallback() {
+      this.getModel();
+    }
+    getModel() {
+      return new Promise((res, rej) => {
+        fetch('/pdf/api/sources')
+          .then(data => data.json())
+          .then((json) => {
+            this.renderPosts(json);
+            res();
+          })
+          .catch((error) => rej(error));
+      })
+    }
+    renderPosts(data) {
+      const count = data.count
+      const shadowRoot = this.attachShadow({ mode: "closed" });
+      data.items.forEach(item => {
+        shadowRoot.appendChild(Object.assign(
+          document.createElement('sl-card'), {
+          textContent: item.slug
+        }
+        ))
+      })
+    }
+  }
+)
 
-class HomeView extends withRouterLinks(HTMLElement) {
-  connectedCallback() {
-    super.connectedCallback()
-    this.innerHTML = `
+customElements.define('tweet-view',
+  class TweetView extends withRouterLinks(HTMLElement) {
+    connectedCallback() {
+      super.connectedCallback()
+      this.innerHTML = `
       <div class='Home' routerlinks>
         <h2>Tweets</h2>
         <div class='Tweet'>
@@ -81,59 +142,84 @@ class HomeView extends withRouterLinks(HTMLElement) {
         </div>
       </div>
     `
+    }
   }
-}
-
-customElements.define('home-view', HomeView)
-
-class MessagesView extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = `
+)
+customElements.define('messages-view',
+  class MessagesView extends HTMLElement {
+    connectedCallback() {
+      this.innerHTML = `
       <div class='Messages'>
         <h2>Messages</h2>
         <p>You have no direct messages</p>
+        <sl-tree>
+  <sl-tree-item lazy>Available Trees</sl-tree-item>
+</sl-tree>
+
+<script type="module">
+  const lazyItem = document.querySelector('sl-tree-item[lazy]');
+
+  lazyItem.addEventListener('sl-lazy-load', () => {
+   alert("heelo");
+  });
+</script>
+
       </div>
     `
+    }
   }
-}
-customElements.define('messages-view', MessagesView)
-
-class SettingsView extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = `
+)
+customElements.define('settings-view',
+  class SettingsView extends HTMLElement {
+    connectedCallback() {
+      this.innerHTML = `
       <div class='Messages'>
-        <h2>Sett</h2>
-        <p>You have no direct messages</p>
+        <a href="/pdf/api/sources" target="_blank">DATA</a>
+        <h2>Settings</h2>
+        <div>
+            Animation
+            <select id="animation-type2">
+              <option value="">None</option>
+              <option value="fade" selected>Fade</option>
+              <option value="slide-fade">Slide Fade</option>
+              <option value="bounce">Bounce</option>
+            </select>            
+          </div> 
+          <sl-alert variant="neutral" duration="3000" closable >
+          <sl-icon slot="icon" name="gear"></sl-icon>
+          <strong>Your settings have been updated</strong><br />
+          Settings will take effect on next login.
+        </sl-alert>     
       </div>
     `
+    }
   }
-}
-customElements.define('settings-view', SettingsView)
+)
+customElements.define('profile-view',
+  class ProfileView extends HTMLElement {
+    static get outlet() {
+      return '.Container'
+    }
 
-class ProfileView extends HTMLElement {
-  static get outlet() {
-    return '.Container'
-  }
-
-  connectedCallback() {
-    this.innerHTML = `
+    connectedCallback() {
+      this.innerHTML = `
       <div class='Profile'>
         <div class='Container'></div>
       </div>
     `
+    }
   }
-}
+)
 
-customElements.define('profile-view', ProfileView)
-
-class ProfileIndexView extends HTMLElement {
-  connectedCallback() {
-    this.innerHTML = `
+customElements.define('profile-index-view',
+  class ProfileIndexView extends HTMLElement {
+    connectedCallback() {
+      this.innerHTML = `
       <div class='ProfileIndex'>
         <h2>${this.$route.params.user} profile</h2>
       </div>
     `
+    }
   }
-}
+)
 
-customElements.define('profile-index-view', ProfileIndexView)

@@ -14,6 +14,11 @@ customElements.define('application-view',
           }
         }
       })
+      this.addEventListener('load', e => {
+        const data = e.detail;
+        notify(JSON.stringify(data.items[0]));
+      }
+      )
       // Custom function to emit toast notifications
       function notify(message, variant = 'primary', icon = 'info-circle', duration = 3000) {
         const alert = Object.assign(document.createElement('sl-alert'), {
@@ -83,7 +88,6 @@ customElements.define('application-view',
 )
 customElements.define('home-view',
   class HomeView extends withRouterLinks(HTMLElement) {
-
     connectedCallback() {
       this.getModel();
     }
@@ -100,13 +104,13 @@ customElements.define('home-view',
     }
     renderPosts(data) {
       const count = data.count
-      const shadowRoot = this.attachShadow({ mode: "closed" });
+      const shadowRoot = this.attachShadow({ mode: "open" });
+      const div = document.createElement("div", { class: "cards" });
+      shadowRoot.appendChild(div);
       data.items.forEach(item => {
-        shadowRoot.appendChild(Object.assign(
-          document.createElement('sl-card'), {
-          textContent: item.slug
-        }
-        ))
+        div.appendChild(Object.assign(
+          document.createElement('sl-card'), { class: "card", textContent: item.slug })
+        )
       })
     }
   }
@@ -189,7 +193,8 @@ customElements.define('settings-view',
           <sl-icon slot="icon" name="gear"></sl-icon>
           <strong>Your settings have been updated</strong><br />
           Settings will take effect on next login.
-        </sl-alert>     
+        </sl-alert>
+        <fetch-json src='/pdf/api/sources'/>     
       </div>
     `
     }
@@ -213,6 +218,35 @@ customElements.define('profile-view',
 
 customElements.define('profile-index-view',
   class ProfileIndexView extends HTMLElement {
+
+    connectedCallback() {
+
+      this.innerHTML = `
+      <div class='ProfileIndex'>
+        <h2>${this.$route.params.user} profile</h2>
+      </div>
+    `
+    }
+  }
+)
+customElements.define('cards-panel',
+  class CardPanel extends HTMLElement {
+    constructor(){
+      super();
+      const template = document.createElement('template');
+      template.id = 'pool-calculator-template';
+      template.innerHTML = `     
+      <style>
+        
+      </style>
+      
+      <div class="input-section">
+      
+        <!-- ... -->
+      
+      </div>
+      `;
+    }
     connectedCallback() {
       this.innerHTML = `
       <div class='ProfileIndex'>
@@ -222,4 +256,35 @@ customElements.define('profile-index-view',
     }
   }
 )
+customElements.define('fetch-json',
+  class FetchJson extends HTMLElement {
+    static observedAttributes = ["src", "size"];
 
+    connectedCallback() {
+      this.getModel();
+    }
+    getModel() {
+      const src = this.getAttribute('src')
+        + "?" + new URLSearchParams({ foo: 'value', bar: 2, });
+      return new Promise((res, rej) => {
+        fetch(src)
+          .then(data => data.json())
+          .then((json) => {
+            this.data=data;
+            this.renderPosts(json);
+            res();
+          })
+          .catch((error) => rej(error));
+      })
+    }
+    renderPosts(data) {
+      this.innerHTML = `<span>${this.getAttribute('src')} : ${data.count}</span>`;
+      
+      this.dispatchEvent(new CustomEvent("load", {
+        detail: data,
+        composed: true,
+        bubbles: true
+      }));
+    }
+  }
+)

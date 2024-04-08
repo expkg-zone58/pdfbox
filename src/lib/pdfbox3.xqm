@@ -3,8 +3,8 @@ xquery version '3.1';
 pdfbox 3.0 https://pdfbox.apache.org/ BaseX 10.7+ interface library, 
 requires pdfbox jar on classpath
 3.02+ required tested with pdfbox-app-3.0.2.jar
-@see https://repository.apache.org/content/groups/snapshots/org/apache/pdfbox/pdfbox-app/3.0.2-SNAPSHOT/
-@javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.0/
+@see download https://pdfbox.apache.org/download.cgi
+@javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.2/
 
 :)
 module namespace pdfbox="urn:expkg-zone58:pdfbox3";
@@ -31,11 +31,11 @@ declare namespace PageExtractor ="java:org.apache.pdfbox.multipdf.PageExtractor"
 declare namespace PDPageTree ="java:org.apache.pdfbox.pdmodel.PDPageTree";
 
 (:~ 
-@see https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.0/org/apache/pdfbox/pdmodel/interactive/documentnavigation/outline/PDDocumentOutline.html 
+@see https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.2/org/apache/pdfbox/pdmodel/interactive/documentnavigation/outline/PDDocumentOutline.html 
 :)
 declare namespace PDDocumentOutline ="java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline";
 
-
+declare namespace PDDocumentInformation ="java:org.apache.pdfbox.pdmodel.PDDocumentInformation";
 (:~ 
 @see https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.0/org/apache/pdfbox/pdmodel/interactive/documentnavigation/outline/PDOutlineItem.html 
 :)
@@ -80,26 +80,53 @@ as xs:integer{
   PDDocument:getNumberOfPages($doc)
 };
 
+(:~ map with document metadata :)
+declare function pdfbox:information($doc as item())
+as map(*){
+  let $info:=PDDocument:getDocumentInformation($doc)
+  return map{
+    "title": PDDocumentInformation:getTitle($info),
+    "creator": PDDocumentInformation:getCreator($info),
+    "producer": PDDocumentInformation:getProducer($info),
+    "subject": PDDocumentInformation:getSubject($info),
+     "keywords": PDDocumentInformation:getKeywords($info),
+     "creationdate": pdfbox:gregToISO(PDDocumentInformation:getCreationDate($info)),
+    "author": PDDocumentInformation:getAuthor($info)
+  }
+};
+
+ (:~ convert date :)
+declare
+function pdfbox:gregToISO($item as item())
+as xs:string{
+ Q{java:java.util.GregorianCalendar}toZonedDateTime($item)=>string()
+};
 
 (:~ outline for $doc as map()* :)
 declare function pdfbox:outline($doc as item())
 as map(*)*{
   (# db:wrapjava some #) {
-  let $bookmark:=
+  let $outline:=
                 PDDocument:getDocumentCatalog($doc)
                 =>PDDocumentCatalog:getDocumentOutline()
-                =>PDOutlineItem:getFirstChild()
-
-  let $bk:=pdfbox:outline($doc,$bookmark) 
-  return  $bk
+ 
+  return  if(exists($outline))
+          then pdfbox:outline($doc,PDOutlineItem:getFirstChild($outline)) 
   }
 };
 
-(: return bookmark info for children of $outlineItem as seq of maps :)
+(:~ return bookmark info for children of $outlineItem as seq of maps :)
 declare function pdfbox:outline($doc as item(),$outlineItem as item()?)
-as map(*)*
-{
-  let $find:=hof:until(
+
+as map(*)*{
+  let $find as map(*):=pdfbox:_outline($doc ,$outlineItem)
+  return map:get($find,"list")
+};
+
+(: BaseX bug 10.7? error if inlined in outline :)
+declare function pdfbox:_outline($doc as item(),$outlineItem as item()?)
+as map(*){
+ hof:until(
             function($output) { empty($output?this) },
             function($input ) { 
                       let $bk:= pdfbox:bookmark($input?this,$doc)
@@ -112,10 +139,9 @@ as map(*)*
                             "this":  PDOutlineItem:getNextSibling($input?this)}
                           },
             map{"list":(),"this":$outlineItem}
-        )
-  return $find?list
+        ) 
 };
-
+(:~ outline as xml :)
 declare function pdfbox:outline-xml($outline as map(*)*)
 as element(outline){
  element outline { 
@@ -175,19 +201,26 @@ as xs:string
 };
 
 
-(:~   pageLabel for every page
+(:~   pageLabel info
 @see https://www.w3.org/TR/WCAG20-TECHS/PDF17.html#PDF17-examples
 @see https://codereview.stackexchange.com/questions/286078/java-code-showing-page-labels-from-pdf-files
 :)
 declare function pdfbox:getPageLabels($doc as item())
+as item()
+{
+  PDDocument:getDocumentCatalog($doc)
+  =>PDDocumentCatalog:getPageLabels()
+};
+
+(:~   pageLabel for every page:)
+declare function pdfbox:pageLabels($doc as item())
 as xs:string*
 {
   PDDocument:getDocumentCatalog($doc)
   =>PDDocumentCatalog:getPageLabels()
   =>PDPageLabels:getLabelsByPageIndices()
 };
-
-(: text on $pageNo :)
+(:~ return text on $pageNo :)
 declare function pdfbox:getText($doc as item(), $pageNo as xs:integer)
 as xs:string{
   let $tStripper := (# db:wrapjava instance #) {
@@ -198,4 +231,19 @@ as xs:string{
   return (# db:checkstrings #) {PDFTextStripper:getText($tStripper,$doc)}
 };
 
+declare function pdfbox:report($pdfpath as xs:string)
+as map(*){
+ let $doc:=pdfbox:open($pdfpath)
+ return (map{
+       "file":  $pdfpath,
+       "pages": pdfbox:page-count($doc),
+       "outline": pdfbox:outline($doc)=>count()
+        },pdfbox:information($doc)
+)=>map:merge()
+};
 
+(: @TODO :)
+declare function pdfbox:pageAsImage($doc as item(), $pageNo as xs:integer)
+as item(){
+(: BufferedImage image = pdfRenderer.renderImageWithDPI(i, 200, ImageType.RGB) :)
+};

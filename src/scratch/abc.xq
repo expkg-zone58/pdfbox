@@ -1,6 +1,6 @@
 (: test use of pageIndex :)
-import module namespace pdfbox="urn:expkg-zone58:pdfbox:3" at "../src/lib/pdfbox3.xqm";
-import module namespace pagenos = 'urn:pageno' at "../src/lib/pageno.xqm";
+import module namespace pdfbox="urn:expkg-zone58:pdfbox3" at "../lib/pdfbox3.xqm";
+
 declare variable $base:=file:base-dir();
 declare function local:go($doc,$pdf as element(pdf)){
   let $range:=$pdf/@pages/tokenize(.,"–")
@@ -11,7 +11,7 @@ declare function local:go($doc,$pdf as element(pdf)){
 };
 let $src:="257107---Book_File-Web_PDF_9798400691218_486731.pdf"=>file:resolve-path($base)
 let $doc:=pdfbox:open($src)
-let $labels:= pdfbox:getPageLabels($doc)
+let $labels:= pdfbox:pageLabels($doc)
 let $pdfs:=doc("pdfs\chunks-docbook.xml")/chunks/pdf
 for $pdf in $pdfs
 let $range:=$pdf/@pages/tokenize(.,"–")

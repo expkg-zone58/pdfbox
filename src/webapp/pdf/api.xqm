@@ -8,7 +8,7 @@ declare
   %rest:path('/pdf/api/sources')
    %output:method("json")
   %output:json("format=xquery")
-function api:apt()
+function api:apt() as map(*)
 {
   let $base:="C:/Users/mrwhe/git/expkg-zone58/pdfbox/data/"
   let $d:="1e/"
@@ -18,6 +18,7 @@ function api:apt()
           "items": array{$f!api:path-info(.)}
   }
 };
+
 declare function api:path-info($file as xs:string)
 as map(*)
 {

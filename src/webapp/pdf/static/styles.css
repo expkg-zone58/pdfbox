@@ -6,6 +6,10 @@ html {
   padding: 0;
   font-family: 'Open Sans', sans-serif;
 }
+sl-card {
+  display: flex;
+  width: 100px;
+}
 
 .App {
   width: 800px;

@@ -1,0 +1,32 @@
+<!doctype html>
+<script type="module">
+  import { define, store, html } from 'https://esm.sh/hybrids@^8';
+
+  const User = {
+    id: true,
+    res: null,
+    firstName: "",
+    lastName: "",
+    [store.connect]: {
+      get: id => fetch(`http://localhost:8080/pdf/api/sources`)
+        .then(data => data.json())
+        .then(res=> { "43"})
+    },
+  };
+ 
+  define({
+    tag: "user-details",
+    user: store(User),
+    render: ({ user }) => html`
+    <div>
+      ${store.pending(user) && `Loading...`}
+      ${store.error(user) && `Something went wrong...`}
+
+      ${store.ready(user) && html`
+        <p>${user.id} ${user.lastName}</p>
+      `}
+    </div>
+  `,
+  });
+</script>
+<user-details user="2"></user-details>

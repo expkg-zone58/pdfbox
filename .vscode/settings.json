@@ -1,5 +1,5 @@
 {
     "basexTools.xquery.profile": "basex-10",
-    "basexTools.xquery.showHovers": false,
+    "basexTools.xquery.showHovers": true,
    
 }

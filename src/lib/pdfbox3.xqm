@@ -40,7 +40,7 @@ declare namespace PDDocumentInformation ="java:org.apache.pdfbox.pdmodel.PDDocum
 @see https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.0/org/apache/pdfbox/pdmodel/interactive/documentnavigation/outline/PDOutlineItem.html 
 :)
 declare namespace PDOutlineItem="java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem";
-
+declare namespace PDFRenderer="java:org.apache.pdfbox.rendering.PDFRenderer";
 declare namespace RandomAccessReadBufferedFile = "java:org.apache.pdfbox.io.RandomAccessReadBufferedFile";
 declare namespace File ="java:java.io.File";
 
@@ -220,6 +220,7 @@ as xs:string*
   =>PDDocumentCatalog:getPageLabels()
   =>PDPageLabels:getLabelsByPageIndices()
 };
+
 (:~ return text on $pageNo :)
 declare function pdfbox:getText($doc as item(), $pageNo as xs:integer)
 as xs:string{
@@ -231,6 +232,7 @@ as xs:string{
   return (# db:checkstrings #) {PDFTextStripper:getText($tStripper,$doc)}
 };
 
+(:~ summary info as map for $pdfpath :)
 declare function pdfbox:report($pdfpath as xs:string)
 as map(*){
  let $doc:=pdfbox:open($pdfpath)
@@ -242,8 +244,17 @@ as map(*){
 )=>map:merge()
 };
 
-(: @TODO :)
-declare function pdfbox:pageAsImage($doc as item(), $pageNo as xs:integer)
+(:~ page (ZERO based) as image 
+@param $scale 1=72 dpi :)
+declare function pdfbox:pageAsImage($doc as item(), $pageNo as xs:integer,$scale as xs:float)
 as item(){
-(: BufferedImage image = pdfRenderer.renderImageWithDPI(i, 200, ImageType.RGB) :)
+  PDFRenderer:new($doc)
+  =>PDFRenderer:renderImage($pageNo,$scale)
+};
+
+(:~ save bufferedimage to $dest 
+@param $type = "gif","png" etc:)
+declare function pdfbox:imageSave($bufferedImage as item(),$dest as xs:string,$type as xs:string)
+as xs:boolean{
+  Q{java:javax.imageio.ImageIO}write($bufferedImage , $type,  File:new($dest))
 };

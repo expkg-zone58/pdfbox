@@ -244,12 +244,14 @@ as map(*){
 )=>map:merge()
 };
 
-(:~ page (ZERO based) as image 
-@param $scale 1=72 dpi :)
-declare function pdfbox:pageAsImage($doc as item(), $pageNo as xs:integer,$scale as xs:float)
+(:~ java:bufferedImage for $pageNo using $scale times dpi= 72
+@param $pageNo (ZERO based) 
+@param $scale 1=72 dpi 
+@return  Java java.awt.image.BufferedImage object
+:)
+declare function pdfbox:pageBufferedImage($doc as item(), $pageNo as xs:integer,$scale as xs:float)
 as item(){
-  PDFRenderer:new($doc)
-  =>PDFRenderer:renderImage($pageNo,$scale)
+ PDFRenderer:new($doc)=>PDFRenderer:renderImage($pageNo,$scale)
 };
 
 (:~ save bufferedimage to $dest 
@@ -257,4 +259,14 @@ as item(){
 declare function pdfbox:imageSave($bufferedImage as item(),$dest as xs:string,$type as xs:string)
 as xs:boolean{
   Q{java:javax.imageio.ImageIO}write($bufferedImage , $type,  File:new($dest))
+};
+
+(:~ return image 
+@param $type = "gif","png" etc:)
+declare function pdfbox:imageBinary($bufferedImage as item(),$type as xs:string)
+as xs:base64Binary{
+  let $bytes:=Q{java:java.io.ByteArrayOutputStream}new()
+  let $_:=Q{java:javax.imageio.ImageIO}write($bufferedImage , $type,  $bytes)
+  return Q{java:java.io.ByteArrayOutputStream}toByteArray($bytes)
+         =>convert:integers-to-base64()
 };

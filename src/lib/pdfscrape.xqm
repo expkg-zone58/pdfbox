@@ -5,26 +5,26 @@ pdfscrape:page-report($doc )=>pdfscrape:inverted-map()
 module namespace pdfscrape = 'urn:pdfscrape';
 import module namespace pdfbox="urn:expkg-zone58:pdfbox3" at "pdfbox3.xqm";
 
-(: look for possible page number in first/last line of page text
+(:~ page number regex
 @todo last line and roman
 1=Number system ( D=decimal, R=Roman)
 2=Side L=left,R=right
 :)
-declare variable $pdfscrape:pats:=map{
+declare %private variable $pdfscrape:pats:=map{
     "DL": "^([1-9][0-9]*).*",
     "DR": ".*[^0-9]([1-9][0-9]*)$",
     "RL": "^([ivxlc]+).*",
     "RR": ".*[^ivxlc]([ivxlc]+)$"
 };
 
-(: page-reports for all pages :)
+(:~ page-reports for all pages :)
 declare function pdfscrape:page-report($doc as item())
 as element(page)*{
   let $count:=pdfbox:page-count($doc)=>trace("Pages: ")
   return (1 to $count )!pdfscrape:page-report($doc,.)    
 };
 
-(: page-report for given page :)
+(:~ page-report for given page :)
 declare function pdfscrape:page-report($doc as item(), $page as xs:integer)
 as element(page){
   let $txt:=pdfbox:getText($doc,$page)
@@ -35,7 +35,7 @@ as element(page){
   return <page index="{ $page }">{ $found, $line1 }</page>
 };
 
-(: empty or attributes created by matching $style with $line1 :)
+(:~ empty or attributes created by matching $style with $line1 :)
 declare function pdfscrape:line-report($style as xs:string, $line1 as xs:string)
 as attribute(*)*{
     if(matches($line1,$pdfscrape:pats?($style)))

@@ -1,0 +1,20 @@
+{
+  "name": "pdfbox",
+  "version": "1.0.0",
+  "description": "A BaseX interface to Apache Pdfbox version 3",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "basex -t ."
+  },
+  "keywords": [
+    "pdf",
+    "xquery",
+    "basex",
+    "java"
+  ],
+  "author": "Andy Bunce",
+  "license": "Apache-2.0"
+}

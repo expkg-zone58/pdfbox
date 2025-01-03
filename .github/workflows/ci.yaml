@@ -26,5 +26,4 @@ jobs:
         unzip BaseX107.zip -d basex
 
     - name: Run BaseX Tests
-      run: |
-        ./basex/bin/basex -t .
+      run: "./basex/bin/basex -t ."

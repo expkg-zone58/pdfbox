@@ -18,7 +18,7 @@ jobs:
       uses: actions/setup-java@v2
       with:
         java-version: '11'
-        distribution: 'temurin
+        distribution: 'temurin'
 
     - name: Install BaseX
       run: |
@@ -26,5 +26,4 @@ jobs:
         unzip BaseX107.zip -d basex
 
     - name: Run BaseX Tests
-      run: |
-        ./basex/bin/basex -t .
+      run:  './basex/bin/basex -t .'

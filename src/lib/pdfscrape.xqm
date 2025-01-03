@@ -35,7 +35,7 @@ as element(page){
   return <page index="{ $page }">{ $found, $line1 }</page>
 };
 
-(:~ empty or attributes created by matching $style with $line1 :)
+(:~ attributes created by matching $style with $line1  or empty :)
 declare function pdfscrape:line-report($style as xs:string, $line1 as xs:string)
 as attribute(*)*{
     if(matches($line1,$pdfscrape:pats?($style)))
@@ -52,10 +52,12 @@ as map(*) {
   $pages[@number]!map:entry(string(@number),string(@index))
   =>map:merge(map{"duplicates":"combine"})
 };
+
 (:~ %match 
 $l page labels
 :)
-declare function pdfscrape:score($l as xs:string*,$report as element(page)*)  
+declare function pdfscrape:score($l as xs:string*,
+                                 $report as element(page)*)  
 { 
   let $s:=$report!(if(@number)then string(@number) else "")
  let $match:= for-each-pair($l,$s,function($l,$s){if($s eq "")then 0 else if ($s eq $l)then 1 else -1})
@@ -76,3 +78,7 @@ as xs:integer{
     => array:head() 
 };
 
+declare function pdfscrape:characters($str as xs:string)
+{
+
+};

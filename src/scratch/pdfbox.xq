@@ -19,6 +19,5 @@ $samples?world=>file:resolve-path($base)
 
 
 
-let $doc:=pdfbox:open($PDF)
 
-return pdfbox:information($doc)
+ pdfbox:report($PDF)

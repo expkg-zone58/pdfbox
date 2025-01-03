@@ -24,7 +24,7 @@ jobs:
     - name: Install BaseX
       run: |
         wget http://files.basex.org/releases/10.7/BaseX107.zip
-        unzip BaseX107.zip -d basex
+        unzip BaseX107.zip 
 
     - name: Run BaseX Tests
       run:  'basex/bin/basex -t .'

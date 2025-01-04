@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "%BASEX10%/bin/basex -t ."
+    "test": "%BASEX10%/bin/basex -t src/test"
   },
   "keywords": [
     "pdf",

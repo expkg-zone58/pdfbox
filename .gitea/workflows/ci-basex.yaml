@@ -2,9 +2,11 @@ name: Run BaseX Tests
 
 on:
   workflow_dispatch: # Enables manual trigger
-  pull_request:
+  push:
     branches:
       - main
+    paths:
+      - '.gitea/workflows/trigger/release'
 
   
 jobs:

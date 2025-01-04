@@ -11,22 +11,11 @@ on:
   
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on:  ghcr.io/quodatum/basexhttp:basex-10.7
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
-    - name: Set up Java
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'temurin'
-
-    - name: Install BaseX
-      run: |
-        wget http://files.basex.org/releases/10.7/BaseX107.zip
-        unzip BaseX107.zip 
 
     - name: Run BaseX Tests
       run:  'basex/bin/basex -t .'

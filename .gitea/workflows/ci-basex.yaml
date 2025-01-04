@@ -11,7 +11,7 @@ on:
   
 jobs:
   test:
-    runs-on:  ghcr.io/quodatum/basexhttp:basex-10.7
+    runs-on:  basex-10.7
 
     steps:
     - name: Checkout repository

@@ -1,13 +1,12 @@
 xquery version '3.1';
 (:~ 
 pdfbox 3.0 https://pdfbox.apache.org/ BaseX 10.7+ interface library, 
-requires pdfbox jar on classpath
-3.02+ required tested with pdfbox-app-3.0.2.jar
+requires pdfbox jar on classpath, tested with pdfbox-app-3.0.3.jar
 @see download https://pdfbox.apache.org/download.cgi
-@javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.2/
+@javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.3/
 
 :)
-module namespace pdfbox="org.expkg-zone58.Pdfbox3";
+module namespace pdfbox="org.expkg_zone58.Pdfbox3";
 
 declare namespace Loader ="java:org.apache.pdfbox.Loader"; 
 declare namespace PDFTextStripper = "java:org.apache.pdfbox.text.PDFTextStripper";

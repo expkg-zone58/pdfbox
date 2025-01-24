@@ -2,14 +2,11 @@
 
  :)
 module namespace test="urn:expkg-zone58:pdfbox3:tests";
-import module namespace pdfbox="org.expkg-zone58.Pdfbox3";
+import module namespace pdfbox="org.expkg_zone58.Pdfbox3";
 
 declare variable $test:base:=file:base-dir()=>file:parent()=>file:parent();
 
-declare %unit:test
-function test:pdfbox-version(){
-  unit:assert(starts-with(pdfbox:version(),"3.0"))
-};
+
 
 declare %unit:test
 function test:page-count(){

@@ -9,16 +9,7 @@ BaseX (10+) interface to [Pdfbox](https://pdfbox.apache.org/) version 3
 * save pdf page range to new pdf
 * save pdf page as image
 
-Uses
-* https://github.com/blikblum/slick-router#readme
-* https://dev.to/blikblum/slick-router-a-powerful-router-for-web-components-3fck
 
-## Sync
-```
-cd C:\Users\mrwhe\git\expkg-zone58\pdfbox\src\webapp\pdf
-
-c:\DeltaCopy\rsync -rlptz --progress --exclude=.git --exclude=.vscode . andy@localhost::basexserv/
-```
 ## Jars
 * fontbox-3.0.2.jar
 * pdfbox-3.0.2.jar

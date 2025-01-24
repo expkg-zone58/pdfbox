@@ -8,7 +8,7 @@ let $config :=map {
          "manifest-jar" : "pdfbox-3.0.3.jar", 
          "input-dir" :  "C:\Users\mrwhe\git\expkg-zone58\pdfbox\jars\", 
          "output" :  "../lib/pdfbox-3.0.3.fat.jar",
-         "main-class": "org.expkg-zone58.Pdfbox3" 
+         "main-class": "org.expkg_zone58.Pdfbox3" 
          }
 
 let $fat-jar := build:fatjar-from-folder($config?input-dir,$config?manifest-jar)

@@ -10,17 +10,23 @@ on:
 
   
 jobs:
-  test:
-    runs-on:  basex-10.7
+ test:
+    runs-on: ubuntu-latest
 
     steps:
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-       node-version: 18
-
     - name: Checkout repository
       uses: actions/checkout@v2
 
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+
+    - name: Install BaseX
+      run: |
+        wget http://files.basex.org/releases/9.6.3/BaseX963.zip
+        unzip BaseX963.zip -d basex
+
     - name: Run BaseX Tests
-      run:  'basex/bin/basex -t .'
+      run: |
+        ./basex/bin/basex -c"RUN tests/test.bxs"

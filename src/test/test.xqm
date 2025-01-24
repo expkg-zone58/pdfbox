@@ -2,7 +2,7 @@
 
  :)
 module namespace test="urn:expkg-zone58:pdfbox3:tests";
-import module namespace pdfbox="urn:expkg-zone58:pdfbox3" at "../lib/pdfbox3.xqm";
+import module namespace pdfbox="org.apache.pdfbox.Loader";
 
 declare variable $test:base:=file:base-dir()=>file:parent()=>file:parent();
 

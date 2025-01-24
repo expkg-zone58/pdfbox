@@ -11,7 +11,7 @@ let $config :=map {
          "main-class": "org.apache.pdfbox.Loader" 
          }
 
-let $fat-jar := build:fatjar-with-lib($config?input-dir,$config?manifest-jar)
+let $fat-jar := build:fatjar-from-folder($config?input-dir,$config?manifest-jar)
 
 let $fat-jar:=build:update-manifest($fat-jar, $config?main-class)
 let $name:=replace($config?main-class,"\.","/") || ".xqm"

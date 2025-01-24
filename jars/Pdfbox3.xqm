@@ -7,7 +7,7 @@ requires pdfbox jar on classpath
 @javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.2/
 
 :)
-module namespace pdfbox="org.apache.pdfbox.Loader";
+module namespace pdfbox="org.expkg-zone58.Pdfbox3";
 
 declare namespace Loader ="java:org.apache.pdfbox.Loader"; 
 declare namespace PDFTextStripper = "java:org.apache.pdfbox.text.PDFTextStripper";

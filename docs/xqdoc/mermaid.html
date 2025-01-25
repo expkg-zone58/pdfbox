@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta http-equiv="Generator" content="xqdoca - https://github.com/quodatum/xqdoca"><title>Module imports diagram (Mermaid) - xqDocA</title><link rel="shortcut icon" type="image/x-icon" href="resources/xqdoc.png"><link rel="stylesheet" type="text/css" href="resources/prism/1.29.0/prism.css"><link rel="stylesheet" type="text/css" href="resources/page.css"><!--
+        <link rel="stylesheet" type="text/css" href="{ $resources }query.css" />
+        <link rel="stylesheet" type="text/css" href="{ $resources }base.css" /> 
+        --></head><body><style>
+    .cssRest > rect, line{
+        fill:palegreen !important;
+        stroke:black !important;
+    }
+    .cssMain > rect, line{
+        fill:powderblue !important;
+        stroke:black !important;
+    }
+     .cssDoca > rect, line{
+        fill:yellow !important;
+        stroke:black !important;
+    }
+</style><nav id="toc" style="position:absolute;top:0"><span><span class="badge badge-info">jars</span> - Module dependancy diagram (mermaid)</span><span class="ml-2"><a href="annotations.html" title="Summary of XQuery annotation use " class="badge badge-pill badge-light" style="margin-left:1em" target="_self">annotations</a><a href="imports.html" title="Summary of import usage " class="badge badge-pill badge-light" style="margin-left:1em" target="_self">imports</a><a href="mermaid.html" title="Project wide module imports as html mermaid class diagram " class="badge badge-pill badge-light" style="margin-left:1em" target="_self">imports-diag</a><a href="mermaid.mmd" title="Project wide module imports as a mermaid class diagram " class="badge badge-pill badge-light" style="margin-left:1em" target="_blank">imports-diag.mmd</a><a href="index.html" title="Index of sources " class="badge badge-pill badge-light" style="margin-left:1em" target="_self">report</a><a href="restxq.html" title="Summary of REST interface " class="badge badge-pill badge-light" style="margin-left:1em" target="_self">restxq</a><a href="validation-report.xml" title="validate generated xqdoc files " class="badge badge-pill badge-light" style="margin-left:1em" target="_blank">xqdoc-validate</a><a href="xqdoca.xml" title="xqDocA run configuration report (XML) " class="badge badge-pill badge-light" style="margin-left:1em" target="_blank">xqdoca.xml</a></span></nav><div class="mermaid">%%{init: {'securityLevel': 'loose', 'theme':'base'}}%%    
+classDiagram
+direction TB
+
+ class RESTXQ:::cssRest { }
+ class INVOKE:::cssMain { }
+ class TEST { }
+
+class pdfbox { &lt;&lt; Pdfbox3.xqm &gt;&gt;}
+
+
+link pdfbox "modules/F000001/index.html" "This is a tooltip for org.expkg_zone58.Pdfbox3" 
+
+</div><script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.9.1/mermaid.min.js" integrity="sha512-6a80OTZVmEJhqYJUmYd5z8yHUCDlYnj6q9XwB/gKOEyNQV/Q8u+XeSG59a2ZKFEHGTYzgfOQKYEBtrZV7vBr+Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><script>mermaid.initialize({
+  startOnLoad:true,
+  logLevel: "error", 
+  securityLevel: "loose", 
+  theme: (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" :  "default" 
+    });</script></body></html>

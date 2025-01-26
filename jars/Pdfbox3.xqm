@@ -43,40 +43,42 @@ declare namespace PDFRenderer="java:org.apache.pdfbox.rendering.PDFRenderer";
 declare namespace RandomAccessReadBufferedFile = "java:org.apache.pdfbox.io.RandomAccessReadBufferedFile";
 declare namespace File ="java:java.io.File";
 
-(:~ version of pdfbox:)
+(:~ version of Apacke Pdfbox in use :)
 declare function pdfbox:version()
 as xs:string{
   Q{java:org.apache.pdfbox.util.Version}getVersion()
 };
 
-(:~ open pdf, returns handle :)
+(:~ open pdf, returns pdf object :)
 declare function pdfbox:open($pdfpath as xs:string)
 as item(){
   Loader:loadPDF( RandomAccessReadBufferedFile:new($pdfpath))
 };
 
-(:~ the PDF specification version this document conforms to.:)
-declare function pdfbox:pdfVersion($doc as item())
+(:~ the PDF specification version this $pdf conforms to.:)
+declare function pdfbox:pdfVersion($pdf as item())
 as xs:float{
-  PDDocument:getVersion($doc)
+  PDDocument:getVersion($pdf)
 };
 
-(:~ save pdf $doc to $savepath , returns $savepath :)
-declare function pdfbox:save($doc as item(),$savepath as xs:string)
+(:~ save pdf $pdf to $savepath , returns $savepath :)
+declare function pdfbox:save($pdf as item(),$savepath as xs:string)
 as xs:string{
-   PDDocument:save($doc,File:new($savepath)),$savepath
+   PDDocument:save($pdf, File:new($savepath)),$savepath
 };
 
-declare function pdfbox:close($doc as item())
+(: release references to $pdf:)
+declare function pdfbox:close($pdf as item())
 as empty-sequence(){
   (# db:wrapjava void #) {
-     PDDocument:close($doc)
+     PDDocument:close($pdf)
   }
 };
 
-declare function pdfbox:page-count($doc as item())
+(:~ number of pages in PDF:)
+declare function pdfbox:page-count($pdf as item())
 as xs:integer{
-  PDDocument:getNumberOfPages($doc)
+  PDDocument:getNumberOfPages($pdf)
 };
 
 (:~ map with document metadata :)
@@ -95,7 +97,7 @@ as map(*){
 };
 
  (:~ convert date :)
-declare
+declare %private
 function pdfbox:gregToISO($item as item())
 as xs:string{
  Q{java:java.util.GregorianCalendar}toZonedDateTime($item)=>string()
@@ -123,7 +125,7 @@ as map(*)*{
 };
 
 (: BaseX bug 10.7? error if inlined in outline :)
-declare function pdfbox:_outline($doc as item(),$outlineItem as item()?)
+declare %private function pdfbox:_outline($doc as item(),$outlineItem as item()?)
 as map(*){
  hof:until(
             function($output) { empty($output?this) },
@@ -157,7 +159,9 @@ as element(bookmark)*
   </bookmark>
 };
 
-(: return bookmark info for children of $outlineItem :)
+(:~ return bookmark info for children of $outlineItem 
+@return map like{index:,title:,hasChildren:}
+:)
 declare function pdfbox:bookmark($bookmark as item(),$doc as item())
 as map(*)
 {
@@ -191,11 +195,11 @@ as item()?
 
 (:~ save new PDF doc from 1 based page range 
 @return save path :)
-declare function pdfbox:extract($doc as item(), 
+declare function pdfbox:extract($pdf as item(), 
              $start as xs:integer,$end as xs:integer,$target as xs:string)
 as xs:string
 {
-    let $a:=PageExtractor:new($doc, $start, $end) =>PageExtractor:extract()
+    let $a:=PageExtractor:new($pdf, $start, $end) =>PageExtractor:extract()
     return (pdfbox:save($a,$target),pdfbox:close($a)) 
 };
 
@@ -204,10 +208,10 @@ as xs:string
 @see https://www.w3.org/TR/WCAG20-TECHS/PDF17.html#PDF17-examples
 @see https://codereview.stackexchange.com/questions/286078/java-code-showing-page-labels-from-pdf-files
 :)
-declare function pdfbox:getPageLabels($doc as item())
+declare function pdfbox:getPageLabels($pdf as item())
 as item()
 {
-  PDDocument:getDocumentCatalog($doc)
+  PDDocument:getDocumentCatalog($pdf)
   =>PDDocumentCatalog:getPageLabels()
 };
 

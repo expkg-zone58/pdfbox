@@ -1,6 +1,6 @@
 (:~ describe book page numbering :)
 
-import module namespace pdfbox="urn:expkg-zone58:pdfbox3" at "../lib/pdfbox3.xqm";
+import module namespace pdfbox="urn:expkg-zone58:pdfbox3" ;
 import module namespace bookpages="urn:bookpages" at "../lib/bookpages.xqm";
 import module namespace pdfscrape="urn:pdfscrape" at "../lib/pdfscrape.xqm";
 

@@ -3,7 +3,7 @@ xquery version '3.1';
 pdfscrape:page-report($doc )=>pdfscrape:inverted-map()
 :)
 module namespace pdfscrape = 'urn:pdfscrape';
-import module namespace pdfbox="urn:expkg-zone58:pdfbox3" at "pdfbox3.xqm";
+import module namespace pdfbox="org.expkg_zone58.Pdfbox3" ;
 
 (:~ page number regex
 @todo last line and roman

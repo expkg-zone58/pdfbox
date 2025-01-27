@@ -1,9 +1,9 @@
 xquery version '3.1';
 (:~ 
 pdfbox 3.0 https://pdfbox.apache.org/ BaseX 10.7+ interface library, 
-requires pdfbox jar on classpath, tested with pdfbox-app-3.0.3.jar
+requires pdfbox jar on classpath, tested with pdfbox-app-3.0.4.jar
 @see download https://pdfbox.apache.org/download.cgi
-@javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.3/
+@javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.4/
 
 :)
 module namespace pdfbox="org.expkg_zone58.Pdfbox3";
@@ -11,32 +11,26 @@ module namespace pdfbox="org.expkg_zone58.Pdfbox3";
 declare namespace Loader ="java:org.apache.pdfbox.Loader"; 
 declare namespace PDFTextStripper = "java:org.apache.pdfbox.text.PDFTextStripper";
 
-(:~ 
-@see https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.0/org/apache/pdfbox/pdmodel/PDDocument.html 
-:)
+(:~ @javadoc org/apache/pdfbox/pdmodel/PDDocument.html :)
 declare namespace PDDocument ="java:org.apache.pdfbox.pdmodel.PDDocument";
 
 declare namespace PDDocumentCatalog ="java:org.apache.pdfbox.pdmodel.PDDocumentCatalog";
 declare namespace PDPageLabels ="java:org.apache.pdfbox.pdmodel.common.PDPageLabels";
 
-(:~ 
-@see https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.0/org/apache/pdfbox/multipdf/PageExtractor.html 
-:)
+(:~ @javadoc org/apache/pdfbox/multipdf/PageExtractor.html :)
 declare namespace PageExtractor ="java:org.apache.pdfbox.multipdf.PageExtractor";
  
-(:~ 
- @see https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.0/org/apache/pdfbox/pdmodel/PDPageTree.html
-:)
+(:~ @javadoc org/apache/pdfbox/pdmodel/PDPageTree.html :)
 declare namespace PDPageTree ="java:org.apache.pdfbox.pdmodel.PDPageTree";
 
 (:~ 
-@see https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.2/org/apache/pdfbox/pdmodel/interactive/documentnavigation/outline/PDDocumentOutline.html 
+@javadoc org/apache/pdfbox/pdmodel/interactive/documentnavigation/outline/PDDocumentOutline.html 
 :)
 declare namespace PDDocumentOutline ="java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline";
 
 declare namespace PDDocumentInformation ="java:org.apache.pdfbox.pdmodel.PDDocumentInformation";
 (:~ 
-@see https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.0/org/apache/pdfbox/pdmodel/interactive/documentnavigation/outline/PDOutlineItem.html 
+@javadoc org/apache/pdfbox/pdmodel/interactive/documentnavigation/outline/PDOutlineItem.html 
 :)
 declare namespace PDOutlineItem="java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem";
 declare namespace PDFRenderer="java:org.apache.pdfbox.rendering.PDFRenderer";
@@ -55,7 +49,7 @@ as item(){
   Loader:loadPDF( RandomAccessReadBufferedFile:new($pdfpath))
 };
 
-(:~ the PDF specification version this $pdf conforms to.:)
+(:~ the version of the PDF specification used by $pdf :)
 declare function pdfbox:pdfVersion($pdf as item())
 as xs:float{
   PDDocument:getVersion($pdf)
@@ -179,14 +173,14 @@ declare function pdfbox:outx($page ,$document)
   return $pageNumber
 };
 
-(:~ pageIndex of $page in $document :)
+(:~ pageIndex of $page in $pdf :)
 declare function pdfbox:pageIndex(
    $page as item()? (: as java:org.apache.pdfbox.pdmodel.PDPage :),
-   $document)
+   $pdf)
 as item()?
 {
   if(exists($page))
-  then PDDocument:getDocumentCatalog($document)
+  then PDDocument:getDocumentCatalog($pdf)
       =>PDDocumentCatalog:getPages()
       =>PDPageTree:indexOf($page)
 };            

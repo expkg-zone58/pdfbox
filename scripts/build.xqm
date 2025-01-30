@@ -1,7 +1,9 @@
 (:~ build utils for REPO packaging :)
 module namespace build = 'urn:quodatum:build1';
 
-(:~ create a flat fat jar :)
+(:~ create a flat fat jar from jars in $input-dir
+keeping only META-INF from $manifest-jar 
+:)
 declare function build:fatjar-from-folder($input-dir as xs:string,$manifest-jar as xs:string)
 as xs:base64Binary { 
     let $fold :=
@@ -13,13 +15,16 @@ function ($res as map (*), $jar as xs:string) {
         map { "name" : ($res? name, $paths), 
               "content" : ($res? content,archive:extract-binary($bin, $paths)) } 
 }
-let $res := fold-left(file:list($input-dir, false(), "*.jar"), map { }, $fold)
+let $res := file:list($input-dir, false(), "*.jar")
+            =>fold-left( map { }, $fold)
 return
     archive:create($res? name, $res? content,
                    map { "format" : "zip", "algorithm" : "deflate" }) 
 };
 
-(:~ create a fat jar with lib :)
+(:~ create a fat jar with lib 
+@remark 
+:)
 declare function build:fatjar-with-lib($input-dir as xs:string,$manifest-jar as xs:string)
  { 
  let $bin :=file:read-binary($input-dir || $manifest-jar)
@@ -49,3 +54,14 @@ declare function build:update($jar as xs:base64Binary,$name  as xs:string,$file 
 as xs:base64Binary{
 archive:update($jar,$name,$file)
 }; 
+
+
+(:~ download $files from $urls to  $destdir:)
+declare variable $build:REPO as xs:string external :="https://repo1.maven.org/maven2/";
+declare function build:maven-download($urls as xs:string*,$destdir as xs:string)
+as empty-sequence(){
+for $f in $urls
+let $dest:=$destdir || replace($f,"^.*/","") 
+where not(file:exists($dest))
+return file:write-binary($dest, fetch:binary(resolve-uri($f,$build:REPO)=>trace("Download: ")))
+};

@@ -7,39 +7,52 @@ import module namespace pdfbox="org.expkg_zone58.Pdfbox3";
 declare variable $test:base:=file:base-dir()=>file:parent()=>file:parent();
 
 
+declare %unit:test
+function test:pdfbox-version(){
+    let $v:= pdfbox:version()=>trace("VER: ")
+    return unit:assert-equals($v,"3.0.4")
+};
+
+declare %unit:test
+function test:specification(){
+    let $pdf:=test:pdf("samples.pdf/BaseX100.pdf")
+    let $spec:=pdfbox:specification($pdf)
+    return unit:assert-equals($spec,0+1.4)
+};
 
 declare %unit:test
 function test:page-count(){
-    let $PDF:="samples.pdf/BaseX100.pdf"=>test:resolve()
-    let $pages:=pdfbox:open($PDF)=>pdfbox:page-count()
+    let $pdf:=test:pdf("samples.pdf/BaseX100.pdf")
+    let $pages:=pdfbox:page-count($pdf)
     return unit:assert-equals($pages,521)
 };
 
 declare %unit:test
 function test:outline-none(){
- let $PDF:="samples.pdf/BaseX100.pdf"=>test:resolve()
- let $outline:=pdfbox:open($PDF)=>pdfbox:outline()
+let $pdf:=test:pdf("samples.pdf/BaseX100.pdf")
+ let $outline:=pdfbox:outline($pdf)
  return unit:assert(empty($outline))
 };
 
 declare %unit:test
 function test:outline-present(){
- let $PDF:="samples.pdf/icelandic-dictionary.pdf"=>test:resolve()
- let $outline:=pdfbox:open($PDF)=>pdfbox:outline()
+ let $pdf:=test:pdf("samples.pdf/icelandic-dictionary.pdf")
+ let $outline:=pdfbox:outline($pdf)
  return unit:assert(exists($outline))
 };
 
 declare %unit:test
 function test:outline-xml(){
- let $PDF:="samples.pdf/icelandic-dictionary.pdf"=>test:resolve()
- let $outline:=pdfbox:open($PDF)=>pdfbox:outline()=>pdfbox:outline-xml()
+ let $pdf:=test:pdf("samples.pdf/icelandic-dictionary.pdf")
+ let $outline:=pdfbox:outline($pdf)=>pdfbox:outline-xml()
  return unit:assert-equals(count($outline/bookmark),31)
 };
 
 declare %unit:test
 function test:pagelabels(){
- let $PDF:="samples.pdf/BaseX100.pdf"=>test:resolve()
- let $labels:=pdfbox:open($PDF)=>pdfbox:pageLabels()
+  let $pdf:=test:pdf("samples.pdf/BaseX100.pdf")
+
+ let $labels:=pdfbox:labels($pdf)
  return (
    unit:assert($labels[1]="i") ,
    unit:assert($labels[27]="1")
@@ -47,20 +60,21 @@ function test:pagelabels(){
 };
 
 declare %unit:test
-function test:save(){
+function test:extract-save(){
+ let $pdf:=test:pdf("samples.pdf/BaseX100.pdf")
  let $dest:=file:create-temp-file("test",".pdf")=>trace("DEST: ")
- let $PDF:="samples.pdf/BaseX100.pdf"=>test:resolve()
- let $outline:=pdfbox:open($PDF)=>pdfbox:extract(2,12,$dest)
+ let $outline:=pdfbox:extract($pdf,2,12,$dest)
  return unit:assert(true())
 };
 
 declare %unit:test
 function test:page-text(){
- let $PDF:="samples.pdf/BaseX100.pdf"=>test:resolve()
- let $text:=pdfbox:open($PDF)=>pdfbox:getText(1)
+let $pdf:=test:pdf("samples.pdf/BaseX100.pdf")
+ let $text:=pdfbox:page-text($pdf,1)
  return unit:assert(starts-with($text,"BaseX Documentation"))
 };
 
-declare function test:resolve($file as xs:string){
-    file:resolve-path($file,$test:base)
+declare function test:pdf($file as xs:string)
+as item(){
+    file:resolve-path($file,$test:base)=>pdfbox:open()
 };

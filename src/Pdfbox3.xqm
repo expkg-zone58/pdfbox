@@ -49,10 +49,12 @@ as item(){
   Loader:loadPDF( RandomAccessReadBufferedFile:new($pdfpath))
 };
 
-(:~ the version of the PDF specification used by $pdf :)
-declare function pdfbox:pdfVersion($pdf as item())
-as xs:float{
-  PDDocument:getVersion($pdf)
+(:~ the version of the PDF specification used by $pdf  e.g "1.4"
+returned as string to avoid rounding issues
+ :)
+declare function pdfbox:specification($pdf as item())
+as xs:string{
+ PDDocument:getVersion($pdf)=>string()
 };
 
 (:~ save pdf $pdf to $savepath , returns $savepath :)
@@ -97,45 +99,49 @@ as xs:string{
  Q{java:java.util.GregorianCalendar}toZonedDateTime($item)=>string()
 };
 
-(:~ outline for $doc as map()* :)
-declare function pdfbox:outline($doc as item())
+(:~ outline for $pdf as map()* :)
+declare function pdfbox:outline($pdf as item())
 as map(*)*{
   (# db:wrapjava some #) {
   let $outline:=
-                PDDocument:getDocumentCatalog($doc)
+                PDDocument:getDocumentCatalog($pdf)
                 =>PDDocumentCatalog:getDocumentOutline()
  
   return  if(exists($outline))
-          then pdfbox:outline($doc,PDOutlineItem:getFirstChild($outline)) 
+          then pdfbox:outline($pdf,PDOutlineItem:getFirstChild($outline)) 
   }
 };
 
 (:~ return bookmark info for children of $outlineItem as seq of maps :)
-declare function pdfbox:outline($doc as item(),$outlineItem as item()?)
+declare function pdfbox:outline($pdf as item(),$outlineItem as item()?)
 
 as map(*)*{
-  let $find as map(*):=pdfbox:_outline($doc ,$outlineItem)
+  let $find as map(*):=pdfbox:_outline($pdf ,$outlineItem)
   return map:get($find,"list")
 };
 
 (: BaseX bug 10.7? error if inlined in outline :)
-declare %private function pdfbox:_outline($doc as item(),$outlineItem as item()?)
+declare %private function pdfbox:_outline($pdf as item(),$outlineItem as item()?)
 as map(*){
- hof:until(
-            function($output) { empty($output?this) },
-            function($input ) { 
-                      let $bk:= pdfbox:bookmark($input?this,$doc)
+  pdfbox:do-until(
+    
+     map{"list":(),"this":$outlineItem},
+
+     function($input ) { 
+                      let $bk:= pdfbox:bookmark($input?this,$pdf)
                       let $bk:= if($bk?hasChildren)
-                                then let $kids:=pdfbox:outline($doc,PDOutlineItem:getFirstChild($input?this))
+                                then let $kids:=pdfbox:outline($pdf,PDOutlineItem:getFirstChild($input?this))
                                      return map:merge(($bk,map:entry("children",$kids)))
                                 else $bk 
                       return map{
                             "list": ($input?list, $bk),
                             "this":  PDOutlineItem:getNextSibling($input?this)}
                           },
-            map{"list":(),"this":$outlineItem}
-        ) 
+
+     function($output) { empty($output?this) }                      
+  )
 };
+
 (:~ outline as xml :)
 declare function pdfbox:outline-xml($outline as map(*)*)
 as element(outline){
@@ -156,27 +162,22 @@ as element(bookmark)*
 (:~ return bookmark info for children of $outlineItem 
 @return map like{index:,title:,hasChildren:}
 :)
-declare function pdfbox:bookmark($bookmark as item(),$doc as item())
+declare function pdfbox:bookmark($bookmark as item(),$pdf as item())
 as map(*)
 {
  map{ 
-  "index":  PDOutlineItem:findDestinationPage($bookmark,$doc)=>pdfbox:pageIndex($doc),
+  "index":  PDOutlineItem:findDestinationPage($bookmark,$pdf)=>pdfbox:page-index($pdf),
   "title":  (# db:checkstrings #) {PDOutlineItem:getTitle($bookmark)}=>translate("�",""),
   "hasChildren": PDOutlineItem:hasChildren($bookmark)
   }
 };
 
-declare function pdfbox:outx($page ,$document)
-{
-  let $currentPage := PDOutlineItem:findDestinationPage($page,$document)
-  let $pageNumber := pdfbox:pageIndex($currentPage,$document)
-  return $pageNumber
-};
+
 
 (:~ pageIndex of $page in $pdf :)
-declare function pdfbox:pageIndex(
+declare function pdfbox:page-index(
    $page as item()? (: as java:org.apache.pdfbox.pdmodel.PDPage :),
-   $pdf)
+   $pdf as item())
 as item()?
 {
   if(exists($page))
@@ -198,28 +199,20 @@ as xs:string
 };
 
 
-(:~   pageLabel info
+(:~   pageLabel for every page
 @see https://www.w3.org/TR/WCAG20-TECHS/PDF17.html#PDF17-examples
 @see https://codereview.stackexchange.com/questions/286078/java-code-showing-page-labels-from-pdf-files
 :)
-declare function pdfbox:getPageLabels($pdf as item())
-as item()
-{
-  PDDocument:getDocumentCatalog($pdf)
-  =>PDDocumentCatalog:getPageLabels()
-};
-
-(:~   pageLabel for every page:)
-declare function pdfbox:pageLabels($doc as item())
+declare function pdfbox:labels($pdf as item())
 as xs:string*
 {
-  PDDocument:getDocumentCatalog($doc)
+  PDDocument:getDocumentCatalog($pdf)
   =>PDDocumentCatalog:getPageLabels()
   =>PDPageLabels:getLabelsByPageIndices()
 };
 
 (:~ return text on $pageNo :)
-declare function pdfbox:getText($doc as item(), $pageNo as xs:integer)
+declare function pdfbox:page-text($doc as item(), $pageNo as xs:integer)
 as xs:string{
   let $tStripper := (# db:wrapjava instance #) {
          PDFTextStripper:new()
@@ -246,9 +239,9 @@ as map(*){
 @param $scale 1=72 dpi 
 @return  Java java.awt.image.BufferedImage object
 :)
-declare function pdfbox:pageBufferedImage($doc as item(), $pageNo as xs:integer,$scale as xs:float)
+declare function pdfbox:pageBufferedImage($pdf as item(), $pageNo as xs:integer,$scale as xs:float)
 as item(){
- PDFRenderer:new($doc)=>PDFRenderer:renderImage($pageNo,$scale)
+ PDFRenderer:new($pdf)=>PDFRenderer:renderImage($pageNo,$scale)
 };
 
 (:~ save bufferedimage to $dest 
@@ -266,4 +259,21 @@ as xs:base64Binary{
   let $_:=Q{java:javax.imageio.ImageIO}write($bufferedImage , $type,  $bytes)
   return Q{java:java.io.ByteArrayOutputStream}toByteArray($bytes)
          =>convert:integers-to-base64()
+};
+
+(:~ fn:do-until shim for BaseX 9+ :)
+declare function pdfbox:do-until(
+ $input 	as item()*, 	
+ $action 	as function(item()*, xs:integer) as item()*, 	
+ $predicate 	as function(item()*, xs:integer) as xs:boolean? 	
+) as item()*
+{
+  let $fn:=function-lookup(QName('http://www.w3.org/2005/xpath-functions','do-until'), 3)
+  return if($fn)
+         then $fn($input,$action,$predicate)
+         else let $hof:=function-lookup(QName('http://basex.org/modules/hof','until'), 3)
+              return if($hof)
+                      then $hof($predicate,$action,$input)
+                      else error(xs:QName('pdfbox:do-until'),"No implementation found")
+
 };

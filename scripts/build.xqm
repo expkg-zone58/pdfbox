@@ -60,10 +60,12 @@ archive:update($jar,$name,$file)
 declare variable $build:REPO as xs:string external :="https://repo1.maven.org/maven2/";
 declare function build:maven-download($urls as xs:string*,$destdir as xs:string)
 as empty-sequence(){
-for $f in $urls
-let $dest:=$destdir || replace($f,"^.*/","") 
-where not(file:exists($dest))
-return build:write-binary($dest, fetch:binary(resolve-uri($f,$build:REPO)=>trace("Download: ")))
+    file:create-dir($destdir),    
+    for $f in $urls
+    let $dest:=$destdir || replace($f,"^.*/","") 
+    where not(file:exists($dest))
+    return build:write-binary($dest, fetch:binary(resolve-uri($f,$build:REPO)
+           =>trace("Download: ")))
 };
 
 declare function build:write-binary($dest as xs:string,$contents)

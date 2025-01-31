@@ -63,5 +63,11 @@ as empty-sequence(){
 for $f in $urls
 let $dest:=$destdir || replace($f,"^.*/","") 
 where not(file:exists($dest))
-return file:write-binary($dest, fetch:binary(resolve-uri($f,$build:REPO)=>trace("Download: ")))
+return build:write-binary($dest, fetch:binary(resolve-uri($f,$build:REPO)=>trace("Download: ")))
+};
+
+declare function build:write-binary($dest as xs:string,$contents)
+as empty-sequence{
+file:create-dir(file:parent($dest)),
+file:write-binary($dest,$contents)
 };

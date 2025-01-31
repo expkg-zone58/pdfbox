@@ -24,6 +24,6 @@ let $name:=replace($config?main-class,"\.","/") || ".xqm"
 let $content:=file:read-binary($config?base || "src/Pdfbox3.xqm")
 let $fat-jar:=archive:update($fat-jar, $name,$content)
 let $output-file := file:resolve-path($config?output,$config?base)
-return (file:write-binary($output-file, $fat-jar),
+return (build:write-binary($output-file, $fat-jar),
         trace($output-file,"fat jar: "))
   

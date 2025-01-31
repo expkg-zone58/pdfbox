@@ -22,18 +22,17 @@ jobs:
     - name: Install BaseX
       run: |
         wget https://files.basex.org/releases/10.7/BaseX107.zip
-        unzip BaseX107.zip -d basex
+        unzip BaseX107.zip 
         echo "$GITHUB_PATH"
         echo "$HOME/basex/bin" >> "$GITHUB_PATH"
-
 
     - name: Checkout repository
       uses: actions/checkout@v4
 
     - name: Build package
       run: |
-        ./basex/bin/basex /scripts/make-fat-jar.xq
+        basex /scripts/make-fat-jar.xq
 
     - name: Run BaseX Tests
       run: |
-        ./basex/bin/basex -t /src/test
+        basex -t /src/test

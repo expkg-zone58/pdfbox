@@ -11,12 +11,8 @@ on:
   
 jobs:
  test:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-22.04
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
     - name: Set up Java
       uses: actions/setup-java@v4
       with:
@@ -27,6 +23,13 @@ jobs:
         wget https://files.basex.org/releases/10.7/BaseX107.zip
         unzip BaseX107.zip -d basex
 
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Build package
+      run: |
+        ./basex/bin/basex /scripts/make-fat-jar.xq
+        
     - name: Run BaseX Tests
       run: |
         ./basex/bin/basex -t /src/test

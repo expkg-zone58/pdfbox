@@ -67,7 +67,7 @@ return build:write-binary($dest, fetch:binary(resolve-uri($f,$build:REPO)=>trace
 };
 
 declare function build:write-binary($dest as xs:string,$contents)
-as empty-sequence{
+as empty-sequence(){
 file:create-dir(file:parent($dest)),
 file:write-binary($dest,$contents)
 };

@@ -16,7 +16,9 @@ jobs:
     - name: Set up Java
       uses: actions/setup-java@v4
       with:
+        distribution: 'temurin'
         java-version: '17'
+
 
     - name: Install BaseX
       run: |
@@ -29,7 +31,7 @@ jobs:
     - name: Build package
       run: |
         ./basex/bin/basex /scripts/make-fat-jar.xq
-        
+
     - name: Run BaseX Tests
       run: |
         ./basex/bin/basex -t /src/test

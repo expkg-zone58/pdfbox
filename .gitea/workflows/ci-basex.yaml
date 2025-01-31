@@ -36,6 +36,7 @@ jobs:
 
     - name: Build package
       run: |
+        ls -l
         $PWD/basex/bin/basex /scripts/make-fat-jar.xq
 
     - name: Run BaseX Tests

@@ -22,14 +22,15 @@ jobs:
     - name: Install BaseX
       run: |
         wget https://files.basex.org/releases/10.7/BaseX107.zip
-        unzip BaseX107.zip
-        chmod a+x $PWD/basex/bin/*
-        echo "PATH=$PATH:$PWD/basex/bin" >> $GITHUB_ENV 
+        unzip BaseX107.zip -d /usr/local/
+        chmod a+x /usr/local/basex/bin/*
+        echo "PATH=$PATH:/usr/local/basex/bin" >> $GITHUB_ENV 
       
     - name: Verify PATH
       run: |
         echo $PATH$
-        ls -l $PWD/basex/bin
+        ls -l /usr/local/basex/bin
+        basex -v
 
     - name: Checkout repository
       uses: actions/checkout@v4

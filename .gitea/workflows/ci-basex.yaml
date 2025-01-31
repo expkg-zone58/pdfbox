@@ -27,8 +27,9 @@ jobs:
       
     - name: Verify PATH
       run: |
-        echo $PATH  
-
+        echo $PATH$PWD/basex/bin
+        ls $PWD/basex/bin
+        
     - name: Checkout repository
       uses: actions/checkout@v4
 

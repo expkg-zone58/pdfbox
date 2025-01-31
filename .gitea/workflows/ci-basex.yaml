@@ -28,7 +28,7 @@ jobs:
       
     - name: Verify PATH
       run: |
-        echo $PATH$PWD/basex/bin
+        echo $PATH$
         ls -l $PWD/basex/bin
 
     - name: Checkout repository
@@ -36,8 +36,8 @@ jobs:
 
     - name: Build package
       run: |
-        basex /scripts/make-fat-jar.xq
+        $PWD/basex/bin/basex /scripts/make-fat-jar.xq
 
     - name: Run BaseX Tests
       run: |
-        basex -t /src/test
+        $PWD/basex/bin/basex -t /src/test

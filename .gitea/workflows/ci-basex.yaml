@@ -19,11 +19,11 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-
     - name: Install BaseX
       run: |
         wget https://files.basex.org/releases/10.7/BaseX107.zip
         unzip BaseX107.zip -d basex
+        pwd
 
     - name: Checkout repository
       uses: actions/checkout@v4

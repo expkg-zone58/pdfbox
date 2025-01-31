@@ -15,18 +15,18 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Java
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v4
       with:
-        java-version: '11'
+        java-version: '17'
 
     - name: Install BaseX
       run: |
-        wget http://files.basex.org/releases/9.6.3/BaseX963.zip
-        unzip BaseX963.zip -d basex
+        wget https://files.basex.org/releases/10.7/BaseX107.zip
+        unzip BaseX107.zip -d basex
 
     - name: Run BaseX Tests
       run: |
-        ./basex/bin/basex -c"RUN tests/test.bxs"
+        ./basex/bin/basex -t /src/test

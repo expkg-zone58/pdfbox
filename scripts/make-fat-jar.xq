@@ -1,7 +1,7 @@
 
 import module namespace build = 'urn:quodatum:build1' at 'build.xqm';
 
-declare variable $urls := (
+declare variable $maven-urls := (
 "org/apache/pdfbox/pdfbox/3.0.4/pdfbox-3.0.4.jar",
 "org/apache/pdfbox/pdfbox-io/3.0.4/pdfbox-io-3.0.4.jar",
 "org/apache/pdfbox/fontbox/3.0.4/fontbox-3.0.4.jar",
@@ -16,7 +16,7 @@ let $config :=map {
          "main-class": "org.expkg_zone58.Pdfbox3" 
          }
 let $jar-path:=file:resolve-path($config?input-dir,$config?base=>trace("base "))=>trace("jar: ")
-let $_:=build:maven-download($urls,$jar-path)
+let $_:=build:maven-download($maven-urls,$jar-path)
 let $fat-jar := build:fatjar-from-folder($jar-path,$config?manifest-jar)
 
 let $fat-jar:=build:update-manifest($fat-jar, $config?main-class)

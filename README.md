@@ -10,10 +10,6 @@ BaseX (10+) interface to [Pdfbox](https://pdfbox.apache.org/) version 3
 * save pdf page as image
 
 
-## Jars
-* fontbox-3.0.2.jar
-* pdfbox-3.0.2.jar
-* pdfbox-io-3.0.2.jar
-* commons-logging-1.3.1.jar
+## Build
 
-3.6 mb
+Use `scripts/make-fat-jar.xq` to package the required `jar`s and `xqm` files to the `dist` folder.

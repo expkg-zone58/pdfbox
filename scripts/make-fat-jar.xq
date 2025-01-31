@@ -7,9 +7,7 @@ declare variable $urls := (
 "org/apache/pdfbox/fontbox/3.0.4/fontbox-3.0.4.jar",
 "commons-logging/commons-logging/1.3.4/commons-logging-1.3.4.jar"
 );
-(: Main execution
-Main-Class: org.basex.modules.Hello
- :)
+
 let $config :=map { 
          "base": file:resolve-path("../",static-base-uri()),
          "manifest-jar" : "pdfbox-3.0.4.jar", 

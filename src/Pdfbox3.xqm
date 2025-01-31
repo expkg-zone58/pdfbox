@@ -10,28 +10,19 @@ module namespace pdfbox="org.expkg_zone58.Pdfbox3";
 
 declare namespace Loader ="java:org.apache.pdfbox.Loader"; 
 declare namespace PDFTextStripper = "java:org.apache.pdfbox.text.PDFTextStripper";
-
-(:~ @javadoc org/apache/pdfbox/pdmodel/PDDocument.html :)
 declare namespace PDDocument ="java:org.apache.pdfbox.pdmodel.PDDocument";
 
 declare namespace PDDocumentCatalog ="java:org.apache.pdfbox.pdmodel.PDDocumentCatalog";
 declare namespace PDPageLabels ="java:org.apache.pdfbox.pdmodel.common.PDPageLabels";
 
-(:~ @javadoc org/apache/pdfbox/multipdf/PageExtractor.html :)
 declare namespace PageExtractor ="java:org.apache.pdfbox.multipdf.PageExtractor";
  
-(:~ @javadoc org/apache/pdfbox/pdmodel/PDPageTree.html :)
 declare namespace PDPageTree ="java:org.apache.pdfbox.pdmodel.PDPageTree";
 
-(:~ 
-@javadoc org/apache/pdfbox/pdmodel/interactive/documentnavigation/outline/PDDocumentOutline.html 
-:)
 declare namespace PDDocumentOutline ="java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline";
 
 declare namespace PDDocumentInformation ="java:org.apache.pdfbox.pdmodel.PDDocumentInformation";
-(:~ 
-@javadoc org/apache/pdfbox/pdmodel/interactive/documentnavigation/outline/PDOutlineItem.html 
-:)
+
 declare namespace PDOutlineItem="java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem";
 declare namespace PDFRenderer="java:org.apache.pdfbox.rendering.PDFRenderer";
 declare namespace RandomAccessReadBufferedFile = "java:org.apache.pdfbox.io.RandomAccessReadBufferedFile";
@@ -46,15 +37,19 @@ as xs:string{
 (:~ open pdf, returns pdf object :)
 declare function pdfbox:open($pdfpath as xs:string)
 as item(){
-  Loader:loadPDF( RandomAccessReadBufferedFile:new($pdfpath))
+  try{
+    Loader:loadPDF( RandomAccessReadBufferedFile:new($pdfpath))
+} catch *{
+    error(xs:QName("pdfbox:open"),"Failed to open: " || $pdfpath)
+}
 };
 
 (:~ the version of the PDF specification used by $pdf  e.g "1.4"
-returned as string to avoid rounding issues
+returned as string to avoid float rounding issues
  :)
 declare function pdfbox:specification($pdf as item())
 as xs:string{
- PDDocument:getVersion($pdf)=>string()
+ PDDocument:getVersion($pdf)=>xs:decimal()=>round(4)
 };
 
 (:~ save pdf $pdf to $savepath , returns $savepath :)
@@ -77,10 +72,23 @@ as xs:integer{
   PDDocument:getNumberOfPages($pdf)
 };
 
+(:~ render of $pdf page to image
+options.format="gif,"png" etc, options.scale= 1 is 72 dpi?? :)
+declare function pdfbox:page-image($pdf as item(),$pageNo as xs:integer,$options as map(*))
+as xs:base64Binary{
+  let $options:=map:merge(($options,map{"format":"gif","scale":1}))
+  let $bufferedImage:=PDFRenderer:new($pdf)=>PDFRenderer:renderImage($pageNo,$options?scale)
+  let $bytes:=Q{java:java.io.ByteArrayOutputStream}new()
+  let $_:=Q{java:javax.imageio.ImageIO}write($bufferedImage ,$options?format,  $bytes)
+  return Q{java:java.io.ByteArrayOutputStream}toByteArray($bytes)
+         =>convert:integers-to-base64()
+ 
+};
+
 (:~ map with document metadata :)
-declare function pdfbox:information($doc as item())
+declare function pdfbox:information($pdf as item())
 as map(*){
-  let $info:=PDDocument:getDocumentInformation($doc)
+  let $info:=PDDocument:getDocumentInformation($pdf)
   return map{
     "title": PDDocumentInformation:getTitle($info),
     "creator": PDDocumentInformation:getCreator($info),
@@ -92,12 +100,7 @@ as map(*){
   }
 };
 
- (:~ convert date :)
-declare %private
-function pdfbox:gregToISO($item as item())
-as xs:string{
- Q{java:java.util.GregorianCalendar}toZonedDateTime($item)=>string()
-};
+ 
 
 (:~ outline for $pdf as map()* :)
 declare function pdfbox:outline($pdf as item())
@@ -167,11 +170,11 @@ as map(*)
 {
  map{ 
   "index":  PDOutlineItem:findDestinationPage($bookmark,$pdf)=>pdfbox:page-index($pdf),
-  "title":  (# db:checkstrings #) {PDOutlineItem:getTitle($bookmark)}=>translate("�",""),
+  "title":  (# db:checkstrings #) {PDOutlineItem:getTitle($bookmark)}
+  (:=>translate("�",""), :),
   "hasChildren": PDOutlineItem:hasChildren($bookmark)
   }
 };
-
 
 
 (:~ pageIndex of $page in $pdf :)
@@ -234,35 +237,17 @@ as map(*){
 )=>map:merge()
 };
 
-(:~ java:bufferedImage for $pageNo using $scale times dpi= 72
-@param $pageNo (ZERO based) 
-@param $scale 1=72 dpi 
-@return  Java java.awt.image.BufferedImage object
+(:~ convert date :)
+declare %private
+function pdfbox:gregToISO($item as item())
+as xs:string{
+ Q{java:java.util.GregorianCalendar}toZonedDateTime($item)=>string()
+};
+
+(:~ fn:do-until shim for BaseX 9+10 
+if  fn:do-until not found use hof:until
 :)
-declare function pdfbox:pageBufferedImage($pdf as item(), $pageNo as xs:integer,$scale as xs:float)
-as item(){
- PDFRenderer:new($pdf)=>PDFRenderer:renderImage($pageNo,$scale)
-};
-
-(:~ save bufferedimage to $dest 
-@param $type = "gif","png" etc:)
-declare function pdfbox:imageSave($bufferedImage as item(),$dest as xs:string,$type as xs:string)
-as xs:boolean{
-  Q{java:javax.imageio.ImageIO}write($bufferedImage , $type,  File:new($dest))
-};
-
-(:~ return image 
-@param $type = "gif","png" etc:)
-declare function pdfbox:imageBinary($bufferedImage as item(),$type as xs:string)
-as xs:base64Binary{
-  let $bytes:=Q{java:java.io.ByteArrayOutputStream}new()
-  let $_:=Q{java:javax.imageio.ImageIO}write($bufferedImage , $type,  $bytes)
-  return Q{java:java.io.ByteArrayOutputStream}toByteArray($bytes)
-         =>convert:integers-to-base64()
-};
-
-(:~ fn:do-until shim for BaseX 9+ :)
-declare function pdfbox:do-until(
+declare %private function pdfbox:do-until(
  $input 	as item()*, 	
  $action 	as function(item()*, xs:integer) as item()*, 	
  $predicate 	as function(item()*, xs:integer) as xs:boolean? 	

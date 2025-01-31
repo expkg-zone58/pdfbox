@@ -17,7 +17,7 @@ declare %unit:test
 function test:specification(){
     let $pdf:=test:pdf("samples.pdf/BaseX100.pdf")
     let $spec:=pdfbox:specification($pdf)
-    return unit:assert-equals($spec,0+1.4)
+    return unit:assert-equals($spec,"1.4")
 };
 
 declare %unit:test

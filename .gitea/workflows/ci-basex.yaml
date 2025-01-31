@@ -23,7 +23,9 @@ jobs:
       run: |
         wget https://files.basex.org/releases/10.7/BaseX107.zip
         unzip BaseX107.zip -d basex
-        pwd
+        echo "$GITHUB_PATH"
+        echo "$HOME/basex/bin" >> "$GITHUB_PATH"
+
 
     - name: Checkout repository
       uses: actions/checkout@v4

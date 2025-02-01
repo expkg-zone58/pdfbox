@@ -25,11 +25,12 @@ jobs:
         unzip BaseX107.zip -d /usr/local/
         chmod a+x /usr/local/basex/bin/*
         echo "BASEX_ROOT=/usr/local/basex" >> $GITHUB_ENV 
-        echo "PATH=$BASEX_ROOT/bin" >> $GITHUB_ENV 
+        echo "PATH=$BASEX_ROOT$/bin" >> $GITHUB_ENV 
       
     - name: Verify PATH
       run: |
-        echo $PATH$
+        echo $PATH$ $BASEX_ROOT/bin
+        echo ""
         basex -v
         basex 
 

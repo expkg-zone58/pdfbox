@@ -36,8 +36,8 @@ jobs:
 
     - name: Build package
       run: |
-        basex scripts/make-fat-jar.xq
+        basex scripts/install.bxs
 
     - name: Run BaseX Tests
       run: |
-        bin/basex -t src/test
+        basex -t src/test

@@ -28,12 +28,21 @@ declare namespace PDFRenderer="java:org.apache.pdfbox.rendering.PDFRenderer";
 declare namespace RandomAccessReadBufferedFile = "java:org.apache.pdfbox.io.RandomAccessReadBufferedFile";
 declare namespace File ="java:java.io.File";
 
-(:~ version of this package 
+(:~ SemVer version of this package 
 with build metadata for Apacke Pdfbox in use  e.g. "0.1.0+pdfbox3.0.4"
 :)
 declare function pdfbox:version()
 as xs:string{
   "0.1.0+pdfbox" || Q{java:org.apache.pdfbox.util.Version}getVersion()
+};
+
+(: open pdf,apply function, close pdf
+with-document pattern, creates local pdfobject and ensures it is closed
+e.g "path..." => pdfbox:with-pdf("path...",pdfbox:page-text(?,5))
+:)
+declare function pdfbox:with-pdf($src as xs:string,$fn as function(*)*)
+as item()*{
+ "@TODO"
 };
 
 (:~ open pdf, returns pdf object :)

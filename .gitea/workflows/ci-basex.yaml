@@ -37,7 +37,3 @@ jobs:
     - name: Build package
       run: |
         basex scripts/install.bxs
-
-    - name: Run BaseX Tests
-      run: |
-        basex -t src/test

@@ -24,12 +24,14 @@ jobs:
         wget https://files.basex.org/releases/10.7/BaseX107.zip
         unzip BaseX107.zip -d /usr/local/
         chmod a+x /usr/local/basex/bin/*
-        echo "PATH=$PATH:/usr/local/basex/bin" >> $GITHUB_ENV 
+        echo "BASEX_ROOT=/usr/local/basex" >> $GITHUB_ENV 
+        echo "PATH=$BASEX_ROOT/bin" >> $GITHUB_ENV 
       
     - name: Verify PATH
       run: |
         echo $PATH$
         basex -v
+        basex 
 
     - name: Checkout repository
       uses: actions/checkout@v4

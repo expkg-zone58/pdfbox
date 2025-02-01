@@ -68,6 +68,7 @@ as empty-sequence(){
            =>trace("Download: ")))
 };
 
+(:~ write-binary but create dir if required :)
 declare function build:write-binary($dest as xs:string,$contents)
 as empty-sequence(){
 file:create-dir(file:parent($dest)),

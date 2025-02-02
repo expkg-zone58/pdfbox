@@ -1,14 +1,16 @@
 
 import module namespace build = 'urn:quodatum:build1' at 'build.xqm';
-declare variable $base:= file:resolve-path("../",static-base-uri())=>trace("base ");
+declare variable $base:= file:parent(db:system()/globaloptions/dbpath/string());
 
-declare variable $custom:= "/usr/local/basex/lib/custom/";
+
 
 "
 copy..
 ",
-file:copy(file:resolve-path("dist/pdfbox-3.0.4.fat.jar",$base)=>trace("Source: ")
-         ,$custom=>trace("Dest: ")),
-file:list($custom),
+file:copy(
+    "dist/pdfbox-3.0.4.fat.jar"=>trace("Source: "),
+    file:resolve-path("lib/custom",$base)=>trace("Dest: ")
+    ),
+file:list(file:resolve-path("lib/custom",$base)),
 "
 "

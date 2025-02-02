@@ -41,7 +41,7 @@ jobs:
       run: |
         basex scripts/install.bxs
         cp dist/pdfbox-3.0.4.fat.jar /usr/local/basex/lib/custom/
-        pwd 
+        echo "PWS" $PWD
         ls -l /usr/local/basex/lib/custom
     - name: run tests
       run: |

@@ -8,7 +8,7 @@ declare variable $custom:= "/usr/local/basex/lib/custom/";
 copy..
 ",
 file:copy(file:resolve-path("dist/pdfbox-3.0.4.fat.jar",$base)=>trace("Source: ")
-         ,$custom),
+         ,$custom=>trace("Dest: ")),
 file:list($custom),
 "
 "

@@ -29,7 +29,8 @@ jobs:
       
     - name: Verify PATH
       run: |
-        echo $PATH$ $BASEX_ROOT 
+        echo path: $PATH$ 
+        echo basex: $BASEX_ROOT 
         echo ""
         basex -c "SHOW OPTIONS"
 

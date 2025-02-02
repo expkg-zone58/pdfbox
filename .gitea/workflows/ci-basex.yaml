@@ -31,8 +31,7 @@ jobs:
       run: |
         echo $PATH$ $BASEX_ROOT 
         echo ""
-        basex -v
-        basex 
+        basex -c "SHOW OPTIONS"
 
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -40,3 +39,4 @@ jobs:
     - name: Build package
       run: |
         basex scripts/install.bxs
+        ls -l /usr/local/basex/lib/custom

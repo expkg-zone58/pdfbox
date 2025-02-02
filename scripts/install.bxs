@@ -6,4 +6,4 @@ REPO INSTALL dist/pdfbox-3.0.4.fat.jar
 REPO LIST
 XQUERY "add-to-custom.."
 RUN add-to-custom.xq
-#TEST src/test
+TEST src/test

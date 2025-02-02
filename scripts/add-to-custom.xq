@@ -1,8 +1,9 @@
 
 import module namespace build = 'urn:quodatum:build1' at 'build.xqm';
+declare variable $base:= file:resolve-path("../",static-base-uri())=>trace("base ");
 
 declare variable $custom:= "/usr/local/basex/lib/custom/";
-declare variable $base:=file:parent(db:system()/globaloptions/dbpath/string());
+
 "
 copy..
 ",

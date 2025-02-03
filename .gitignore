@@ -1,4 +1,5 @@
 data/
 dist/
-jars/
+jars/*
+!jars/.gitignore
 docs/xqdoc/

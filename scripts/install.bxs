@@ -1,5 +1,5 @@
 # run query
-XQUERY "make fat jar.."
+XQUERY "make xar.."
 RUN make-xar.xq
 XQUERY "Repo install.."
 REPO INSTALL dist/pdfbox.xar

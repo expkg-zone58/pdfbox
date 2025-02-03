@@ -1,9 +1,8 @@
 # run query
 XQUERY "make fat jar.."
-RUN make-fat-jar.xq
+RUN make-xar.xq
 XQUERY "Repo install.."
-REPO INSTALL dist/pdfbox-3.0.4.fat.jar
+REPO INSTALL dist/pdfbox.xar
 REPO LIST
-XQUERY "add-to-custom.."
-RUN add-to-custom.xq
-#TEST src/test
+
+

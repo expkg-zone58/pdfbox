@@ -26,7 +26,7 @@ return
 @remark 
 :)
 declare function build:fatjar-with-lib($input-dir as xs:string,$manifest-jar as xs:string)
- { 
+ as xs:base64Binary{ 
  let $bin :=file:read-binary($input-dir || $manifest-jar)
   
  let $lib:=file:list($input-dir || "lib/", false(), "*.jar")!concat("lib/",.)
@@ -55,6 +55,32 @@ as xs:base64Binary{
 archive:update($jar,$name,$file)
 }; 
 
+declare function build:xar-create($base as xs:string)
+as xs:base64Binary{
+  let $entries:=
+            build:xar-add(map{},file:resolve-path("jars/",$base),"content/")
+            =>build:xar-add(file:resolve-path("src/Pdfbox3.xqm",$base),"content/")
+            =>build:xar-add(file:resolve-path("src/metadata/",$base),"")
+  return  archive:create($entries?name, $entries?content,
+                   map { "format" : "zip", "algorithm" : "deflate" })         
+};
+
+(:~ zip data for $dir
+:)
+declare function build:xar-add($map as map(*),$src as xs:string,$xar-dir as xs:string)
+as map(*){
+let $_:=trace(count($map?name),"size ")
+let $names:=if(file:is-dir($src))
+            then file:children($src)
+            else $src
+return map:merge((
+  $map,
+  map{"name":$names!concat($xar-dir,file:name(.)),
+           "content":$names!file:read-binary( .)}
+         ),
+         map{"duplicates":"combine"}
+       )
+}; 
 
 (:~ download $files from $urls to  $destdir:)
 declare variable $build:REPO as xs:string external :="https://repo1.maven.org/maven2/";
@@ -68,7 +94,7 @@ as empty-sequence(){
            =>trace("Download: ")))
 };
 
-(:~ write-binary but create dir if required :)
+(:~ write-binary, creating dir if required :)
 declare function build:write-binary($dest as xs:string,$contents)
 as empty-sequence(){
 file:create-dir(file:parent($dest)),

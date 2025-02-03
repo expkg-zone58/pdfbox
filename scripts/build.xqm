@@ -71,7 +71,7 @@ declare function build:xar-add($map as map(*),$src as xs:string,$xar-dir as xs:s
 as map(*){
 let $_:=trace(count($map?name),"size ")
 let $names:=if(file:is-dir($src))
-            then file:children($src)
+            then file:list($src)[not(starts-with(.,'.'))]!concat($src,.)
             else $src
 return map:merge((
   $map,

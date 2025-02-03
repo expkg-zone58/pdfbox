@@ -5,10 +5,7 @@ on:
   push:
     branches:
       - main
-    paths:
-      - '.gitea/workflows/trigger/release'
-
-  
+ 
 jobs:
  test:
     runs-on: ubuntu-22.04

@@ -19,18 +19,25 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Install BaseX
+    - name: Download BaseX
       run: |
-        wget https://files.basex.org/releases/10.7/BaseX107.zip
-        unzip BaseX107.zip -d /usr/local/
-        echo "BASEX_ROOT=/usr/local/basex" >> $GITHUB_ENV 
-        echo "PATH=$PATH:/usr/local/basex/bin" >> $GITHUB_ENV
-      
-    - name: Verify PATH
+        BASEX_VERSION="11.7"  # Example version (adjust as needed)
+        # Remove dots from version for filename (e.g., "11.7" → "117")
+        BASEX_CLEAN_VERSION="${BASEX_VERSION//./}"
+        wget https://files.basex.org/releases/$BASEX_VERSION/BaseX$BASEX_CLEAN_VERSION.zip -O BaseX.zip
+
+    - name: Unzip BaseX
       run: |
-        echo path: $PATH$ 
-        echo basex: $BASEX_ROOT 
-        echo ""
+        sudo unzip BaseX.zip -d /opt/
+        rm BaseX.zip
+
+    - name: Add BaseX to PATH
+      run: |
+        echo "/opt/basex/bin" >> $GITHUB_PATH
+        echo "BASEX_HOME=/opt/basex" >> $GITHUB_ENV 
+
+    - name: Verify BaseX installation
+      run: |
         basex -c "SHOW OPTIONS"
 
     - name: Checkout repository

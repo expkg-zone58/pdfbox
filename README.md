@@ -1,9 +1,11 @@
 # Pdfbox
 A BaseX interface for [Pdfbox](https://pdfbox.apache.org/) version 3. 
-It is packaged using the [Expath](https://docs.basex.org/main/Repository#expath_packaging) format, and is tested against BaseX 10.7 and 11.7
+It is packaged using the [Expath](https://docs.basex.org/main/Repository#expath_packaging) format, and is tested against BaseX 10.7 and 11.7.
+
+* The Pdfbox 3 [FAQ](https://pdfbox.apache.org/3.0/faq.html) may be useful.
 ## Features
 * read PDF page count.
-* read any PDF outline and return as maps or XML.
+* read any PDF outline and return as map(s) or XML.
 * read pagelabels.
 * read page text.
 * save pdf page range to a new pdf.

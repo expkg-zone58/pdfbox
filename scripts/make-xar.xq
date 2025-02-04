@@ -13,4 +13,4 @@ let $_:=build:maven-download($maven-urls,$base || "jars/")
 let $xar:=build:xar-create($base)
 let $output-file := file:resolve-path("dist/pdfbox.xar",$base)
 return (build:write-binary($output-file, $xar),
-        trace($output-file,"zar: "))
+        trace($output-file,"xar: "))

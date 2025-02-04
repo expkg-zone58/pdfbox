@@ -1,7 +1,7 @@
 <package xmlns="http://expath.org/ns/pkg"
          name="org.expkg_zone58.Pdfbox3"
          abbrev="pdfbox"
-         version="0.1.0"
+         version="0.1.1"
          spec="1.0">
 
    <title>BaseX  interface to Pdfbox (https://pdfbox.apache.org/) version 3</title>

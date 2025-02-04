@@ -4,6 +4,8 @@ module namespace build = 'urn:quodatum:build1';
 (:~ create a flat fat jar from jars in $input-dir
 keeping only META-INF from $manifest-jar 
 :)
+declare variable $build:archive-opts:= map { "format" : "zip", "algorithm" : "deflate" };
+
 declare function build:fatjar-from-folder($input-dir as xs:string,$manifest-jar as xs:string)
 as xs:base64Binary { 
     let $fold :=
@@ -17,9 +19,7 @@ function ($res as map (*), $jar as xs:string) {
 }
 let $res := file:list($input-dir, false(), "*.jar")
             =>fold-left( map { }, $fold)
-return
-    archive:create($res? name, $res? content,
-                   map { "format" : "zip", "algorithm" : "deflate" }) 
+return archive:create($res? name, $res? content,$build:archive-opts) 
 };
 
 (:~ create a fat jar with lib 
@@ -34,8 +34,7 @@ declare function build:fatjar-with-lib($input-dir as xs:string,$manifest-jar as 
               ,$lib)
  let  $content:=(archive:extract-binary($bin,$name)
                 ,$lib!file:read-binary($input-dir || .))
-return  archive:create($name, $content,
-                   map { "format" : "zip", "algorithm" : "deflate" }) 
+return  archive:create($name, $content,$build:archive-opts)
 };
 
 (:~ update-manifest :)
@@ -61,15 +60,13 @@ as xs:base64Binary{
             build:xar-add(map{},file:resolve-path("jars/",$base),"content/")
             =>build:xar-add(file:resolve-path("src/Pdfbox3.xqm",$base),"content/")
             =>build:xar-add(file:resolve-path("src/metadata/",$base),"")
-  return  archive:create($entries?name, $entries?content,
-                   map { "format" : "zip", "algorithm" : "deflate" })         
+  return  archive:create($entries?name, $entries?content,$build:archive-opts)      
 };
 
 (:~ zip data for $dir
 :)
 declare function build:xar-add($map as map(*),$src as xs:string,$xar-dir as xs:string)
 as map(*){
-let $_:=trace(count($map?name),"size ")
 let $names:=if(file:is-dir($src))
             then file:list($src)[not(starts-with(.,'.'))]!concat($src,.)
             else $src
@@ -95,7 +92,7 @@ as empty-sequence(){
 };
 
 (:~ write-binary, creating dir if required :)
-declare function build:write-binary($dest as xs:string,$contents)
+declare function build:write-binary($dest as xs:string,$contents as xs:base64Binary?)
 as empty-sequence(){
 file:create-dir(file:parent($dest)),
 file:write-binary($dest,$contents)

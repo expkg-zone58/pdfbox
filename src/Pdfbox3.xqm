@@ -4,8 +4,8 @@ pdfbox 3.0 https://pdfbox.apache.org/ BaseX 10.7+ interface library,
 requires pdfbox jar on classpath, tested with pdfbox-app-3.0.4.jar
 @see download https://pdfbox.apache.org/download.cgi
 @javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.4/
-
 :)
+
 module namespace pdfbox="org.expkg_zone58.Pdfbox3";
 
 declare namespace Loader ="java:org.apache.pdfbox.Loader"; 
@@ -28,21 +28,30 @@ declare namespace PDFRenderer="java:org.apache.pdfbox.rendering.PDFRenderer";
 declare namespace RandomAccessReadBufferedFile = "java:org.apache.pdfbox.io.RandomAccessReadBufferedFile";
 declare namespace File ="java:java.io.File";
 
+declare variable $pdfbox:package-version:="0.1.1";
+
 (:~ SemVer version of this package 
-with build metadata for Apacke Pdfbox in use  e.g. "0.1.0+pdfbox3.0.4"
+with build metadata for Apache Pdfbox in use  e.g. "0.1.0+pdfbox3.0.4"
 :)
 declare function pdfbox:version()
 as xs:string{
-  "0.1.0+pdfbox" || Q{java:org.apache.pdfbox.util.Version}getVersion()
+  $pdfbox:package-version ||"+pdfbox" || Q{java:org.apache.pdfbox.util.Version}getVersion()
 };
 
-(: open pdf,apply function, close pdf
-with-document pattern, creates local pdfobject and ensures it is closed
-e.g "path..." => pdfbox:with-pdf("path...",pdfbox:page-text(?,5))
+(:~ with-document pattern: open pdf,apply function, close pdf
+ creates a local pdfobject and ensures it is closed after use
+e.g pdfbox:with-pdf("path...",pdfbox:page-text(?,5))
 :)
-declare function pdfbox:with-pdf($src as xs:string,$fn as function(*)*)
+declare function pdfbox:with-pdf($src as xs:string,
+                                $fn as function(item())as item()*)
 as item()*{
- "@TODO"
+ let $pdf:=pdfbox:open($src)
+ return try{
+        $fn($pdf),pdfbox:close($pdf)
+        } catch *{
+          pdfbox:close($pdf),error()
+        }
+
 };
 
 (:~ open pdf, returns pdf object :)
@@ -63,7 +72,7 @@ as xs:string{
  PDDocument:getVersion($pdf)=>xs:decimal()=>round(4)=>string()
 };
 
-(:~ save pdf $pdf to $savepath , returns $savepath :)
+(:~ save pdf $pdf to filesystem at $savepath , returns $savepath :)
 declare function pdfbox:save($pdf as item(),$savepath as xs:string)
 as xs:string{
    PDDocument:save($pdf, File:new($savepath)),$savepath
@@ -97,7 +106,7 @@ as xs:base64Binary{
 };
 
 (:~ map with document metadata :)
-declare function pdfbox:information($pdf as item())
+declare function pdfbox:metadata($pdf as item())
 as map(*){
   let $info:=PDDocument:getDocumentInformation($pdf)
   return map{
@@ -105,13 +114,36 @@ as map(*){
     "creator": PDDocumentInformation:getCreator($info),
     "producer": PDDocumentInformation:getProducer($info),
     "subject": PDDocumentInformation:getSubject($info),
-     "keywords": PDDocumentInformation:getKeywords($info),
-     "creationdate": pdfbox:gregToISO(PDDocumentInformation:getCreationDate($info)),
+    "keywords": PDDocumentInformation:getKeywords($info),
+    "creationdate": pdfbox:gregToISO(PDDocumentInformation:getCreationDate($info)),
     "author": PDDocumentInformation:getAuthor($info)
   }
 };
 
+(:~ summary info as map for $pdfpath :)
+declare function pdfbox:report($pdfpath as xs:string)
+as map(*){
+ let $pdf:=pdfbox:open($pdfpath)
+ return (map{
+       "file":  $pdfpath,
+       "pages": pdfbox:page-count($pdf),
+       "hasOutline": pdfbox:hasOutline($pdf),
+       "specification":pdfbox:specification($pdf)
+        },pdfbox:metadata($pdf)
+)=>map:merge()
+};
+
+ (:~ true if $pdf has an outline for $pdf as map()* :)
+declare function pdfbox:hasOutline($pdf as item())
+as xs:boolean{
+  (# db:wrapjava some #) {
+  let $outline:=
+                PDDocument:getDocumentCatalog($pdf)
+                =>PDDocumentCatalog:getDocumentOutline()
  
+  return  exists($outline)
+  }
+};
 
 (:~ outline for $pdf as map()* :)
 declare function pdfbox:outline($pdf as item())
@@ -236,17 +268,7 @@ as xs:string{
   return (# db:checkstrings #) {PDFTextStripper:getText($tStripper,$doc)}
 };
 
-(:~ summary info as map for $pdfpath :)
-declare function pdfbox:report($pdfpath as xs:string)
-as map(*){
- let $doc:=pdfbox:open($pdfpath)
- return (map{
-       "file":  $pdfpath,
-       "pages": pdfbox:page-count($doc),
-       "outline": pdfbox:outline($doc)=>count()
-        },pdfbox:information($doc)
-)=>map:merge()
-};
+
 
 (:~ convert date :)
 declare %private

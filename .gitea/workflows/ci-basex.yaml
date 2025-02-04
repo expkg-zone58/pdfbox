@@ -42,12 +42,14 @@ jobs:
 
     - name: Checkout repository
       uses: actions/checkout@v4
-
+      with:
+        ref: main
+        
     - name: Build package
       run: |
         basex scripts/install.bxs
       
-    - name: run tests
+    - name: Run tests
       run: |
         basex -Wt src/test
 

@@ -141,7 +141,7 @@ as map(*){
     
      map{"list":(),"this":$outlineItem},
 
-     function($input ) { 
+     function($input,$pos ) { 
                       let $bk:= pdfbox:bookmark($input?this,$pdf)
                       let $bk:= if($bk?hasChildren)
                                 then let $kids:=pdfbox:outline($pdf,PDOutlineItem:getFirstChild($input?this))
@@ -152,7 +152,7 @@ as map(*){
                             "this":  PDOutlineItem:getNextSibling($input?this)}
                           },
 
-     function($output) { empty($output?this) }                      
+     function($output,$pos) { empty($output?this) }                      
   )
 };
 
@@ -265,11 +265,11 @@ declare %private function pdfbox:do-until(
 ) as item()*
 {
   let $fn:=function-lookup(QName('http://www.w3.org/2005/xpath-functions','do-until'), 3)
-  return if($fn)
+  return if(exists($fn))
          then $fn($input,$action,$predicate)
          else let $hof:=function-lookup(QName('http://basex.org/modules/hof','until'), 3)
-              return if($hof)
-                      then $hof($predicate,$action,$input)
+              return if(exists($hof))
+                      then $hof($predicate(?,0),$action(?,0),$input)
                       else error(xs:QName('pdfbox:do-until'),"No implementation found")
 
 };

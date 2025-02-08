@@ -2,7 +2,7 @@
 XQUERY "make xar.."
 RUN make-xar.xq
 XQUERY "Repo install.."
-REPO INSTALL dist/pdfbox.xar
+RUN repo-install.xq
 REPO LIST
 
 

@@ -28,14 +28,13 @@ declare namespace PDFRenderer="java:org.apache.pdfbox.rendering.PDFRenderer";
 declare namespace RandomAccessReadBufferedFile = "java:org.apache.pdfbox.io.RandomAccessReadBufferedFile";
 declare namespace File ="java:java.io.File";
 
-declare variable $pdfbox:package-version:="0.1.1";
+declare variable $pdfbox:package-version:="0.1.2";
 
-(:~ SemVer version of this package 
-with build metadata for Apache Pdfbox in use  e.g. "0.1.0+pdfbox3.0.4"
+(:~  version of  Apache Pdfbox in use  e.g. "3.0.4"
 :)
 declare function pdfbox:version()
 as xs:string{
-  $pdfbox:package-version ||"+pdfbox" || Q{java:org.apache.pdfbox.util.Version}getVersion()
+  Q{java:org.apache.pdfbox.util.Version}getVersion()
 };
 
 (:~ with-document pattern: open pdf,apply function, close pdf
@@ -49,7 +48,7 @@ as item()*{
  return try{
         $fn($pdf),pdfbox:close($pdf)
         } catch *{
-          pdfbox:close($pdf),error()
+          pdfbox:close($pdf),fn:error($err:code,$src || " " || $err:description)
         }
 
 };
@@ -189,14 +188,16 @@ as map(*){
 };
 
 (:~ outline as xml :)
-declare function pdfbox:outline-xml($outline as map(*)*)
-as element(outline){
+declare function pdfbox:outline-xml($pdf as item())
+as element(outline)?{
  element outline { 
-   $outline!pdfbox:bookmark-xml(.)
+   let $outline:=pdfbox:outline($pdf)
+   return if(exists($outline))
+          then <outline>{$outline!pdfbox:bookmark-xml(.)}</outline>
  }
 };
 
-declare function pdfbox:bookmark-xml($outline as map(*)*)
+declare %private function pdfbox:bookmark-xml($outline as map(*)*)
 as element(bookmark)*
 {
   $outline!
@@ -208,11 +209,11 @@ as element(bookmark)*
 (:~ return bookmark info for children of $outlineItem 
 @return map like{index:,title:,hasChildren:}
 :)
-declare function pdfbox:bookmark($bookmark as item(),$pdf as item())
+declare %private function pdfbox:bookmark($bookmark as item(),$pdf as item())
 as map(*)
 {
  map{ 
-  "index":  PDOutlineItem:findDestinationPage($bookmark,$pdf)=>pdfbox:page-index($pdf),
+  "index":  PDOutlineItem:findDestinationPage($bookmark,$pdf)=>pdfbox:find-page($pdf),
   "title":  (# db:checkstrings #) {PDOutlineItem:getTitle($bookmark)}
   (:=>translate("�",""), :),
   "hasChildren": PDOutlineItem:hasChildren($bookmark)
@@ -221,7 +222,7 @@ as map(*)
 
 
 (:~ pageIndex of $page in $pdf :)
-declare function pdfbox:page-index(
+declare function pdfbox:find-page(
    $page as item()? (: as java:org.apache.pdfbox.pdmodel.PDPage :),
    $pdf as item())
 as item()?
@@ -267,8 +268,6 @@ as xs:string{
        }
   return (# db:checkstrings #) {PDFTextStripper:getText($tStripper,$doc)}
 };
-
-
 
 (:~ convert date :)
 declare %private

@@ -1,7 +1,0 @@
-<package xmlns="http://www.basex.org/modules/pkg">
-    <jar>pdfbox-3.0.4.jar</jar>
-    <jar>pdfbox-io-3.0.4.jar</jar>
-    <jar>fontbox-3.0.4.jar</jar>
-    <jar>commons-logging-1.3.4.jar</jar>
-    <class>org.apache.pdfbox.pdmodel.PDDocument</class>
-</package>

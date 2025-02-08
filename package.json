@@ -1,8 +1,8 @@
 {
   "name": "pdfbox",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "A BaseX interface to Apache Pdfbox version 3",
-  "main": "Pdfbox.xqm",
+  "main": "src/Pdfbox3.xqm",
   "homepage": "https://github.com/npm/example#readme",
   "directories": {
     "doc": "docs"
@@ -20,6 +20,16 @@
   "author": "Andy Bunce",
   "license": "Apache-2.0",
   "quodatum": {
-    "random": true
+    "random": true,
+    "namespace": "org.expkg_zone58.Pdfbox3",
+    "main-class": "org.apache.pdfbox.pdmodel.PDDocument",
+    "download": "jars/",
+    "maven": [
+      "org/apache/pdfbox/pdfbox/3.0.4/pdfbox-3.0.4.jar",
+      "org/apache/pdfbox/pdfbox-io/3.0.4/pdfbox-io-3.0.4.jar",
+      "org/apache/pdfbox/fontbox/3.0.4/fontbox-3.0.4.jar",
+      "commons-logging/commons-logging/1.3.4/commons-logging-1.3.4.jar"
+    ]
+
   }
 }

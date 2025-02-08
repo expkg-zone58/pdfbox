@@ -1,11 +1,19 @@
-(:~ build utils for REPO packaging :)
-module namespace build = 'urn:quodatum:build1';
+(:~ build utils for REPO packaging 
 
-(:~ create a flat fat jar from jars in $input-dir
-keeping only META-INF from $manifest-jar 
 :)
+module namespace build = 'urn:quodatum:build1';
+declare namespace bxpkg='http://www.basex.org/modules/pkg';
+declare namespace pkg='http://expath.org/ns/pkg';
+
+(:~ jar compress options :)
 declare variable $build:archive-opts:= map { "format" : "zip", "algorithm" : "deflate" };
 
+declare variable $build:base:= file:resolve-path("../",static-base-uri())=>trace("base ");
+declare variable $build:PKG:=json:doc(file:resolve-path("package.json",$build:base),map{"format":"xquery"});
+
+(:~ return binary for fat jar from jars in $input-dir 
+keeping only META-INF from $manifest-jar 
+:)
 declare function build:fatjar-from-folder($input-dir as xs:string,$manifest-jar as xs:string)
 as xs:base64Binary { 
     let $fold :=
@@ -54,30 +62,76 @@ as xs:base64Binary{
 archive:update($jar,$name,$file)
 }; 
 
-declare function build:xar-create($base as xs:string)
+(:~ build basex.xml from package.json :)
+declare function build:basex.xml()
+as xs:string{
+``[<package xmlns="http://www.basex.org/modules/pkg">
+  `{  build:jars("name")!concat('<jar>',.,'</jar>') }`
+   <class>`{ $build:PKG?quodatum?main-class }`</class>
+</package>
+]``
+ 
+};
+
+(:~  expath-pkg.xml using package.json :)
+declare function build:expath-pkg.xml()
+as xs:string{
+ ``[<package xmlns="http://expath.org/ns/pkg"
+         name="`{$build:PKG?quodatum?namespace}`"
+         abbrev="`{$build:PKG?name}`"
+         version="`{$build:PKG?version}`"
+         spec="1.0">
+   <title>`{$build:PKG?description}`</title>
+   <dependency processor="basex" name="value"/>
+   <xquery> 
+     <namespace>`{$build:PKG?quodatum?namespace}`</namespace>
+     <file>`{$build:PKG?main=>replace("^.*/","")}`</file>
+   </xquery>
+</package>
+ ]``
+
+};
+
+declare function build:xar-create()
 as xs:base64Binary{
+
   let $entries:=
-            build:xar-add(map{},file:resolve-path("jars/",$base),"content/")
-            =>build:xar-add(file:resolve-path("src/Pdfbox3.xqm",$base),"content/")
-            =>build:xar-add(file:resolve-path("src/metadata/",$base),"")
+            build:xar-add(map{},build:jars("content"),build:jars("download")!build:content(.))
+            =>build:xar-add("content/Pdfbox3.xqm",build:content("src/Pdfbox3.xqm"))
+            =>build:xar-add("expath-pkg.xml",convert:string-to-base64(build:expath-pkg.xml()))
+            =>build:xar-add("basex.xml",convert:string-to-base64(build:basex.xml()))
   return  archive:create($entries?name, $entries?content,$build:archive-opts)      
 };
 
-(:~ zip data for $dir
-:)
-declare function build:xar-add($map as map(*),$src as xs:string,$xar-dir as xs:string)
+(:~ content as base64Binary of $path :)
+declare function build:content($path as xs:string) 
+as xs:base64Binary{
+file:resolve-path($path,$build:base)=>file:read-binary()
+};
+
+(:~ add (name,content) pairs to archive data :)
+declare function build:xar-add($map as map(*),$xar-path as xs:string*,$content as item()*)
 as map(*){
-let $names:=if(file:is-dir($src))
-            then file:list($src)[not(starts-with(.,'.'))]!concat($src,.)
-            else $src
-return map:merge((
-  $map,
-  map{"name":$names!concat($xar-dir,file:name(.)),
-           "content":$names!file:read-binary( .)}
-         ),
-         map{"duplicates":"combine"}
-       )
+  map{"name": ($map?name,$xar-path), "content": ($map?content,$content)}
 }; 
+
+(:~ path to created xar file :)
+declare function build:xar-path()
+as xs:string{
+  let $a:=``[dist/pdfbox-`{$build:PKG?version}`.xar]``
+  return  file:resolve-path($a,$build:base)
+}; 
+
+declare function build:jars($style as xs:string)
+as xs:string*{
+let $src:=$build:PKG?quodatum?maven=>array:flatten()
+let $names:= $src!replace(.,"^.*/","")
+return switch($style)
+case "name" return $names
+case "download" return $names!concat($build:PKG?quodatum?download,.)
+case "content" return $names!concat("content/",.)
+default return $src
+};
 
 (:~ download $files from $urls to  $destdir:)
 declare variable $build:REPO as xs:string external :="https://repo1.maven.org/maven2/";

@@ -10,7 +10,7 @@ declare variable $test:base:=file:base-dir()=>file:parent()=>file:parent();
 declare %unit:test
 function test:pdfbox-version(){
     let $v:= pdfbox:version()=>trace("VER: ")
-    return unit:assert-equals($v,"0.1.0+pdfbox3.0.4")
+    return unit:assert-equals($v,"3.0.4")
 };
 
 declare %unit:test
@@ -44,7 +44,7 @@ function test:outline-present(){
 declare %unit:test
 function test:outline-xml(){
  let $pdf:=test:pdf("samples.pdf/icelandic-dictionary.pdf")
- let $outline:=pdfbox:outline($pdf)=>pdfbox:outline-xml()
+ let $outline:=pdfbox:outline-xml($pdf)
  return unit:assert-equals(count($outline/bookmark),31)
 };
 
@@ -80,6 +80,13 @@ function test:page-image(){
  let $pdf:=test:pdf("samples.pdf/BaseX100.pdf")
  let $image:=pdfbox:page-image($pdf,0,map{})
  return unit:assert(true())
+};
+
+declare %unit:test
+function test:pdf-with(){
+ let $path:=test:pdf("samples.pdf/BaseX100.pdf")
+ let $txt:=pdfbox:with-pdf($path,pdfbox:page-text(?,101))
+ return unit:assert-equals($txt,"Options")
 };
 
 declare function test:pdf($file as xs:string)

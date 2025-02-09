@@ -52,4 +52,5 @@ jobs:
     - name: Run tests
       run: |
         basex -Wt src/test
+        basex -Wt src/test
 

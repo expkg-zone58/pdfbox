@@ -190,11 +190,10 @@ as map(*){
 (:~ outline as xml :)
 declare function pdfbox:outline-xml($pdf as item())
 as element(outline)?{
- element outline { 
-   let $outline:=pdfbox:outline($pdf)
-   return if(exists($outline))
-          then <outline>{$outline!pdfbox:bookmark-xml(.)}</outline>
- }
+ let $outline:=pdfbox:outline($pdf)
+  return if(exists($outline))
+         then <outline>{$outline!pdfbox:bookmark-xml(.)}</outline>
+         else ()
 };
 
 declare %private function pdfbox:bookmark-xml($outline as map(*)*)

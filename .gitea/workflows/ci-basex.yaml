@@ -38,7 +38,7 @@ jobs:
 
     - name: Verify BaseX installation
       run: |
-        basex -c "SHOW OPTIONS"
+        basex -v
 
     - name: Checkout repository
       uses: actions/checkout@v4

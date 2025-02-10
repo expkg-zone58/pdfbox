@@ -6,52 +6,49 @@ on:
     branches:
       - main
     paths:
-      - '.gitea/workflows/trigger/release'
+      - ".gitea/workflows/trigger/release"
 
-  
 jobs:
- test:
+  test:
     runs-on: ubuntu-latest
     steps:
-    - name: Set up Java
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '17'
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
 
-    - name: Download BaseX
-      run: |
-        BASEX_VERSION="10.7"  # Example version (adjust as needed)
-        # Remove dots from version for filename (e.g., "11.7" → "117") "9.7.4","10.7"
-        BASEX_CLEAN_VERSION="${BASEX_VERSION//./}"
-        wget https://files.basex.org/releases/$BASEX_VERSION/BaseX$BASEX_CLEAN_VERSION.zip -O BaseX.zip
+      - name: Download BaseX
+        run: |
+          BASEX_VERSION="10.7"  # Example version (adjust as needed)
+          # Remove dots from version for filename (e.g., "11.7" → "117") "9.7.4","10.7"
+          BASEX_CLEAN_VERSION="${BASEX_VERSION//./}"
+          wget https://files.basex.org/releases/$BASEX_VERSION/BaseX$BASEX_CLEAN_VERSION.zip -O BaseX.zip
 
-    - name: Unzip BaseX
-      run: |
-        unzip BaseX.zip -d $HOME      
-        rm BaseX.zip
+      - name: Unzip BaseX
+        run: |
+          unzip BaseX.zip -d $HOME      
+          rm BaseX.zip
 
-    - name: Add BaseX to PATH
-      run: |
-        echo "BASEX_ROOT=$HOME/basex" >> $GITHUB_ENV 
-        echo "PATH=$PATH:$HOME/basex/bin" >> $GITHUB_ENV
+      - name: Add BaseX to PATH
+        run: |
+          echo "BASEX_ROOT=$HOME/basex" >> $GITHUB_ENV 
+          echo "PATH=$PATH:$HOME/basex/bin" >> $GITHUB_ENV
 
-    - name: Verify BaseX installation
-      run: |
-        basex -c "SHOW OPTIONS"
+      - name: Verify BaseX installation
+        run: |
+          basex -c "SHOW OPTIONS"
 
-    - name: Checkout repository
-      uses: actions/checkout@v4
-      with:
-        ref: main
-        
-    - name: Build package
-      run: |
-        basex scripts/make-xar.xq
-        basex scripts/repo-install.xq
-      
-    - name: Run tests
-      run: |
-        basex -Wt src/test
-       
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
 
+      - name: Build package
+        run: |
+          basex scripts/make-xar.xq
+          basex scripts/repo-install.xq
+
+      - name: Run tests
+        run: |
+          basex -Wt src/test

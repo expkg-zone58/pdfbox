@@ -1,8 +1,0 @@
-# run query
-XQUERY "make xar.."
-RUN make-xar.xq
-XQUERY "Repo install.."
-RUN repo-install.xq
-REPO LIST
-
-

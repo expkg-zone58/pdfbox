@@ -38,7 +38,7 @@ jobs:
 
     - name: Verify BaseX installation
       run: |
-        basex -v
+        basex -c "SHOW OPTIONS"
 
     - name: Checkout repository
       uses: actions/checkout@v4
@@ -47,7 +47,8 @@ jobs:
         
     - name: Build package
       run: |
-        basex scripts/install.bxs
+        basex scripts/make-xar.xq
+        basex scripts/repo-install.xq
       
     - name: Run tests
       run: |

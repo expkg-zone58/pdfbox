@@ -35,7 +35,8 @@ jobs:
 
     - name: Build package
       run: |
-        basex scripts/install.bxs
+        basex scripts/make-xar.xq
+        basex scripts/repo-install.xq
       
     - name: run tests
       run: |

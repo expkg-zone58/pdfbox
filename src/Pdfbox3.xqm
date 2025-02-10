@@ -28,14 +28,7 @@ declare namespace PDFRenderer="java:org.apache.pdfbox.rendering.PDFRenderer";
 declare namespace RandomAccessReadBufferedFile = "java:org.apache.pdfbox.io.RandomAccessReadBufferedFile";
 declare namespace File ="java:java.io.File";
 
-declare variable $pdfbox:package-version:="0.1.2";
 
-(:~  version of  Apache Pdfbox in use  e.g. "3.0.4"
-:)
-declare function pdfbox:version()
-as xs:string{
-  Q{java:org.apache.pdfbox.util.Version}getVersion()
-};
 
 (:~ with-document pattern: open pdf,apply function, close pdf
  creates a local pdfobject and ensures it is closed after use
@@ -44,7 +37,7 @@ e.g pdfbox:with-pdf("path...",pdfbox:page-text(?,5))
 declare function pdfbox:with-pdf($src as xs:string,
                                 $fn as function(item())as item()*)
 as item()*{
- let $pdf:=pdfbox:open($src)
+ let $pdf:=pdfbox:open-file($src)
  return try{
         $fn($pdf),pdfbox:close($pdf)
         } catch *{
@@ -54,12 +47,12 @@ as item()*{
 };
 
 (:~ open pdf, returns pdf object :)
-declare function pdfbox:open($pdfpath as xs:string)
+declare function pdfbox:open-file($pdfpath as xs:string)
 as item(){
   try{
     Loader:loadPDF( RandomAccessReadBufferedFile:new($pdfpath))
 } catch *{
-    error(xs:QName("pdfbox:open"),"Failed to open: " || $pdfpath)
+    error(xs:QName("pdfbox:open-file"),"Failed to open: " || $pdfpath)
 }
 };
 
@@ -122,7 +115,7 @@ as map(*){
 (:~ summary info as map for $pdfpath :)
 declare function pdfbox:report($pdfpath as xs:string)
 as map(*){
- let $pdf:=pdfbox:open($pdfpath)
+ let $pdf:=pdfbox:open-file($pdfpath)
  return (map{
        "file":  $pdfpath,
        "pages": pdfbox:page-count($pdf),
@@ -142,6 +135,12 @@ as xs:boolean{
  
   return  exists($outline)
   }
+};
+
+(:~ true if $pdf is encrypted* :)
+declare function pdfbox:isEncrypted($pdf as item())
+as xs:boolean{
+  PDDocument:isEncrypted($pdf)
 };
 
 (:~ outline for $pdf as map()* :)
@@ -266,6 +265,12 @@ as xs:string{
          => PDFTextStripper:setEndPage($pageNo)
        }
   return (# db:checkstrings #) {PDFTextStripper:getText($tStripper,$doc)}
+};
+
+(:~  version of  Apache Pdfbox in use  e.g. "3.0.4" :)
+declare function pdfbox:version()
+as xs:string{
+  Q{java:org.apache.pdfbox.util.Version}getVersion()
 };
 
 (:~ convert date :)

@@ -67,7 +67,7 @@ declare function build:basex.xml()
 as xs:string{
 ``[<package xmlns="http://www.basex.org/modules/pkg">
   `{  build:jars("name")!concat('<jar>',.,'</jar>') }`
-   <class>`{ $build:PKG?quodatum?main-class }`</class>
+   <class>`{ $build:PKG?expkg_zone58?main-class }`</class>
 </package>
 ]``
  
@@ -77,14 +77,14 @@ as xs:string{
 declare function build:expath-pkg.xml()
 as xs:string{
  ``[<package xmlns="http://expath.org/ns/pkg"
-         name="`{$build:PKG?quodatum?namespace}`"
+         name="`{$build:PKG?expkg_zone58?namespace}`"
          abbrev="`{$build:PKG?name}`"
          version="`{$build:PKG?version}`"
          spec="1.0">
    <title>`{$build:PKG?description}`</title>
    <dependency processor="basex" name="value"/>
    <xquery> 
-     <namespace>`{$build:PKG?quodatum?namespace}`</namespace>
+     <namespace>`{$build:PKG?expkg_zone58?namespace}`</namespace>
      <file>`{$build:PKG?main=>replace("^.*/","")}`</file>
    </xquery>
 </package>
@@ -94,7 +94,7 @@ as xs:string{
 
 declare function build:xar-create()
 as xs:base64Binary{
-  let $_:=build:maven-download($build:PKG?quodatum?maven=>array:flatten(),$build:base || "jars/")
+  let $_:=build:maven-download($build:PKG?expkg_zone58?maven=>array:flatten(),$build:base || "jars/")
   let $entries:=
             build:xar-add(map{},build:jars("content"),build:jars("download")!build:content(.))
             =>build:xar-add("content/Pdfbox3.xqm",build:content("src/Pdfbox3.xqm"))
@@ -124,11 +124,11 @@ as xs:string{
 
 declare function build:jars($style as xs:string)
 as xs:string*{
-let $src:=$build:PKG?quodatum?maven=>array:flatten()
+let $src:=$build:PKG?expkg_zone58?maven=>array:flatten()
 let $names:= $src!replace(.,"^.*/","")
 return switch($style)
 case "name" return $names
-case "download" return $names!concat($build:PKG?quodatum?download,.)
+case "download" return $names!concat($build:PKG?expkg_zone58?download,.)
 case "content" return $names!concat("content/",.)
 default return $src
 };

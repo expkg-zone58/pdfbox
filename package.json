@@ -19,8 +19,7 @@
   ],
   "author": "Andy Bunce",
   "license": "Apache-2.0",
-  "quodatum": {
-    "random": true,
+  "expkg_zone58": {
     "namespace": "org.expkg_zone58.Pdfbox3",
     "main-class": "org.apache.pdfbox.pdmodel.PDDocument",
     "download": "jars/",

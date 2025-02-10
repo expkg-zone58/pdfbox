@@ -28,13 +28,13 @@ jobs:
 
     - name: Unzip BaseX
       run: |
-        sudo unzip BaseX.zip -d /opt/
+        unzip BaseX107.zip -d $HOME      
         rm BaseX.zip
 
     - name: Add BaseX to PATH
       run: |
-        echo "/opt/basex/bin" >> $GITHUB_PATH
-        echo "BASEX_HOME=/opt/basex" >> $GITHUB_ENV 
+        echo "BASEX_ROOT=$HOME/basex" >> $GITHUB_ENV 
+        echo "PATH=$PATH:$HOME/basex/bin" >> $GITHUB_ENV
 
     - name: Verify BaseX installation
       run: |

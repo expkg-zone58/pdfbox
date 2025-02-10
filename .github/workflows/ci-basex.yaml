@@ -5,7 +5,10 @@ on:
   push:
     branches:
       - main
- 
+    paths:
+      - '.gitea/workflows/trigger/release'
+
+  
 jobs:
  test:
     runs-on: ubuntu-latest
@@ -16,29 +19,39 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Install BaseX
+    - name: Download BaseX
       run: |
-        wget https://files.basex.org/releases/10.7/BaseX107.zip
-        unzip BaseX107.zip -d /usr/local/
-        echo "BASEX_ROOT=/usr/local/basex" >> $GITHUB_ENV 
-        echo "PATH=$PATH:/usr/local/basex/bin" >> $GITHUB_ENV
-      
-    - name: Verify PATH
+        BASEX_VERSION="10.7"  # Example version (adjust as needed)
+        # Remove dots from version for filename (e.g., "11.7" → "117") "9.7.4","10.7"
+        BASEX_CLEAN_VERSION="${BASEX_VERSION//./}"
+        wget https://files.basex.org/releases/$BASEX_VERSION/BaseX$BASEX_CLEAN_VERSION.zip -O BaseX.zip
+
+    - name: Unzip BaseX
       run: |
-        echo path: $PATH$ 
-        echo basex: $BASEX_ROOT 
-        echo ""
+        unzip BaseX107.zip -d $HOME      
+        rm BaseX.zip
+
+    - name: Add BaseX to PATH
+      run: |
+        echo "BASEX_ROOT=$HOME/basex" >> $GITHUB_ENV 
+        echo "PATH=$PATH:$HOME/basex/bin" >> $GITHUB_ENV
+
+    - name: Verify BaseX installation
+      run: |
         basex -c "SHOW OPTIONS"
 
     - name: Checkout repository
       uses: actions/checkout@v4
-
+      with:
+        ref: main
+        
     - name: Build package
       run: |
         basex scripts/make-xar.xq
         basex scripts/repo-install.xq
       
-    - name: run tests
+    - name: Run tests
       run: |
         basex -Wt src/test
+       
 

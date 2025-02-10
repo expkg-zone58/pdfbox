@@ -28,7 +28,7 @@ jobs:
 
     - name: Unzip BaseX
       run: |
-        unzip BaseX107.zip -d $HOME      
+        unzip BaseX.zip -d $HOME      
         rm BaseX.zip
 
     - name: Add BaseX to PATH

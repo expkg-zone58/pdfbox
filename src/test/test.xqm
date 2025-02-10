@@ -91,7 +91,7 @@ function test:with-pdf(){
 
 declare function test:open($file as xs:string)
 as item(){
-    test:resolve($file)=>pdfbox:open()
+    test:resolve($file)=>pdfbox:open-file()
 };
 
 declare function test:resolve($file as xs:string)

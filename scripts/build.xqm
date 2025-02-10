@@ -94,7 +94,7 @@ as xs:string{
 
 declare function build:xar-create()
 as xs:base64Binary{
-
+  let $_:=build:maven-download($build:PKG?quodatum?maven=>array:flatten(),$build:base || "jars/")
   let $entries:=
             build:xar-add(map{},build:jars("content"),build:jars("download")!build:content(.))
             =>build:xar-add("content/Pdfbox3.xqm",build:content("src/Pdfbox3.xqm"))

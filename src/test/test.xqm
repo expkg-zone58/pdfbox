@@ -83,7 +83,7 @@ function test:page-image(){
 };
 
 declare %unit:test
-function test:pdf-with(){
+function test:with-pdf(){
  let $path:=test:resolve("samples.pdf/BaseX100.pdf")
  let $txt:=pdfbox:with-pdf($path,pdfbox:page-text(?,101))
  return unit:assert(starts-with($txt,"Options"))

@@ -21,7 +21,7 @@ jobs:
 
     - name: Download BaseX
       run: |
-        BASEX_VERSION="9.7.4"  # Example version (adjust as needed)
+        BASEX_VERSION="10.7"  # Example version (adjust as needed)
         # Remove dots from version for filename (e.g., "11.7" → "117") "9.7.4","10.7"
         BASEX_CLEAN_VERSION="${BASEX_VERSION//./}"
         wget https://files.basex.org/releases/$BASEX_VERSION/BaseX$BASEX_CLEAN_VERSION.zip -O BaseX.zip
@@ -51,6 +51,6 @@ jobs:
       
     - name: Run tests
       run: |
-        basex -t src/test
+        basex -Wt src/test
        
 

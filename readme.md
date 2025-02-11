@@ -12,6 +12,7 @@ A test suite is available and workflow actions run this on BaseX 10.7 and 11.7.
 * The Apache Pdfbox 3 [FAQ](https://pdfbox.apache.org/3.0/faq.html) may be useful.
 ## Features
 
+
 The features focus on extracting information from PDFs rather than creation or editing.
 
 * read PDF page count.
@@ -21,6 +22,7 @@ The features focus on extracting information from PDFs rather than creation or e
 * save pdf page range to a new pdf.
 * save image of rendered pdf page.
 
+AI (Deepseek) generated [documentation](doc.md)  
 
 
 # Install

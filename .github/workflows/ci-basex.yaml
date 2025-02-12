@@ -7,10 +7,16 @@ on:
       - main
     paths:
       - ".gitea/workflows/trigger/release"
-
+  
+ 
 jobs:
+ 
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        basex-version: ["10.7", "11.7"]
+      
     steps:
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -18,32 +24,16 @@ jobs:
           distribution: "temurin"
           java-version: "17"
 
-      - name: Download BaseX
-        run: |
-          BASEX_VERSION="10.7"  # Example version (adjust as needed)
-          # Remove dots from version for filename (e.g., "11.7" → "117") "9.7.4","10.7"
-          BASEX_CLEAN_VERSION="${BASEX_VERSION//./}"
-          wget https://files.basex.org/releases/$BASEX_VERSION/BaseX$BASEX_CLEAN_VERSION.zip -O BaseX.zip
-
-      - name: Unzip BaseX
-        run: |
-          unzip BaseX.zip -d $HOME      
-          rm BaseX.zip
-
-      - name: Add BaseX to PATH
-        run: |
-          echo "BASEX_ROOT=$HOME/basex" >> $GITHUB_ENV 
-          echo "PATH=$PATH:$HOME/basex/bin" >> $GITHUB_ENV
-
-      - name: Verify BaseX installation
-        run: |
-          basex -c "SHOW OPTIONS"
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           ref: main
 
+      - name: Install BaseX
+        uses: ./.github/actions/install-basex
+        with:
+          basex-version: ${{ matrix.basex-version }}  # Specify the BaseX version here    
+     
       - name: Build package
         run: |
           basex scripts/make-xar.xq

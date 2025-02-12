@@ -23,10 +23,10 @@ The features focus on extracting information from PDFs rather than creation or e
 * save image of rendered pdf page.
 
 AI (Deepseek) generated [documentation](doc.md)  
-
+* The Apache Pdfbox 3 [FAQ](https://pdfbox.apache.org/3.0/faq.html) may be useful.
 
 # Install
-Pre-built `pdfbox-x.y.z.zar` files are available on the releases page. They can be installed using the standard respository functions or using the GUI.
+Pre-built `pdfbox-x.y.z.zar` files are available on the [releases](releases) page. They can be installed using the standard respository functions or using the GUI.
 
 # Usage
 ```xquery
@@ -43,6 +43,7 @@ pdfbox:with-pdf("...path/to/pdf.pdf",
 
 * `scripts/make-xar.xq` packages the required `jar`s and `xqm` files to a `xar` file in the `dist` folder.
 
+The `package.json` is used/abused as a configuration source. Non standard information is held in the `expkg_zone58` section. This is experimental and may change.
 ### Action support
 
 The workflow `ci-basex.yaml` builds and tests the package. This can be used as an action on [github](https://github.com/features/actions), or on a local [gitea](https://docs.gitea.com/usage/actions/overview) installation.

@@ -24,7 +24,7 @@ jobs:
           java-version: "17"
 
       - name: Install BaseX
-        uses: ./gitea/actions/install-basex
+        uses: apb/pdfbox/gitea/actions/install-basex
         with:
           basex-version: '11.7'  # Specify the BaseX version here
 

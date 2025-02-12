@@ -30,4 +30,4 @@ jobs:
 
       - name: Run BaseX command
         run: |
-          basex 2+2
+          basex "2+2"

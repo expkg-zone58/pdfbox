@@ -1,12 +1,12 @@
-name: 'Install BaseX'
-description: 'Install BaseX on a GitHub Actions runner, assumes Java already installed'
+name: "Install BaseX"
+description: "Install BaseX on a GitHub Actions runner, assumes Java already installed"
 inputs:
   basex-version:
-    description: 'The version of BaseX to install (e.g., 11.7)'
+    description: "The version of BaseX to install (e.g., 11.7)"
     required: true
-    default: '11.7'
+    default: "11.7"
 runs:
-  using: 'composite'
+  using: "composite"
   steps:
     - name: Download BaseX
       shell: bash
@@ -16,7 +16,7 @@ runs:
         wget https://files.basex.org/releases/$BASEX_VERSION/BaseX$BASEX_CLEAN_VERSION.zip -O BaseX.zip
 
     - name: Unzip BaseX
-      shell:  bash
+      shell: bash
       run: |
         unzip BaseX.zip -d $HOME
         echo "rm"      
@@ -26,10 +26,10 @@ runs:
     - name: Add BaseX to PATH
       shell: bash
       run: |
-          echo "BASEX_ROOT=$HOME/basex" >> $GITHUB_ENV 
-          echo "PATH=$PATH:$HOME/basex/bin" >> $GITHUB_ENV
+        echo "BASEX_ROOT=$HOME/basex" >> $GITHUB_ENV 
+        echo "PATH=$PATH:$HOME/basex/bin" >> $GITHUB_ENV
 
     - name: Verify BaseX installation
       shell: bash
       run: |
-          basex declare option output:indent 'yes';db:system()
+        basex "declare option output:indent 'yes';db:system()"

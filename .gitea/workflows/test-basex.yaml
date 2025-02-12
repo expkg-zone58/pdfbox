@@ -8,7 +8,7 @@ on:
     branches:
       - main
     paths:
-      - ".gitea/workflows/trigger/release"
+      - ".gitea/workflows/trigger/basex-act"
 
 jobs:
   test-basex:
@@ -30,4 +30,4 @@ jobs:
 
       - name: Run BaseX command
         run: |
-          basex --version
+          basex 2+2

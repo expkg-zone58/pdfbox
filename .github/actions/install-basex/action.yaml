@@ -18,8 +18,10 @@ runs:
     - name: Unzip BaseX
       shell:  bash
       run: |
-        unzip BaseX.zip -d $HOME      
+        unzip BaseX.zip -d $HOME
+        echo "rm"      
         rm BaseX.zip
+        echo "done"
 
     - name: Add BaseX to PATH
       shell: bash

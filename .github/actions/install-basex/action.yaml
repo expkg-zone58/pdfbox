@@ -30,4 +30,4 @@ runs:
     - name: Verify BaseX installation
       shell: bash
       run: |
-          basex -v
+          basex declare option output:indent 'yes';db:system()

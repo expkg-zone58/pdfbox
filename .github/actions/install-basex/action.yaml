@@ -26,6 +26,7 @@ runs:
     - name: Add BaseX to PATH
       shell: bash
       run: |
+          set -x  # Enable debugging
           echo "BASEX_ROOT=$HOME/basex" >> $GITHUB_ENV 
           echo "PATH=$PATH:$HOME/basex/bin" >> $GITHUB_ENV
 

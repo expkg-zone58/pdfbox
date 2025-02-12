@@ -27,9 +27,10 @@ runs:
       shell: bash
       run: |
         echo "BASEX_ROOT=$HOME/basex" >> $GITHUB_ENV 
-        echo "PATH=$PATH:$HOME/basex/bin" >> $GITHUB_ENV
+        echo "PATH=$PATH:$HOME/basex/bin" >> $GITHUB_ENV 
 
     - name: Verify BaseX installation
       shell: bash
       run: |
         basex "declare option output:indent 'yes';db:system()"
+

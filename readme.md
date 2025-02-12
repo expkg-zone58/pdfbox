@@ -26,7 +26,7 @@ AI (Deepseek) generated [documentation](doc.md)
 * The Apache Pdfbox 3 [FAQ](https://pdfbox.apache.org/3.0/faq.html) may be useful.
 
 # Install
-Pre-built `pdfbox-x.y.z.zar` files are available on the [releases](releases) page. They can be installed using the standard respository functions or using the GUI.
+Pre-built `pdfbox-x.y.z.zar` files are available on the [releases](../../releases) page. They can be installed using the standard respository functions or using the GUI.
 
 # Usage
 ```xquery

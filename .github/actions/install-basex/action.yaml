@@ -16,18 +16,18 @@ runs:
         wget https://files.basex.org/releases/$BASEX_VERSION/BaseX$BASEX_CLEAN_VERSION.zip -O BaseX.zip
 
     - name: Unzip BaseX
-      shell:  "bash"
+      shell:  bash
       run: |
         unzip BaseX.zip -d $HOME      
         rm BaseX.zip
 
     - name: Add BaseX to PATH
-      shell: "bash"
+      shell: bash
       run: |
           echo "BASEX_ROOT=$HOME/basex" >> $GITHUB_ENV 
           echo "PATH=$PATH:$HOME/basex/bin" >> $GITHUB_ENV
 
     - name: Verify BaseX installation
-      shell: "bash"
+      shell: bash
       run: |
-          basex -v"
+          basex -v

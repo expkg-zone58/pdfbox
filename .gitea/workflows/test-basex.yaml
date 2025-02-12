@@ -24,7 +24,7 @@ jobs:
           java-version: "17"
 
       - name: Install BaseX
-        uses: ./.github/actions/install-basex
+        uses: .github/actions/install-basex
         with:
           basex-version: '11.7'  # Specify the BaseX version here
 

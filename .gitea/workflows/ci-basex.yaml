@@ -7,10 +7,16 @@ on:
       - main
     paths:
       - ".gitea/workflows/trigger/release"
-
+  
+ 
 jobs:
+ 
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        basex-version: ["10.7", "11.7"]
+      
     steps:
       - name: Set up Java
         uses: actions/setup-java@v4
@@ -26,7 +32,7 @@ jobs:
       - name: Install BaseX
         uses: ./.github/actions/install-basex
         with:
-          basex-version: '11.7'  # Specify the BaseX version here    
+          basex-version: ${{ matrix.basex-version }}  # Specify the BaseX version here    
      
       - name: Build package
         run: |

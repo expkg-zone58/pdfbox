@@ -43,3 +43,9 @@ jobs:
         run: |
           basex -Wt src/test >test-results.xml
           cat test-results.xml
+
+      - name: Upload test result Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: test-results.xml

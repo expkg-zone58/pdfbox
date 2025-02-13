@@ -11,18 +11,12 @@ module namespace pdfbox="org.expkg_zone58.Pdfbox3";
 declare namespace Loader ="java:org.apache.pdfbox.Loader"; 
 declare namespace PDFTextStripper = "java:org.apache.pdfbox.text.PDFTextStripper";
 declare namespace PDDocument ="java:org.apache.pdfbox.pdmodel.PDDocument";
-
 declare namespace PDDocumentCatalog ="java:org.apache.pdfbox.pdmodel.PDDocumentCatalog";
 declare namespace PDPageLabels ="java:org.apache.pdfbox.pdmodel.common.PDPageLabels";
-
 declare namespace PageExtractor ="java:org.apache.pdfbox.multipdf.PageExtractor";
- 
 declare namespace PDPageTree ="java:org.apache.pdfbox.pdmodel.PDPageTree";
-
 declare namespace PDDocumentOutline ="java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline";
-
 declare namespace PDDocumentInformation ="java:org.apache.pdfbox.pdmodel.PDDocumentInformation";
-
 declare namespace PDOutlineItem="java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem";
 declare namespace PDFRenderer="java:org.apache.pdfbox.rendering.PDFRenderer";
 declare namespace RandomAccessReadBufferedFile = "java:org.apache.pdfbox.io.RandomAccessReadBufferedFile";
@@ -95,6 +89,16 @@ as xs:base64Binary{
   return Q{java:java.io.ByteArrayOutputStream}toByteArray($bytes)
          =>convert:integers-to-base64()
  
+};
+
+declare variable $pdfbox:doc-info:=map{
+    "title": PDDocumentInformation:getTitle#1,
+    "creator": PDDocumentInformation:getCreator#1,
+    "producer": PDDocumentInformation:getProducer#1,
+    "subject": PDDocumentInformation:getSubject#1,
+    "keywords": PDDocumentInformation:getKeywords#1,
+    "creationdate": pdfbox:gregToISO(PDDocumentInformation:getCreationDate#1),
+    "author": PDDocumentInformation:getAuthor#1
 };
 
 (:~ map with document metadata :)

@@ -3,13 +3,12 @@ A `BaseX` interface for the `Apache Pdfbox library` version 3.
 
 The [Apache PDFBox® library](https://pdfbox.apache.org/) is an open source Java tool for working with PDF documents. This project allows creation of new PDF documents, manipulation of existing documents and the ability to extract content from documents.
 
-This interface is packaged in the [Expath](https://docs.basex.org/main/Repository#expath_packaging) format.
+This interface is packaged in the [Expath](https://docs.basex.org/main/Repository#expath_packaging) format. The package includes the required Pdfbox jars.
 A test suite is available and workflow actions run this on BaseX 10.7 and 11.7.
 
 > [!NOTE]  
 >Currently (v0.1.5) works with BaseX 9.7, but this may change with future versions.
 
-* The Apache Pdfbox 3 [FAQ](https://pdfbox.apache.org/3.0/faq.html) may be useful.
 ## Features
 
 

@@ -92,28 +92,23 @@ as xs:base64Binary{
 };
 
 declare variable $pdfbox:doc-info:=map{
-    "title": PDDocumentInformation:getTitle#1,
-    "creator": PDDocumentInformation:getCreator#1,
-    "producer": PDDocumentInformation:getProducer#1,
-    "subject": PDDocumentInformation:getSubject#1,
-    "keywords": PDDocumentInformation:getKeywords#1,
-    "creationdate": pdfbox:gregToISO(PDDocumentInformation:getCreationDate#1),
-    "author": PDDocumentInformation:getAuthor#1
+  "title": PDDocumentInformation:getTitle#1,
+  "author": PDDocumentInformation:getAuthor#1,
+  "creator": PDDocumentInformation:getCreator#1,
+  "producer": PDDocumentInformation:getProducer#1,
+  "subject": PDDocumentInformation:getSubject#1,
+  "keywords": PDDocumentInformation:getKeywords#1,
+  "creationdate": function($i){pdfbox:gregToISO(PDDocumentInformation:getCreationDate($i))},
+  "modificationdate": function($i){pdfbox:gregToISO(PDDocumentInformation:getModificationDate($i))} 
 };
 
 (:~ map with document metadata :)
 declare function pdfbox:metadata($pdf as item())
 as map(*){
   let $info:=PDDocument:getDocumentInformation($pdf)
-  return map{
-    "title": PDDocumentInformation:getTitle($info),
-    "creator": PDDocumentInformation:getCreator($info),
-    "producer": PDDocumentInformation:getProducer($info),
-    "subject": PDDocumentInformation:getSubject($info),
-    "keywords": PDDocumentInformation:getKeywords($info),
-    "creationdate": pdfbox:gregToISO(PDDocumentInformation:getCreationDate($info)),
-    "author": PDDocumentInformation:getAuthor($info)
-  }
+  return map:for-each($pdfbox:doc-info,
+             function($k,$v){map:entry($k,$pdfbox:doc-info($k)($info))})
+         =>map:merge()
 };
 
 (:~ summary info as map for $pdfpath :)
@@ -124,27 +119,26 @@ as map(*){
        "file":  $pdfpath,
        "pages": pdfbox:page-count($pdf),
        "hasOutline": pdfbox:hasOutline($pdf),
+       "hasLabels": pdfbox:hasLabels($pdf),
        "specification":pdfbox:specification($pdf)
         },pdfbox:metadata($pdf)
 )=>map:merge()
 };
 
- (:~ true if $pdf has an outline for $pdf as map()* :)
+(:~ true if $pdf has an outline :)
 declare function pdfbox:hasOutline($pdf as item())
 as xs:boolean{
-  (# db:wrapjava some #) {
-  let $outline:=
-                PDDocument:getDocumentCatalog($pdf)
-                =>PDDocumentCatalog:getDocumentOutline()
- 
-  return  exists($outline)
-  }
+  PDDocument:getDocumentCatalog($pdf)
+  =>PDDocumentCatalog:getDocumentOutline()
+  =>exists()
 };
 
-(:~ true if $pdf is encrypted* :)
-declare function pdfbox:isEncrypted($pdf as item())
+(:~ true if $pdf has Labels :)
+declare function pdfbox:hasLabels($pdf as item())
 as xs:boolean{
-  PDDocument:isEncrypted($pdf)
+  PDDocument:getDocumentCatalog($pdf)
+  =>PDDocumentCatalog:getPageLabels()
+  =>exists()
 };
 
 (:~ outline for $pdf as map()* :)
@@ -162,7 +156,6 @@ as map(*)*{
 
 (:~ return bookmark info for children of $outlineItem as seq of maps :)
 declare function pdfbox:outline($pdf as item(),$outlineItem as item()?)
-
 as map(*)*{
   let $find as map(*):=pdfbox:_outline($pdf ,$outlineItem)
   return map:get($find,"list")
@@ -176,15 +169,15 @@ as map(*){
      map{"list":(),"this":$outlineItem},
 
      function($input,$pos ) { 
-                      let $bk:= pdfbox:bookmark($input?this,$pdf)
-                      let $bk:= if($bk?hasChildren)
-                                then let $kids:=pdfbox:outline($pdf,PDOutlineItem:getFirstChild($input?this))
-                                     return map:merge(($bk,map:entry("children",$kids)))
-                                else $bk 
-                      return map{
-                            "list": ($input?list, $bk),
-                            "this":  PDOutlineItem:getNextSibling($input?this)}
-                          },
+        let $bk:= pdfbox:bookmark($input?this,$pdf)
+        let $bk:= if($bk?hasChildren)
+                  then let $kids:=pdfbox:outline($pdf,PDOutlineItem:getFirstChild($input?this))
+                        return map:merge(($bk,map:entry("children",$kids)))
+                  else $bk 
+        return map{
+              "list": ($input?list, $bk),
+              "this":  PDOutlineItem:getNextSibling($input?this)}
+      },
 
      function($output,$pos) { empty($output?this) }                      
   )
@@ -248,16 +241,18 @@ as xs:string
 };
 
 
-(:~   pageLabel for every page
+(:~   pageLabel for every page or empty if none
 @see https://www.w3.org/TR/WCAG20-TECHS/PDF17.html#PDF17-examples
 @see https://codereview.stackexchange.com/questions/286078/java-code-showing-page-labels-from-pdf-files
 :)
 declare function pdfbox:labels($pdf as item())
 as xs:string*
 {
-  PDDocument:getDocumentCatalog($pdf)
-  =>PDDocumentCatalog:getPageLabels()
-  =>PDPageLabels:getLabelsByPageIndices()
+  let $pagelabels:=PDDocument:getDocumentCatalog($pdf)
+                   =>PDDocumentCatalog:getPageLabels()
+  return if(exists($pagelabels))
+         then PDPageLabels:getLabelsByPageIndices($pagelabels)
+         else ()
 };
 
 (:~ return text on $pageNo :)
@@ -279,9 +274,11 @@ as xs:string{
 
 (:~ convert date :)
 declare %private
-function pdfbox:gregToISO($item as item())
-as xs:string{
- Q{java:java.util.GregorianCalendar}toZonedDateTime($item)=>string()
+function pdfbox:gregToISO($item as item()?)
+as xs:string?{
+ if(exists($item))
+ then Q{java:java.util.GregorianCalendar}toZonedDateTime($item)=>string()
+ else ()
 };
 
 (:~ fn:do-until shim for BaseX 9+10 
@@ -299,6 +296,6 @@ declare %private function pdfbox:do-until(
          else let $hof:=function-lookup(QName('http://basex.org/modules/hof','until'), 3)
               return if(exists($hof))
                       then $hof($predicate(?,0),$action(?,0),$input)
-                      else error(xs:QName('pdfbox:do-until'),"No implementation found")
+                      else error(xs:QName('pdfbox:do-until'),"No implementation do-until found")
 
 };

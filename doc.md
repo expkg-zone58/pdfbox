@@ -225,7 +225,6 @@ Returns the version of the Apache PDFBox library in use.
 
 ## Notes
 
-- Ensure that the `pdfbox-app-3.0.4.jar` (or a compatible version) is on the classpath.
 - The library is designed to work with BaseX 10.7+.
 - Some functions may throw errors if the PDF is encrypted or if the file cannot be opened.
 
@@ -258,7 +257,3 @@ return pdfbox:metadata($pdf)
 let $pdf := pdfbox:open-file("path/to/document.pdf")
 return pdfbox:extract($pdf, 1, 3, "path/to/new/document.pdf")
 ```
-
-## Conclusion
-
-The `Pdfbox3.xqm` library provides a powerful interface for working with PDF documents in XQuery. It allows you to extract text, render pages, extract metadata, and more. 

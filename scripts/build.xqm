@@ -128,7 +128,7 @@ let $src:=$build:PKG?expkg_zone58?maven=>array:flatten()
 let $names:= $src!replace(.,"^.*/","")
 return switch($style)
 case "name" return $names
-case "download" return $names!concat($build:PKG?expkg_zone58?download,.)
+case "download" return $names!concat("jars/",.)
 case "content" return $names!concat("content/",.)
 default return $src
 };

@@ -97,7 +97,7 @@ as xs:base64Binary{
    keys are property names, 
    values are sequences of functions to get property from $pdf object
 :)
-declare %private variable $pdfbox:doc-info:=map{
+declare %private variable $pdfbox:property-map:=map{
   "pages": pdfbox:page-count#1,
 
   "hasOutline": pdfbox:hasOutline#1,
@@ -133,10 +133,16 @@ declare %private variable $pdfbox:doc-info:=map{
                         pdfbox:gregToISO#1)
 };
 
+(:~ known property names sorted :)
+declare function pdfbox:defined-properties() 
+as xs:string*{
+  $pdfbox:property-map=>map:keys()=>sort()
+};
+
 (:~  return value of $property for $pdf :)
 declare function pdfbox:property($pdf as item(),$property as xs:string)
 as item()*{
-  let $fns:= $pdfbox:doc-info($property)
+  let $fns:= $pdfbox:property-map($property)
   return if(exists($fns))
          then fold-left($fns, 
                         $pdf, 
@@ -147,16 +153,21 @@ as item()*{
 (:~ summary CSV style info for all properties for $pdfpaths :)
 declare function pdfbox:report($pdfpaths as xs:string*)
 as map(*){
- pdfbox:report($pdfpaths,map:keys($pdfbox:doc-info))
+ pdfbox:report($pdfpaths,map:keys($pdfbox:property-map))
 };
 
 (:~ summary CSV style info for named properties for $pdfpaths :)
 declare function pdfbox:report($pdfpaths as xs:string*, $properties as xs:string*)
 as map(*){
-  map{"names":   array{$properties},
+  map{"names":   array{"path",$properties},
   
-      "records": for $pdf in $pdfpaths!pdfbox:open-file(.)
-                 return array{$properties!pdfbox:property($pdf, .)}
+      "records": for $path in $pdfpaths
+                 let $pdf:=pdfbox:open-file($path)
+                 return fold-left($properties,
+                                  array{$path},
+                                  function($result as array(*),$prop as xs:string){
+                                    array:append($result, string(pdfbox:property($pdf, $prop)))}
+                 )
   }
 };
 

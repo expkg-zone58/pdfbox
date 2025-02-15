@@ -41,7 +41,7 @@ jobs:
 
       - name: Run tests
         run: |
-          basex -Wt src/test >test-results.xml
+          basex -Wt tests >test-results.xml
           cat test-results.xml
 
       - name: Upload test result Artifacts

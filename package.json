@@ -8,7 +8,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "test": "%BASEX10%/bin/basex -t src/test",
+    "test": "%BASEX10%/bin/basex -t tests",
     "docs": "xqdoca"
   },
   "keywords": [

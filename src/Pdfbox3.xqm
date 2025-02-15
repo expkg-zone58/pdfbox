@@ -1,9 +1,11 @@
 xquery version '3.1';
 (:~ 
 pdfbox 3.0 https://pdfbox.apache.org/ BaseX 10.7+ interface library, 
-requires pdfbox jar on classpath, tested with pdfbox-app-3.0.4.jar
+requires pdfbox jars on classpath, i.e. in custom or xar
+tested with pdfbox-app-3.0.4.jar
 @see download https://pdfbox.apache.org/download.cgi
 @javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.4/
+@author Andy Bunce 2025
 :)
 
 module namespace pdfbox="org.expkg_zone58.Pdfbox3";
@@ -91,38 +93,71 @@ as xs:base64Binary{
  
 };
 
-declare variable $pdfbox:doc-info:=map{
-  "title": PDDocumentInformation:getTitle#1,
-  "author": PDDocumentInformation:getAuthor#1,
-  "creator": PDDocumentInformation:getCreator#1,
-  "producer": PDDocumentInformation:getProducer#1,
-  "subject": PDDocumentInformation:getSubject#1,
-  "keywords": PDDocumentInformation:getKeywords#1,
-  "creationdate": function($i){pdfbox:gregToISO(PDDocumentInformation:getCreationDate($i))},
-  "modificationdate": function($i){pdfbox:gregToISO(PDDocumentInformation:getModificationDate($i))} 
+(:~ property access map
+   keys are property names, 
+   values are sequences of functions to get property from $pdf object
+:)
+declare %private variable $pdfbox:doc-info:=map{
+  "pages": pdfbox:page-count#1,
+
+  "hasOutline": pdfbox:hasOutline#1,
+
+  "hasLabels": pdfbox:hasLabels#1,
+
+  "specification":pdfbox:specification#1,
+
+  "title": (PDDocument:getDocumentInformation#1,
+            PDDocumentInformation:getTitle#1) ,
+
+  "author": (PDDocument:getDocumentInformation#1,
+             PDDocumentInformation:getAuthor#1 ),
+
+  "creator": (PDDocument:getDocumentInformation#1,
+              PDDocumentInformation:getCreator#1),
+
+  "producer": (PDDocument:getDocumentInformation#1,
+               PDDocumentInformation:getProducer#1),
+
+  "subject": (PDDocument:getDocumentInformation#1,
+              PDDocumentInformation:getSubject#1),
+
+  "keywords": (PDDocument:getDocumentInformation#1,
+               PDDocumentInformation:getKeywords#1),
+
+  "creationDate": (PDDocument:getDocumentInformation#1,
+                   PDDocumentInformation:getCreationDate#1,
+                   pdfbox:gregToISO#1),
+
+  "modificationDate":  (PDDocument:getDocumentInformation#1,
+                        PDDocumentInformation:getModificationDate#1,
+                        pdfbox:gregToISO#1)
 };
 
-(:~ map with document metadata :)
-declare function pdfbox:metadata($pdf as item())
-as map(*){
-  let $info:=PDDocument:getDocumentInformation($pdf)
-  return map:for-each($pdfbox:doc-info,
-             function($k,$v){map:entry($k,$pdfbox:doc-info($k)($info))})
-         =>map:merge()
+(:~  return value of $property for $pdf :)
+declare function pdfbox:property($pdf as item(),$property as xs:string)
+as item()*{
+  let $fns:= $pdfbox:doc-info($property)
+  return if(exists($fns))
+         then fold-left($fns, 
+                        $pdf, 
+                        function($result,$this as function(*)){$this($result)})
+         else error(xs:QName('pdfbox:property'),concat("Property '",$property,"' not defined."))
 };
 
-(:~ summary info as map for $pdfpath :)
-declare function pdfbox:report($pdfpath as xs:string)
+(:~ summary CSV style info for all properties for $pdfpaths :)
+declare function pdfbox:report($pdfpaths as xs:string*)
 as map(*){
- let $pdf:=pdfbox:open-file($pdfpath)
- return (map{
-       "file":  $pdfpath,
-       "pages": pdfbox:page-count($pdf),
-       "hasOutline": pdfbox:hasOutline($pdf),
-       "hasLabels": pdfbox:hasLabels($pdf),
-       "specification":pdfbox:specification($pdf)
-        },pdfbox:metadata($pdf)
-)=>map:merge()
+ pdfbox:report($pdfpaths,map:keys($pdfbox:doc-info))
+};
+
+(:~ summary CSV style info for named properties for $pdfpaths :)
+declare function pdfbox:report($pdfpaths as xs:string*, $properties as xs:string*)
+as map(*){
+  map{"names":   array{$properties},
+  
+      "records": for $pdf in $pdfpaths!pdfbox:open-file(.)
+                 return array{$properties!pdfbox:property($pdf, .)}
+  }
 };
 
 (:~ true if $pdf has an outline :)

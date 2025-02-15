@@ -1,6 +1,6 @@
 {
   "name": "pdfbox",
-  "version": "0.1.6",
+  "version": "0.2.1",
   "description": "A BaseX interface to Apache Pdfbox version 3",
   "main": "src/Pdfbox3.xqm",
   "homepage": "https://github.com/npm/example#readme",

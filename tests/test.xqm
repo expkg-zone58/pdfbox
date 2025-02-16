@@ -6,7 +6,6 @@ import module namespace pdfbox="org.expkg_zone58.Pdfbox3";
 
 declare variable $test:base:=file:base-dir()=>file:parent();
 
-
 declare %unit:test
 function test:pdfbox-version(){
     let $v:= pdfbox:version()=>trace("VER: ")
@@ -61,10 +60,10 @@ function test:labels(){
 };
 
 declare %unit:test
-function test:extract-save(){
+function test:extract(){
  let $pdf:=test:open("samples.pdf/BaseX100.pdf")
  let $dest:=file:create-temp-file("test",".pdf")=>trace("DEST: ")
- let $outline:=pdfbox:extract($pdf,2,12,$dest)
+ let $bin:=pdfbox:extract($pdf,2,12)
  return unit:assert(true())
 };
 
@@ -82,6 +81,7 @@ function test:page-image(){
  return unit:assert(true())
 };
 
+
 declare %unit:test
 function test:with-pdf(){
  let $path:=test:resolve("samples.pdf/BaseX100.pdf")
@@ -89,11 +89,39 @@ function test:with-pdf(){
  return unit:assert(starts-with($txt,"Options"))
 };
 
-declare function test:open($file as xs:string)
-as item(){
-    test:resolve($file)=>pdfbox:open-file()
+(:~ get PDF from url :)
+declare %unit:test
+function test:with-url(){
+ let $url:="https://files.basex.org/publications/Gath%20et%20al.%20%5b2009%5d,%20INEX%20Efficiency%20Track%20meets%20XQuery%20Full%20Text%20in%20BaseX.pdf"
+
+ let $count:=pdfbox:with-pdf($url,pdfbox:page-count#1)
+ return unit:assert-equals($count,6)
 };
 
+(:~ password missing  :)
+declare %unit:test("expected", "pdfbox:open")
+function test:password-bad(){
+ let $pdf:=test:open("samples.pdf/page-numbers-password.pdf")
+ return unit:assert(true())
+};
+
+(:~password good  :)
+declare %unit:test
+function test:password-good(){
+ let $pdf:=test:open("samples.pdf/page-numbers-password.pdf",map{"password":"password"})
+ return unit:assert(true())
+};
+
+(:---------------------------------------:)
+declare function test:open($file as xs:string,$opts as map(*))
+as item(){
+    test:resolve($file)=>pdfbox:open($opts)
+};
+
+declare function test:open($file as xs:string)
+as item(){
+    test:open($file,map{})
+};
 declare function test:resolve($file as xs:string)
 as item(){
     file:resolve-path($file,$test:base)

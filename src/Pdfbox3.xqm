@@ -21,7 +21,7 @@ declare namespace PDDocumentOutline ="java:org.apache.pdfbox.pdmodel.interactive
 declare namespace PDDocumentInformation ="java:org.apache.pdfbox.pdmodel.PDDocumentInformation";
 declare namespace PDOutlineItem="java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem";
 declare namespace PDFRenderer="java:org.apache.pdfbox.rendering.PDFRenderer";
-declare namespace RandomAccessReadBufferedFile = "java:org.apache.pdfbox.io.RandomAccessReadBufferedFile";
+declare namespace RandomAccessReadBuffer="java:org.apache.pdfbox.io.RandomAccessReadBuffer";
 declare namespace File ="java:java.io.File";
 
 
@@ -33,7 +33,7 @@ e.g pdfbox:with-pdf("path...",pdfbox:page-text(?,5))
 declare function pdfbox:with-pdf($src as xs:string,
                                 $fn as function(item())as item()*)
 as item()*{
- let $pdf:=pdfbox:open-file($src)
+ let $pdf:=pdfbox:open($src)
  return try{
         $fn($pdf),pdfbox:close($pdf)
         } catch *{
@@ -42,13 +42,22 @@ as item()*{
 
 };
 
-(:~ open pdf, returns pdf object :)
-declare function pdfbox:open-file($pdfpath as xs:string)
+
+(:~ open pdf using fetch:binary, returns pdf object :)
+declare function pdfbox:open($pdfpath as xs:string)
+as item(){
+pdfbox:open($pdfpath, map{})
+};
+
+(:~ open pdf using with password option, returns pdf object :)
+declare function pdfbox:open($pdfpath as xs:string, $opts as map(*))
 as item(){
   try{
-    Loader:loadPDF( RandomAccessReadBufferedFile:new($pdfpath))
+    if($opts?password)
+    then Loader:loadPDF( RandomAccessReadBuffer:new(fetch:binary($pdfpath)),$opts?password)
+    else Loader:loadPDF( RandomAccessReadBuffer:new(fetch:binary($pdfpath)))
 } catch *{
-    error(xs:QName("pdfbox:open-file"),"Failed to open: " || $pdfpath)
+    error(xs:QName("pdfbox:open"),"Failed to open: " || $pdfpath || " " || $err:description)
 }
 };
 
@@ -64,6 +73,15 @@ as xs:string{
 declare function pdfbox:save($pdf as item(),$savepath as xs:string)
 as xs:string{
    PDDocument:save($pdf, File:new($savepath)),$savepath
+};
+
+(:~   $pdf as xs:base64Binary :)
+declare function pdfbox:binary($pdf as item())
+as xs:base64Binary{
+   let $bytes:=Q{java:java.io.ByteArrayOutputStream}new()
+   let $_:=PDDocument:save($pdf, $bytes)
+   return  Q{java:java.io.ByteArrayOutputStream}toByteArray($bytes)
+         =>convert:integers-to-base64()
 };
 
 (: release references to $pdf:)
@@ -150,7 +168,8 @@ as item()*{
          else error(xs:QName('pdfbox:property'),concat("Property '",$property,"' not defined."))
 };
 
-(:~ summary CSV style info for all properties for $pdfpaths :)
+(:~ summary CSV style info for all properties for $pdfpaths 
+:)
 declare function pdfbox:report($pdfpaths as xs:string*)
 as map(*){
  pdfbox:report($pdfpaths,map:keys($pdfbox:property-map))
@@ -162,7 +181,7 @@ as map(*){
   map{"names":   array{"path",$properties},
   
       "records": for $path in $pdfpaths
-                 let $pdf:=pdfbox:open-file($path)
+                 let $pdf:=pdfbox:open($path)
                  return fold-left($properties,
                                   array{$path},
                                   function($result as array(*),$prop as xs:string){
@@ -203,12 +222,12 @@ as map(*)*{
 (:~ return bookmark info for children of $outlineItem as seq of maps :)
 declare function pdfbox:outline($pdf as item(),$outlineItem as item()?)
 as map(*)*{
-  let $find as map(*):=pdfbox:_outline($pdf ,$outlineItem)
+  let $find as map(*):=pdfbox:outline_($pdf ,$outlineItem)
   return map:get($find,"list")
 };
 
-(: BaseX bug 10.7? error if inlined in outline :)
-declare %private function pdfbox:_outline($pdf as item(),$outlineItem as item()?)
+(:~ BaseX bug 10.7? error if inlined in outline :)
+declare %private function pdfbox:outline_($pdf as item(),$outlineItem as item()?)
 as map(*){
   pdfbox:do-until(
     
@@ -274,16 +293,13 @@ as item()?
       =>PDPageTree:indexOf($page)
 };            
 
-
-
-(:~ save new PDF doc from 1 based page range 
-@return save path :)
+(:~  new PDF doc from 1 based page range as xs:base64Binary :)
 declare function pdfbox:extract($pdf as item(), 
-             $start as xs:integer,$end as xs:integer,$target as xs:string)
-as xs:string
+             $start as xs:integer,$end as xs:integer)
+as xs:base64Binary
 {
     let $a:=PageExtractor:new($pdf, $start, $end) =>PageExtractor:extract()
-    return (pdfbox:save($a,$target),pdfbox:close($a)) 
+    return (pdfbox:binary($a),pdfbox:close($a)) 
 };
 
 

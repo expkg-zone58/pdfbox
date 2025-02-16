@@ -11,17 +11,23 @@ A test suite is available and workflow actions run this on BaseX 10.7 and 11.7.
 
 ## Features
 
-
-The features focus on extracting information from PDFs rather than creation or editing.
-
+The features focus on extracting information from PDFs rather than creation or editing of PDFs.
+### Supported
 * read PDF page count.
 * read any PDF outline and return as map(s) or XML.
 * read pagelabels.
 * read page text.
 * save pdf page range to a new pdf.
 * save image of rendered pdf page.
+* open PDF with password
+* support for xs:base64Binary in function inputs and outputs to support database and store usage.
 
-AI (Deepseek) generated [documentation](doc.md)  
+### Not supported:
+* creating completely new PDFs
+* Page size information
+
+## Documentation
+* Function [documentation](doc.md)  
 * The Apache Pdfbox 3 [FAQ](https://pdfbox.apache.org/3.0/faq.html) may be useful.
 
 # Install

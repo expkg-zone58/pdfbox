@@ -1,3 +1,6 @@
+## 0.2.5 2025-02-17
+* rename property pages to pageCount
+* increase test coverage
 ## 0.2.4 2025-02-16
 * Add `property`
 * rewrite `report` to return CSV style data

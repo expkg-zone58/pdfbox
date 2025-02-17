@@ -112,6 +112,72 @@ function test:password-good(){
  return unit:assert(true())
 };
 
+(:~ Test for pdfbox:binary function :)
+declare %unit:test
+function test:binary(){
+    let $pdf:=test:open("samples.pdf/BaseX100.pdf")
+    let $binary:=pdfbox:binary($pdf)
+    return unit:assert(exists($binary))
+};
+
+(:~ Test for pdfbox:save function :)
+declare %unit:test
+function test:save(){
+    let $pdf:=test:open("samples.pdf/BaseX100.pdf")
+    let $dest:=file:create-temp-file("test-save",".pdf")
+    let $savedPath:=pdfbox:save($pdf, $dest)
+    return unit:assert-equals($savedPath, $dest)
+};
+
+(:~ Test for pdfbox:property function :)
+declare %unit:test
+function test:property(){
+    let $pdf:=test:open("samples.pdf/BaseX100.pdf")
+    let $pages:=pdfbox:property($pdf, "pageCount")
+    return unit:assert(true())
+};
+
+(:~ Test for pdfbox:property function :)
+declare %unit:test("expected", "pdfbox:property")
+function test:property-bad(){
+    let $pdf:=test:open("samples.pdf/BaseX100.pdf")
+    let $title:=pdfbox:property($pdf, "totle")
+    return unit:assert(exists($title))
+};
+(:~ Test for pdfbox:defined-properties function :)
+declare %unit:test
+function test:defined-properties(){
+    let $properties:=pdfbox:defined-properties()
+    return unit:assert(exists($properties))
+};
+
+(:~ Test for pdfbox:report function :)
+declare %unit:test
+function test:report(){
+    let $pdfPaths:=("samples.pdf/BaseX100.pdf", "samples.pdf/icelandic-dictionary.pdf")
+                  !test:resolve(.)
+    let $report:=pdfbox:report($pdfPaths)
+    return unit:assert(exists($report?names) and exists($report?records))
+};
+
+(:~ Test for pdfbox:hasOutline function :)
+declare %unit:test
+function test:hasOutline(){
+    let $pdf:=test:open("samples.pdf/BaseX100.pdf")
+    let $hasOutline:=pdfbox:hasOutline($pdf)
+    return unit:assert(not($hasOutline))
+};
+
+(:~ Test for pdfbox:hasLabels function :)
+declare %unit:test
+function test:hasLabels(){
+    let $pdf:=test:open("samples.pdf/BaseX100.pdf")
+    let $hasLabels:=pdfbox:hasLabels($pdf)
+    return unit:assert($hasLabels)
+};
+
+
+
 (:---------------------------------------:)
 declare function test:open($file as xs:string,$opts as map(*))
 as item(){

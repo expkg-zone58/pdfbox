@@ -116,7 +116,7 @@ as xs:base64Binary{
    values are sequences of functions to get property from $pdf object
 :)
 declare %private variable $pdfbox:property-map:=map{
-  "pages": pdfbox:page-count#1,
+  "pageCount": pdfbox:page-count#1,
 
   "hasOutline": pdfbox:hasOutline#1,
 

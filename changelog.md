@@ -1,3 +1,8 @@
+# 0.2.7 2025-02-18
+* reduce memory use
+* add open from xs:base64Binary
+* open opts with password
+* increase test coverage
 ## 0.2.5 2025-02-17
 * rename property pages to pageCount
 * increase test coverage

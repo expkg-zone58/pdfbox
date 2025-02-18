@@ -16,12 +16,16 @@ declare namespace PDDocument ="java:org.apache.pdfbox.pdmodel.PDDocument";
 declare namespace PDDocumentCatalog ="java:org.apache.pdfbox.pdmodel.PDDocumentCatalog";
 declare namespace PDPageLabels ="java:org.apache.pdfbox.pdmodel.common.PDPageLabels";
 declare namespace PageExtractor ="java:org.apache.pdfbox.multipdf.PageExtractor";
+declare namespace PDPage ="org.apache.pdfbox.pdmodel.PDPage";
 declare namespace PDPageTree ="java:org.apache.pdfbox.pdmodel.PDPageTree";
 declare namespace PDDocumentOutline ="java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline";
 declare namespace PDDocumentInformation ="java:org.apache.pdfbox.pdmodel.PDDocumentInformation";
 declare namespace PDOutlineItem="java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem";
 declare namespace PDFRenderer="java:org.apache.pdfbox.rendering.PDFRenderer";
 declare namespace RandomAccessReadBuffer="java:org.apache.pdfbox.io.RandomAccessReadBuffer";
+declare namespace RandomAccessReadBufferedFile = "java:org.apache.pdfbox.io.RandomAccessReadBufferedFile";
+declare namespace PDRectangle="org.apache.pdfbox.pdmodel.common.PDRectangle";
+
 declare namespace File ="java:java.io.File";
 
 
@@ -44,20 +48,30 @@ as item()*{
 
 
 (:~ open pdf using fetch:binary, returns pdf object :)
-declare function pdfbox:open($pdfpath as xs:string)
+declare function pdfbox:open($pdfsrc as item())
 as item(){
-pdfbox:open($pdfpath, map{})
+pdfbox:open($pdfsrc, map{})
 };
 
-(:~ open pdf using with password option, returns pdf object :)
-declare function pdfbox:open($pdfpath as xs:string, $opts as map(*))
+(:~ open pdf from file/url/binary, opts may have password , returns pdf object 
+@param $pdfsrc a fetchable url or a xs:base64Binary 
+@param $opts map {"password":} 
+:)
+declare function pdfbox:open($pdfsrc as item(), $opts as map(*))
 as item(){
   try{
-    if($opts?password)
-    then Loader:loadPDF( RandomAccessReadBuffer:new(fetch:binary($pdfpath)),$opts?password)
-    else Loader:loadPDF( RandomAccessReadBuffer:new(fetch:binary($pdfpath)))
+
+      if($pdfsrc instance of xs:base64Binary)
+      then Loader:loadPDF( $pdfsrc,string($opts?password))
+      else if(starts-with($pdfsrc,"http"))
+           then Loader:loadPDF( fetch:binary($pdfsrc),string($opts?password))
+           else  Loader:loadPDF(RandomAccessReadBufferedFile:new($pdfsrc),string($opts?password))
+
 } catch *{
-    error(xs:QName("pdfbox:open"),"Failed to open: " || $pdfpath || " " || $err:description)
+    let $loc:=if($pdfsrc instance of xs:base64Binary)
+              then "xs:base64Binary"
+              else $pdfsrc
+    return error(xs:QName("pdfbox:open"),"Failed PDF load " || $loc || " " || $err:description)
 }
 };
 
@@ -99,10 +113,10 @@ as xs:integer{
 };
 
 (:~ render of $pdf page to image
-options.format="gif,"png" etc, options.scale= 1 is 72 dpi?? :)
+options.format="bmp jpg png gif" etc, options.scale= 1 is 72 dpi?? :)
 declare function pdfbox:page-image($pdf as item(),$pageNo as xs:integer,$options as map(*))
 as xs:base64Binary{
-  let $options:=map:merge(($options,map{"format":"gif","scale":1}))
+  let $options:=map:merge(($options,map{"format":"jpg","scale":1}))
   let $bufferedImage:=PDFRenderer:new($pdf)=>PDFRenderer:renderImage($pageNo,$options?scale)
   let $bytes:=Q{java:java.io.ByteArrayOutputStream}new()
   let $_:=Q{java:javax.imageio.ImageIO}write($bufferedImage ,$options?format,  $bytes)
@@ -175,18 +189,31 @@ as map(*){
  pdfbox:report($pdfpaths,map:keys($pdfbox:property-map))
 };
 
-(:~ summary CSV style info for named properties for $pdfpaths :)
-declare function pdfbox:report($pdfpaths as xs:string*, $properties as xs:string*)
+(:~ summary CSV style info for named properties for $pdfpaths 
+@see https://docs.basex.org/main/CSV_Functions#xquery
+:)
+declare function pdfbox:report($pdfpaths as item()*, $properties as xs:string*)
 as map(*){
   map{"names":   array{"path",$properties},
   
       "records": for $path in $pdfpaths
-                 let $pdf:=pdfbox:open($path)
-                 return fold-left($properties,
-                                  array{$path},
+                 let $name:=if($path instance of xs:base64Binary) then "binary" else $path
+                 return try{
+                  let $pdf:=pdfbox:open($path)
+                  return (fold-left($properties,
+                                  array{$name},
                                   function($result as array(*),$prop as xs:string){
                                     array:append($result, string(pdfbox:property($pdf, $prop)))}
-                 )
+                         ), pdfbox:close($pdf)
+                         )
+                 } catch *{
+                      fold-left($properties,
+                                array{$name},
+                                function($result as array(*),$prop as xs:string){
+                                    array:append($result, "#ERROR")}
+                               )
+                 }
+               
   }
 };
 
@@ -318,14 +345,22 @@ as xs:string*
 };
 
 (:~ return text on $pageNo :)
-declare function pdfbox:page-text($doc as item(), $pageNo as xs:integer)
+declare function pdfbox:page-text($pdf as item(), $pageNo as xs:integer)
 as xs:string{
   let $tStripper := (# db:wrapjava instance #) {
          PDFTextStripper:new()
          => PDFTextStripper:setStartPage($pageNo)
          => PDFTextStripper:setEndPage($pageNo)
        }
-  return (# db:checkstrings #) {PDFTextStripper:getText($tStripper,$doc)}
+  return (# db:checkstrings #) {PDFTextStripper:getText($tStripper,$pdf)}
+};
+
+(:~ return size of $pageNo zero based :)
+declare function pdfbox:page-size($pdf as item(), $pageNo as xs:integer)
+as xs:string{
+  PDDocument:getPage($pdf, $pageNo)
+  =>PDPage:getMediaBox()
+  =>PDRectangle:toString()
 };
 
 (:~  version of  Apache Pdfbox in use  e.g. "3.0.4" :)

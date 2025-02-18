@@ -1,4 +1,4 @@
-
+(: WIP :)
 import module namespace build = 'urn:quodatum:build1' at 'build.xqm';
 
 declare variable $base:= file:resolve-path("../",static-base-uri())=>trace("base ");

@@ -22,11 +22,11 @@
   "expkg_zone58": {
     "namespace": "org.expkg_zone58.Pdfbox3",
     "main-class": "org.apache.pdfbox.pdmodel.PDDocument",
-    "maven": [
-      "org/apache/pdfbox/pdfbox/3.0.4/pdfbox-3.0.4.jar",
-      "org/apache/pdfbox/pdfbox-io/3.0.4/pdfbox-io-3.0.4.jar",
-      "org/apache/pdfbox/fontbox/3.0.4/fontbox-3.0.4.jar",
-      "commons-logging/commons-logging/1.3.4/commons-logging-1.3.4.jar"
+    "maven2": [
+      "org.apache.pdfbox:pdfbox:3.0.4",
+      "org.apache.pdfbox:pdfbox-io:3.0.4",
+      "org.apache.pdfbox:fontbox:3.0.4",
+      "commons-logging:commons-logging:1.3.4"
     ]
 
   }

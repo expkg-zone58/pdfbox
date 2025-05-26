@@ -1,0 +1,1 @@
+{"cells":[{"kind":2,"language":"xquery","value":"import module namespace pdfbox=\"org.expkg_zone58.Pdfbox3\";\r\nlet $a:=pdfbox:open(\"C:\\Users\\mrwhe\\git\\expkg-zone58\\pdfbox\\data\\1e\\gpg-book\\2-5-1\\B4541C-TRD\\255894---Book_File-Web_PDF_9798400668005_486272.pdf\")\r\nreturn pdfbox:labels($a)"}]}

@@ -98,7 +98,7 @@ as xs:base64Binary{
          =>convert:integers-to-base64()
 };
 
-(: release references to $pdf:)
+(:~ release references to $pdf:)
 declare function pdfbox:close($pdf as item())
 as empty-sequence(){
   (# db:wrapjava void #) {
@@ -112,7 +112,7 @@ as xs:integer{
   PDDocument:getNumberOfPages($pdf)
 };
 
-(:~ render of $pdf page to image
+(:~ pdf page as image (zero is cover)
 options.format="bmp jpg png gif" etc, options.scale= 1 is 72 dpi?? :)
 declare function pdfbox:page-image($pdf as item(),$pageNo as xs:integer,$options as map(*))
 as xs:base64Binary{
@@ -284,6 +284,7 @@ as element(outline)?{
          else ()
 };
 
+(:~ recursive ouutline map to XML :)
 declare %private function pdfbox:bookmark-xml($outline as map(*)*)
 as element(bookmark)*
 {
@@ -355,7 +356,7 @@ as xs:string{
   return (# db:checkstrings #) {PDFTextStripper:getText($tStripper,$pdf)}
 };
 
-(:~ return size of $pageNo zero based :)
+(:~ return size of $pageNo (zero is cover :)
 declare function pdfbox:page-size($pdf as item(), $pageNo as xs:integer)
 as xs:string{
   PDDocument:getPage($pdf, $pageNo)
@@ -363,7 +364,7 @@ as xs:string{
   =>PDRectangle:toString()
 };
 
-(:~  version of  Apache Pdfbox in use  e.g. "3.0.4" :)
+(:~  version of Apache Pdfbox in use  e.g. "3.0.4" :)
 declare function pdfbox:version()
 as xs:string{
   Q{java:org.apache.pdfbox.util.Version}getVersion()

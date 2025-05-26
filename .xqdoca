@@ -1,4 +1,4 @@
 <xqdoca xmlns="urn:quodatum:xqdoca" version="1.0">
-    <source>jars/</source>
+    <source>src/</source>
     <target>docs/xqdoc/</target>
 </xqdoca>

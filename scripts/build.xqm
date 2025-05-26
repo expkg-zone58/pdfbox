@@ -94,7 +94,7 @@ as xs:string{
 
 declare function build:xar-create()
 as xs:base64Binary{
-  let $_:=build:maven-download($build:PKG?expkg_zone58?maven=>array:flatten(),$build:base || "jars/")
+  let $_:=build:maven-download($build:PKG?expkg_zone58?maven2=>array:flatten(),$build:base || "jars/")
   let $entries:=
             build:xar-add(map{},build:jars("content"),build:jars("download")!build:content(.))
             =>build:xar-add("content/Pdfbox3.xqm",build:content("src/Pdfbox3.xqm"))
@@ -124,25 +124,43 @@ as xs:string{
 
 declare function build:jars($style as xs:string)
 as xs:string*{
-let $src:=$build:PKG?expkg_zone58?maven=>array:flatten()
-let $names:= $src!replace(.,"^.*/","")
+let $artifacts:=$build:PKG?expkg_zone58?maven2=>array:flatten()
+let $names:= $artifacts!build:maven-slug(.)!file:name(.)
 return switch($style)
 case "name" return $names
 case "download" return $names!concat("jars/",.)
 case "content" return $names!concat("content/",.)
-default return $src
+default return $names
 };
 
 (:~ download $files from $urls to  $destdir:)
 declare variable $build:REPO as xs:string external :="https://repo1.maven.org/maven2/";
-declare function build:maven-download($urls as xs:string*,$destdir as xs:string)
+
+declare function build:maven-download($artifacts as xs:string*,$destdir as xs:string)
 as empty-sequence(){
     file:create-dir($destdir),    
-    for $f in $urls
-    let $dest:=$destdir || replace($f,"^.*/","") 
+    for $id in $artifacts
+    let $slug:=build:maven-slug($id)
+    let $dest:=$destdir || file:name($slug) 
     where not(file:exists($dest))
-    return build:write-binary($dest, fetch:binary(resolve-uri($f,$build:REPO)
+    return build:write-binary($dest, fetch:binary(resolve-uri($slug,$build:REPO)
            =>trace("Download: ")))
+};
+
+(:~ non-rooted url for maven artifact :)
+declare function build:maven-slug($artifact as xs:string)
+as xs:string{
+   
+   let $parts:=if(matches($artifact,'[^:]+:[^:]+:[^:]+'))
+               then tokenize($artifact,":")
+               else error(xs:QName('build:maven-slug'),"invalid format required 'groupId:id:version'")
+  
+    return (
+            translate($parts[1],".","/"),
+            $parts[2],
+            $parts[3],
+            string-join(($parts[2] , "-" , $parts[3] , ".jar"),"")
+    )=>string-join("/")
 };
 
 (:~ write-binary, creating dir if required :)

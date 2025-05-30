@@ -9,6 +9,8 @@ declare namespace pkg='http://expath.org/ns/pkg';
 declare variable $build:archive-opts:= map { "format" : "zip", "algorithm" : "deflate" };
 
 declare variable $build:base:= file:resolve-path("../",static-base-uri())=>trace("base ");
+
+(:~ load "npm style" package.json :)
 declare variable $build:PKG:=json:doc(file:resolve-path("package.json",$build:base),map{"format":"xquery"});
 
 (:~ return binary for fat jar from jars in $input-dir 

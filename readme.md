@@ -41,7 +41,7 @@ import module namespace pdfbox="org.expkg_zone58.Pdfbox3";
 
 pdfbox:with-pdf("...path/to/pdf.pdf",
  function($pdf){
-  (1 to pdfbox:page-count($pdf))!pdfbox:page-text($pdf,.)
+  (1 to pdfbox:number-of-pages($pdf))!pdfbox:page-text($pdf,.)
  }
 )
 ```

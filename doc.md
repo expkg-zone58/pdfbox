@@ -78,10 +78,10 @@ let $text := pdfbox:page-text($pdf, 1)  (: Extract text from page 1 :)
 ---
 
 ### Rendering a Page as an Image
-You can render a PDF page as an image using the `pdfbox:page-image` function. Supported formats include `jpg`, `png`, `bmp`, and `gif`.
+You can render a PDF page as an image using the `pdfbox:page-render` function. Supported formats include `jpg`, `png`, `bmp`, and `gif`.
 
 ```xquery
-let $image := pdfbox:page-image($pdf, 1, map{"format": "png", "scale": 2})
+let $image := pdfbox:page-render($pdf, 1, map{"format": "png", "scale": 2})
 ```
 
 - `format`: The image format (default is `jpg`).
@@ -90,10 +90,10 @@ let $image := pdfbox:page-image($pdf, 1, map{"format": "png", "scale": 2})
 ---
 
 ### Extracting a Range of Pages
-To extract a range of pages from a PDF, use the `pdfbox:extract` function.
+To extract a range of pages from a PDF, use the `pdfbox:extract-range` function.
 
 ```xquery
-let $extracted := pdfbox:extract($pdf, 1, 3)  (: Extract pages 1 to 3 :)
+let $extracted := pdfbox:extract-range($pdf, 1, 3)  (: Extract pages 1 to 3 :)
 ```
 
 The result is a new PDF document in binary format.

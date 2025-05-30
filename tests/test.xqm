@@ -9,7 +9,7 @@ declare variable $test:base:=file:base-dir()=>file:parent();
 declare %unit:test
 function test:pdfbox-version(){
     let $v:= pdfbox:version()=>trace("VER: ")
-    return unit:assert-equals($v,"3.0.4")
+    return unit:assert-equals($v,"3.0.5")
 };
 
 declare %unit:test
@@ -22,7 +22,7 @@ function test:specification(){
 declare %unit:test
 function test:page-count(){
     let $pdf:=test:open("samples.pdf/BaseX100.pdf")
-    let $pages:=pdfbox:page-count($pdf)
+    let $pages:=pdfbox:number-of-pages($pdf)
     return unit:assert-equals($pages,521)
 };
 
@@ -53,7 +53,7 @@ function test:labels(){
 
  let $labels:=pdfbox:labels($pdf) 
  return (
-   unit:assert-equals(count($labels),pdfbox:page-count($pdf)),
+   unit:assert-equals(count($labels),pdfbox:number-of-pages($pdf)),
    unit:assert($labels[1]="i") ,
    unit:assert($labels[27]="1")
  )
@@ -63,7 +63,7 @@ declare %unit:test
 function test:extract(){
  let $pdf:=test:open("samples.pdf/BaseX100.pdf")
  let $dest:=file:create-temp-file("test",".pdf")=>trace("DEST: ")
- let $bin:=pdfbox:extract($pdf,2,12)
+ let $bin:=pdfbox:extract-range($pdf,2,12)
  return unit:assert(true())
 };
 
@@ -77,7 +77,7 @@ let $pdf:=test:open("samples.pdf/BaseX100.pdf")
 declare %unit:test
 function test:page-image(){
  let $pdf:=test:open("samples.pdf/BaseX100.pdf")
- let $image:=pdfbox:page-image($pdf,0,map{})
+ let $image:=pdfbox:page-render($pdf,0,map{})
  return unit:assert(true())
 };
 
@@ -94,7 +94,7 @@ declare %unit:test
 function test:with-url(){
  let $url:="https://files.basex.org/publications/Gath%20et%20al.%20%5b2009%5d,%20INEX%20Efficiency%20Track%20meets%20XQuery%20Full%20Text%20in%20BaseX.pdf"
 
- let $count:=pdfbox:with-pdf($url,pdfbox:page-count#1)
+ let $count:=pdfbox:with-pdf($url,pdfbox:number-of-pages#1)
  return unit:assert-equals($count,6)
 };
 
@@ -141,13 +141,13 @@ function test:property(){
 declare %unit:test("expected", "pdfbox:property")
 function test:property-bad(){
     let $pdf:=test:open("samples.pdf/BaseX100.pdf")
-    let $title:=pdfbox:property($pdf, "totle")
+    let $title:=pdfbox:property($pdf, "badname")
     return unit:assert(exists($title))
 };
-(:~ Test for pdfbox:defined-properties function :)
+(:~ Test for pdfbox:property-names function :)
 declare %unit:test
 function test:defined-properties(){
-    let $properties:=pdfbox:defined-properties()
+    let $properties:=pdfbox:property-names()
     return unit:assert(exists($properties))
 };
 

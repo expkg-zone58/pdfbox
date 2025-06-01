@@ -2,4 +2,3 @@ data/
 dist/
 jars/*
 !jars/.gitignore
-docs/xqdoca/

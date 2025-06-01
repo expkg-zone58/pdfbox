@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><meta http-equiv="Generator" content="xqdoca - https://github.com/quodatum/xqdoca"><title>Module imports diagram - xqDocA</title><link rel="shortcut icon" type="image/x-icon" href="resources/xqdoc.png"><link rel="stylesheet" type="text/css" href="resources/prism/1.29.0/prism.css"><link rel="stylesheet" type="text/css" href="resources/page.css"><!--
+        <link rel="stylesheet" type="text/css" href="{ $resources }query.css" />
+        <link rel="stylesheet" type="text/css" href="{ $resources }base.css" /> 
+        --></head><body><nav id="toc" style="position:absolute;top:0"><span><span class="badge badge-info">src</span> - Module dependancy diagram</span><span class="ml-2"><a href="annotations.html" title="Summary of XQuery annotation use " class="badge badge-pill badge-light" style="margin-left:1em" target="_self">annotations</a><a href="imports.html" title="Summary of import usage " class="badge badge-pill badge-light" style="margin-left:1em" target="_self">imports</a><a href="mermaid.html" title="Project wide module imports as html mermaid class diagram " class="badge badge-pill badge-light" style="margin-left:1em" target="_self">imports-diag</a><a href="mermaid.mmd" title="Project wide module imports as a mermaid class diagram " class="badge badge-pill badge-light" style="margin-left:1em" target="_blank">imports-diag.mmd</a><a href="index.html" title="Index of sources " class="badge badge-pill badge-light" style="margin-left:1em" target="_self">report</a><a href="restxq.html" title="Summary of REST interface " class="badge badge-pill badge-light" style="margin-left:1em" target="_self">restxq</a><a href="validation-report.xml" title="validate generated xqdoc files " class="badge badge-pill badge-light" style="margin-left:1em" target="_blank">xqdoc-validate</a><a href="xqdoca.xml" title="xqDocA run configuration report (XML) " class="badge badge-pill badge-light" style="margin-left:1em" target="_blank">xqdoca.xml</a></span></nav><div class="mermaid">---
+title: something here
+config:
+  theme: base
+  securityLevel: loose
+--- 
+classDiagram
+direction TB
+
+class RESTXQ:::cssrest  
+class INVOKE:::cssmain  
+class TEST:::cssunit
+
+class pdfbox { &lt;&lt; Pdfbox3.xqm &gt;&gt;}
+
+
+
+classDef cssrest fill:palegreen
+classDef cssmain fill:powderblue
+classDef cssunit fill:yellow
+
+link pdfbox "modules/F000001/index.html" "This is a tooltip for org.expkg_zone58.Pdfbox3"
+
+
+</div><script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+   mermaid.initialize({
+  startOnLoad:true,
+  logLevel: "error", 
+  securityLevel: "loose", 
+  theme: (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" :  "default" 
+    });</script></body></html>

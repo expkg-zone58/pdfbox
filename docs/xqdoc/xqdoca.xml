@@ -1,0 +1,13 @@
+<xqdoca created="2025-06-01T21:16:07.687+01:00"><xqdoca>0.9.1</xqdoca><target>docs/xqdoc/</target><outputs><global>
+            report
+            restxq
+            imports
+            imports-diag imports-diag.mmd 
+            annotations 
+            xqdoca.xml
+            xqdoc-validate
+        </global><module>
+            module 
+            xqdoc 
+            xqparse
+        </module></outputs><platform>basex</platform><extensions>*.xqm,*.xq,*.xquery</extensions><project>src</project><source>src/</source><xqdoc><refs>true</refs><body-items>true</body-items><version>1.1</version><body-full>true</body-full></xqdoc></xqdoca>

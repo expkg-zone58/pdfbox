@@ -1,0 +1,24 @@
+---
+title: something here
+config:
+  theme: base
+  securityLevel: loose
+--- 
+classDiagram
+direction TB
+
+class RESTXQ:::cssrest  
+class INVOKE:::cssmain  
+class TEST:::cssunit
+
+class pdfbox { << Pdfbox3.xqm >>}
+
+
+
+classDef cssrest fill:palegreen
+classDef cssmain fill:powderblue
+classDef cssunit fill:yellow
+
+link pdfbox "modules/F000001/index.html" "This is a tooltip for org.expkg_zone58.Pdfbox3"
+
+

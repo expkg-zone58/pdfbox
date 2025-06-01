@@ -3,7 +3,7 @@ xquery version '3.1';
 A BaseX 10.7+ interface to pdfbox 3.0 https://pdfbox.apache.org/ , 
 requires pdfbox jars on classpath, i.e. in custom or xar
 tested with pdfbox-app-3.0.5.jar
-@see <a href="https://pdfbox.apache.org/download.cgi">download</a>
+@see https://pdfbox.apache.org/download.cgi
 @javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.5/
 @author Andy Bunce 2025
 :)
@@ -22,6 +22,12 @@ declare namespace PDDocumentOutline ="java:org.apache.pdfbox.pdmodel.interactive
 declare namespace PDDocumentInformation ="java:org.apache.pdfbox.pdmodel.PDDocumentInformation";
 declare namespace PDOutlineItem="java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem";
 declare namespace PDFRenderer="java:org.apache.pdfbox.rendering.PDFRenderer";
+declare namespace PDMetadata="java:org.apache.pdfbox.pdmodel.common.PDMetadata";
+declare namespace COSInputStream="java:org.apache.pdfbox.cos.COSInputStream";
+
+declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
+
+
 declare namespace RandomAccessReadBuffer="java:org.apache.pdfbox.io.RandomAccessReadBuffer";
 declare namespace RandomAccessReadBufferedFile = "java:org.apache.pdfbox.io.RandomAccessReadBufferedFile";
 declare namespace PDRectangle="org.apache.pdfbox.pdmodel.common.PDRectangle";
@@ -89,7 +95,7 @@ as xs:string{
    PDDocument:save($pdf, File:new($savepath)),$savepath
 };
 
-(:~ Create binary representation of $pdf as xs:base64Binary :)
+(:~ Create binary representation of $pdf object as xs:base64Binary :)
 declare function pdfbox:binary($pdf as item())
 as xs:base64Binary{
    let $bytes:=Q{java:java.io.ByteArrayOutputStream}new()
@@ -124,6 +130,7 @@ as xs:base64Binary{
          =>convert:integers-to-base64()
  
 };
+
 
 (:~ property access map
    keys are property names, 
@@ -233,6 +240,37 @@ as xs:boolean{
   =>exists()
 };
 
+(:~ XMP metadata as "RDF" document
+@note usually rdf:RDF root, but sometimes x:xmpmeta 
+:)
+declare function pdfbox:metadata($pdf as item())
+as document-node(element(*))?
+{
+  let $m:=PDDocument:getDocumentCatalog($pdf)
+         =>PDDocumentCatalog:getMetadata()
+  return  if(exists($m))
+          then 
+              let $is:=PDMetadata:exportXMPMetadata($m)
+              return pdfbox:do-until(
+                        map{"n":0,"data":""},
+
+                        function($input,$pos ) {  pdfbox:read-stream($is,$input?data)},
+
+                        function($output,$pos) { $output?n eq -1 }     
+                     )?data=>parse-xml()
+          else ()
+};
+
+(:~ read next block from XMP stream :)
+declare %private function pdfbox:read-stream($is,$read as xs:string)
+as map(*){
+  let $blen:=4096
+  let $buff:=Q{java:java.util.Arrays}copyOf(array{xs:byte(0)},$blen)
+  let $n:= COSInputStream:read($is,$buff,xs:int(0),xs:int($blen))
+  let $data:=convert:integers-to-base64(subsequence($buff,1,$n))=>convert:binary-to-string()
+  return map{"n":$n, "data": $read || $data}
+};
+
 (:~ outline for $pdf as map()* :)
 declare function pdfbox:outline($pdf as item())
 as map(*)*{
@@ -321,7 +359,10 @@ as item()?
       =>PDPageTree:indexOf($page)
 };            
 
-(:~  Return new extract PDF doc as xs:base64Binary, using a 1 based page range  :)
+(:~  Return new  PDF doc with pages from $start to $end as xs:base64Binary, (1 based)  
+@param $start first page to include
+@param $end last page to include
+:)
 declare function pdfbox:extract-range($pdf as item(), 
              $start as xs:integer,$end as xs:integer)
 as xs:base64Binary
@@ -356,8 +397,10 @@ as xs:string{
   return (# db:checkstrings #) {PDFTextStripper:getText($tStripper,$pdf)}
 };
 
-(:~ return size of $pageNo (zero is cover :)
-declare function pdfbox:page-size($pdf as item(), $pageNo as xs:integer)
+(:~ return size of $pageNo (zero based)
+@result e.g. [0.0,0.0,168.0,239.52]
+ :)
+declare function pdfbox:page-media-box($pdf as item(), $pageNo as xs:integer)
 as xs:string{
   PDDocument:getPage($pdf, $pageNo)
   =>PDPage:getMediaBox()
@@ -380,7 +423,7 @@ as xs:string?{
 };
 
 (:~ fn:do-until shim for BaseX 9+10 
-if  fn:do-until not found use hof:until
+if  fn:do-until not found use hof:until, note: $pos always zero
 :)
 declare %private function pdfbox:do-until(
  $input 	as item()*, 	

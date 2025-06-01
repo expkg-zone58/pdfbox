@@ -1,6 +1,6 @@
 {
   "name": "pdfbox",
-  "version": "0.3.1",
+  "version": "0.3.6",
   "description": "A BaseX interface to Apache Pdfbox version 3",
   "main": "src/Pdfbox3.xqm",
   "homepage": "https://github.com/expkg-zone58/pdfbox#readme",
@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "%BASEX10%/bin/basex  -Wt tests",
-    "docs": "xqdoca"
+    "docs": "xqdoca",
+    "build": "%BASEX10%/bin/basex scripts/make-xar.xq"
   },
   "keywords": [
     "pdf",
@@ -22,7 +23,7 @@
   "expkg_zone58": {
     "namespace": "org.expkg_zone58.Pdfbox3",
     "main-class": "org.apache.pdfbox.pdmodel.PDDocument",
-    "manifest-jar" :"pdfbox-3.0.4.jar",
+    "manifest-jar" :"pdfbox-3.0.5.jar",
     "output" :  "dist/pdfbox-3.0.5.fat.jar",
     "maven2": [
       "org.apache.pdfbox:pdfbox:3.0.5",

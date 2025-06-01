@@ -162,10 +162,10 @@ let $labels := pdfbox:labels($pdf)
 ---
 
 ### Getting Page Size
-To get the size of a specific page, use the `pdfbox:page-size` function.
+To get the size of a specific page, use the `pdfbox:page-media-box` function.
 
 ```xquery
-let $size := pdfbox:page-size($pdf, 1)  (: Get size of page 1 :)
+let $size := pdfbox:page-media-box($pdf, 1)  (: Get size of page 1 :)
 ```
 
 ---

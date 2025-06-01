@@ -1,3 +1,9 @@
+# 0.3.6 2025-05-31
+* Add metadata function
+* rename page-size->page-media-box
+# 0.3.1 2025-05-28
+* update to Apache pdfbox to 3.0.5
+* API name changes e.g. page-count->number-of-pages
 # 0.2.7 2025-02-18
 * reduce memory use
 * add open from xs:base64Binary

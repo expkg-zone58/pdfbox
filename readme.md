@@ -20,12 +20,12 @@ The features focus on extracting information from PDFs rather than creation or e
 * save pdf page range to a new pdf.
 * save image of rendered pdf page.
 * open PDF with password
+* read XMP metadata 
+* Page size information
 * support for xs:base64Binary in function inputs and outputs to facilitate database and store usage.
 
 ### Not supported:
-* creating completely new PDFs
-* Page size information
-* XMP processing
+* creating PDFs with new content
 * Form processing
 
 ## Documentation

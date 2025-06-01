@@ -36,7 +36,7 @@ declare namespace File ="java:java.io.File";
 
 
 
-(:~ with-document pattern: open pdf,apply function, close pdf
+(:~ "With-document" pattern: open pdf,apply function, close pdf
  creates a local pdfobject and ensures it is closed after use
 e.g pdfbox:with-pdf("path...",pdfbox:page-text(?,5))
 :)
@@ -322,7 +322,7 @@ as element(outline)?{
          else ()
 };
 
-(:~ recursive ouutline map to XML :)
+(:~ Convert outline map to XML :)
 declare %private function pdfbox:bookmark-xml($outline as map(*)*)
 as element(bookmark)*
 {
@@ -332,7 +332,7 @@ as element(bookmark)*
   </bookmark>
 };
 
-(:~ return bookmark info for $bookmark
+(:~ Return bookmark info for $bookmark
 @return map{index:..,title:..,hasChildren:..}
 :)
 declare %private function pdfbox:bookmark($bookmark as item(),$pdf as item())
@@ -397,7 +397,7 @@ as xs:string{
   return (# db:checkstrings #) {PDFTextStripper:getText($tStripper,$pdf)}
 };
 
-(:~ return size of $pageNo (zero based)
+(:~ Return size of $pageNo (zero based)
 @result e.g. [0.0,0.0,168.0,239.52]
  :)
 declare function pdfbox:page-media-box($pdf as item(), $pageNo as xs:integer)
@@ -407,13 +407,13 @@ as xs:string{
   =>PDRectangle:toString()
 };
 
-(:~  version of Apache Pdfbox in use  e.g. "3.0.4" :)
+(:~  Version of Apache Pdfbox in use  e.g. "3.0.4" :)
 declare function pdfbox:version()
 as xs:string{
   Q{java:org.apache.pdfbox.util.Version}getVersion()
 };
 
-(:~ convert date :)
+(:~ Convert date :)
 declare %private
 function pdfbox:gregToISO($item as item()?)
 as xs:string?{

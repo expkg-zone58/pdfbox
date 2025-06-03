@@ -1,12 +1,14 @@
 <!DOCTYPE html><html xmlns="http:/www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/><meta http-equiv="Generator" content="xqdoca - https://github.com/quodatum/xqdoca"/><title>src - xqDocA - xqDocA</title><link rel="shortcut icon" type="image/x-icon" href="../../resources/xqdoc.png"/><link rel="stylesheet" type="text/css" href="../../resources/prism/1.29.0/prism.css"/><link rel="stylesheet" type="text/css" href="../../resources/page.css"/><link rel="stylesheet" type="text/css" href="../../resources/query.css"/><link rel="stylesheet" type="text/css" href="../../resources/base.css"/></head><body class="home" id="top"><div id="main" class="line-numbers"><div><h1><span class="badge badge-info">org.expkg_zone58.Pdfbox3</span> 
                     <small>library module</small><div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></h1><nav id="toc"><h2><a href="../../index.html">src</a>
                 / Module
-       </h2><h3><a id="contents"></a><span class="">org.expkg_zone58.Pdfbox3</span></h3><ol class="toc"><li><a href="#summary"><span class="secno">1 </span><span class="content">Summary</span></a></li><li><a href="#imports"><span class="secno">2 </span><span class="content">Imports</span></a></li><li><a href="#variables"><span class="secno">3 </span><span class="content">Variables</span></a><ol class="toc"><li><a href="#$pdfbox:property-map"><span class="secno">3.1</span><span class="content">$pdfbox:property-map</span><div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></a></li></ol></li><li><a href="#functions"><span class="secno">4 </span><span class="content">Functions</span></a><ol class="toc"><li><a href="#pdfbox:binary"><span class="secno">4.1</span><span class="content" title="Create binary representation of $pdf object as xs:base64Binary">binary<div style="float:right"></div></span></a></li><li><a href="#pdfbox:bookmark"><span class="secno">4.2</span><span class="content" title="return bookmark info for $bookmark">bookmark<div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></span></a></li><li><a href="#pdfbox:bookmark-xml"><span class="secno">4.3</span><span class="content" title="recursive ouutline map to XML">bookmark-xml<div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></span></a></li><li><a href="#pdfbox:close"><span class="secno">4.4</span><span class="content" title="Release any resources related to $pdf">close<div style="float:right"></div></span></a></li><li><a href="#pdfbox:do-until"><span class="secno">4.5</span><span class="content" title="fn:do-until shim for BaseX 9+10 if fn:do-until not found use hof:until, note: $pos always zero">do-until<div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></span></a></li><li><a href="#pdfbox:extract-range"><span class="secno">4.6</span><span class="content" title="Return new PDF doc with pages from $start to $end as xs:base64Binary, (1 based)">extract-range<div style="float:right"></div></span></a></li><li><a href="#pdfbox:find-page"><span class="secno">4.7</span><span class="content" title="pageIndex of $page in $pdf">find-page<div style="float:right"></div></span></a></li><li><a href="#pdfbox:gregToISO"><span class="secno">4.8</span><span class="content" title="convert date">gregToISO<div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></span></a></li><li><a href="#pdfbox:hasLabels"><span class="secno">4.9</span><span class="content" title="true if $pdf has Labels">hasLabels<div style="float:right"></div></span></a></li><li><a href="#pdfbox:hasOutline"><span class="secno">4.10</span><span class="content" title="true if $pdf has an outline">hasOutline<div style="float:right"></div></span></a></li><li><a href="#pdfbox:labels"><span class="secno">4.11</span><span class="content" title="pageLabel for every page or empty if none">labels<div style="float:right"></div></span></a></li><li><a href="#pdfbox:metadata"><span class="secno">4.12</span><span class="content" title="XMP metadata as &quot;RDF&quot; document">metadata<div style="float:right"></div></span></a></li><li><a href="#pdfbox:number-of-pages"><span class="secno">4.13</span><span class="content" title="Number of pages in PDF">number-of-pages<div style="float:right"></div></span></a></li><li><a href="#pdfbox:open"><span class="secno">4.14</span><span class="content" title="open pdf using fetch:binary, returns pdf object">open<div style="float:right"></div></span></a></li><li><a href="#pdfbox:outline"><span class="secno">4.15</span><span class="content" title="outline for $pdf as map()*">outline<div style="float:right"></div></span></a></li><li><a href="#pdfbox:outline-xml"><span class="secno">4.16</span><span class="content" title="PDF outline in xml format">outline-xml<div style="float:right"></div></span></a></li><li><a href="#pdfbox:outline_"><span class="secno">4.17</span><span class="content" title="BaseX bug 10.7? error if inlined in outline">outline_<div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></span></a></li><li><a href="#pdfbox:page-media-box"><span class="secno">4.18</span><span class="content" title="return size of $pageNo (zero based)">page-media-box<div style="float:right"></div></span></a></li><li><a href="#pdfbox:page-render"><span class="secno">4.19</span><span class="content" title="Pdf page as image (zero is cover) options.format=&quot;bmp jpg png gif&quot; etc, options.scale= 1 is 72 dpi??">page-render<div style="float:right"></div></span></a></li><li><a href="#pdfbox:page-text"><span class="secno">4.20</span><span class="content" title="return text on $pageNo">page-text<div style="float:right"></div></span></a></li><li><a href="#pdfbox:property"><span class="secno">4.21</span><span class="content" title="return value of $property for $pdf">property<div style="float:right"></div></span></a></li><li><a href="#pdfbox:property-names"><span class="secno">4.22</span><span class="content" title="known property names sorted">property-names<div style="float:right"></div></span></a></li><li><a href="#pdfbox:read-stream"><span class="secno">4.23</span><span class="content" title="read next block from XMP stream">read-stream<div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></span></a></li><li><a href="#pdfbox:report"><span class="secno">4.24</span><span class="content" title="summary CSV style info for all properties for $pdfpaths">report<div style="float:right"></div></span></a></li><li><a href="#pdfbox:save"><span class="secno">4.25</span><span class="content" title="Save pdf $pdf to filesystem at $savepath , returns $savepath">save<div style="float:right"></div></span></a></li><li><a href="#pdfbox:specification"><span class="secno">4.26</span><span class="content" title="The version of the PDF specification used by $pdf e.g &quot;1.4&quot; returned as string to avoid float rounding issues">specification<div style="float:right"></div></span></a></li><li><a href="#pdfbox:version"><span class="secno">4.27</span><span class="content" title="version of Apache Pdfbox in use e.g. &quot;3.0.4&quot;">version<div style="float:right"></div></span></a></li><li><a href="#pdfbox:with-pdf"><span class="secno">4.28</span><span class="content" title="with-document pattern: open pdf,apply function, close pdf creates a local pdfobject and ensures it is closed after use e.g pdfbox:with-pdf(&quot;path...&quot;,pdfbox:page-text(?,5))">with-pdf<div style="float:right"></div></span></a></li></ol></li><li><a href="#namespaces"><span class="secno">5 </span><span class="content">Namespaces</span></a></li><li><a href="#restxq"><span class="secno">6 </span><span class="content">RestXQ</span></a></li><li><a href="#source"><span class="secno">7 </span><span class="content">Source</span></a></li></ol></nav><section id="summary"><h2>Summary</h2><div>&#xD;
+       </h2><h3><a id="contents"></a><span class="">org.expkg_zone58.Pdfbox3</span></h3><ol class="toc"><li><a href="#summary"><span class="secno">1 </span><span class="content">Summary</span></a></li><li><a href="#imports"><span class="secno">2 </span><span class="content">Imports</span></a></li><li><a href="#variables"><span class="secno">3 </span><span class="content">Variables</span></a><ol class="toc"><li><a href="#$pdfbox:property-map"><span class="secno">3.1</span><span class="content">$pdfbox:property-map</span><div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></a></li></ol></li><li><a href="#functions"><span class="secno">4 </span><span class="content">Functions</span></a><ol class="toc"><li><a href="#pdfbox:binary"><span class="secno">4.1</span><span class="content" title="Create binary representation of $pdf object as xs:base64Binary">binary<div style="float:right"></div></span></a></li><li><a href="#pdfbox:bookmark"><span class="secno">4.2</span><span class="content" title="Return bookmark info for $bookmark">bookmark<div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></span></a></li><li><a href="#pdfbox:bookmark-xml"><span class="secno">4.3</span><span class="content" title="Convert outline map to XML">bookmark-xml<div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></span></a></li><li><a href="#pdfbox:close"><span class="secno">4.4</span><span class="content" title="Release any resources related to $pdf">close<div style="float:right"></div></span></a></li><li><a href="#pdfbox:do-until"><span class="secno">4.5</span><span class="content" title="fn:do-until shim for BaseX 9+10 if fn:do-until not found use hof:until, note: $pos always zero">do-until<div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></span></a></li><li><a href="#pdfbox:extract-range"><span class="secno">4.6</span><span class="content" title="Return new PDF doc with pages from $start to $end as xs:base64Binary, (1 based)">extract-range<div style="float:right"></div></span></a></li><li><a href="#pdfbox:find-page"><span class="secno">4.7</span><span class="content" title="pageIndex of $page in $pdf">find-page<div style="float:right"></div></span></a></li><li><a href="#pdfbox:gregToISO"><span class="secno">4.8</span><span class="content" title="Convert date">gregToISO<div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></span></a></li><li><a href="#pdfbox:label-as-map"><span class="secno">4.9</span><span class="content" title="express label/page-range for $page as map">label-as-map<div style="float:right"></div></span></a></li><li><a href="#pdfbox:label-as-string"><span class="secno">4.10</span><span class="content" title="label for $page formated as string">label-as-string<div style="float:right"></div></span></a></li><li><a href="#pdfbox:labels-as-map"><span class="secno">4.11</span><span class="content" title="sequence of maps for each label in">labels-as-map<div style="float:right"></div></span></a></li><li><a href="#pdfbox:labels-as-strings"><span class="secno">4.12</span><span class="content" title="sequence of label ranges defined in PDF as formatted strings">labels-as-strings<div style="float:right"></div></span></a></li><li><a href="#pdfbox:labels-by-page"><span class="secno">4.13</span><span class="content" title="pageLabel for every page from derived from page-ranges The returned sequence will contain at MOST as much entries as the document has pages.">labels-by-page<div style="float:right"></div></span></a></li><li><a href="#pdfbox:metadata"><span class="secno">4.14</span><span class="content" title="XMP metadata as &quot;RDF&quot; document">metadata<div style="float:right"></div></span></a></li><li><a href="#pdfbox:number-of-bookmarks"><span class="secno">4.15</span><span class="content" title="number of outline items">number-of-bookmarks<div style="float:right"></div></span></a></li><li><a href="#pdfbox:number-of-labels"><span class="secno">4.16</span><span class="content" title="The number of labels defined in PDF">number-of-labels<div style="float:right"></div></span></a></li><li><a href="#pdfbox:number-of-pages"><span class="secno">4.17</span><span class="content" title="Number of pages in PDF">number-of-pages<div style="float:right"></div></span></a></li><li><a href="#pdfbox:open"><span class="secno">4.18</span><span class="content" title="open pdf using fetch:binary, returns pdf object">open<div style="float:right"></div></span></a></li><li><a href="#pdfbox:outline"><span class="secno">4.19</span><span class="content" title="outline for $pdf as map()*">outline<div style="float:right"></div></span></a></li><li><a href="#pdfbox:outline-xml"><span class="secno">4.20</span><span class="content" title="PDF outline in xml format">outline-xml<div style="float:right"></div></span></a></li><li><a href="#pdfbox:outline_"><span class="secno">4.21</span><span class="content" title="BaseX bug 10.7? error if inlined in outline">outline_<div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></span></a></li><li><a href="#pdfbox:page-labels"><span class="secno">4.22</span><span class="content" title="get pagelabels exist">page-labels<div style="float:right"></div></span></a></li><li><a href="#pdfbox:page-media-box"><span class="secno">4.23</span><span class="content" title="Return size of $pageNo (zero based)">page-media-box<div style="float:right"></div></span></a></li><li><a href="#pdfbox:page-render"><span class="secno">4.24</span><span class="content" title="Pdf page as image (zero is cover) options.format=&quot;bmp jpg png gif&quot; etc, options.scale= 1 is 72 dpi??">page-render<div style="float:right"></div></span></a></li><li><a href="#pdfbox:page-text"><span class="secno">4.25</span><span class="content" title="return text on $pageNo">page-text<div style="float:right"></div></span></a></li><li><a href="#pdfbox:pdf-save"><span class="secno">4.26</span><span class="content" title="Save pdf $pdf to filesystem at $savepath , returns $savepath">pdf-save<div style="float:right"></div></span></a></li><li><a href="#pdfbox:property"><span class="secno">4.27</span><span class="content" title="return value of $property for $pdf">property<div style="float:right"></div></span></a></li><li><a href="#pdfbox:property-names"><span class="secno">4.28</span><span class="content" title="known property names sorted">property-names<div style="float:right"></div></span></a></li><li><a href="#pdfbox:read-stream"><span class="secno">4.29</span><span class="content" title="read next block from XMP stream">read-stream<div style="float:right"><span class="badge badge-dark" title="Private">P</span></div></span></a></li><li><a href="#pdfbox:report"><span class="secno">4.30</span><span class="content" title="summary CSV style info for all properties for $pdfpaths">report<div style="float:right"></div></span></a></li><li><a href="#pdfbox:report-save"><span class="secno">4.31</span><span class="content" title="convenience function to save report() data to file">report-save<div style="float:right"></div></span></a></li><li><a href="#pdfbox:specification"><span class="secno">4.32</span><span class="content" title="The version of the PDF specification used by $pdf e.g &quot;1.4&quot; returned as string to avoid float rounding issues">specification<div style="float:right"></div></span></a></li><li><a href="#pdfbox:version"><span class="secno">4.33</span><span class="content" title="Version of Apache Pdfbox in use e.g. &quot;3.0.4&quot;">version<div style="float:right"></div></span></a></li><li><a href="#pdfbox:with-pdf"><span class="secno">4.34</span><span class="content" title="&quot;With-document&quot; pattern: open pdf,apply $fn function, close pdf creates a local pdfobject and ensures it is closed after use e.g pdfbox:with-pdf(&quot;path...&quot;,pdfbox:page-text(?,5))">with-pdf<div style="float:right"></div></span></a></li></ol></li><li><a href="#namespaces"><span class="secno">5 </span><span class="content">Namespaces</span></a></li><li><a href="#restxq"><span class="secno">6 </span><span class="content">RestXQ</span></a></li><li><a href="#source"><span class="secno">7 </span><span class="content">Source</span></a></li></ol></nav><section id="summary"><h2>Summary</h2><div>&#xD;
 &#xD;
-A BaseX 10.7+ interface to pdfbox 3.0 https://pdfbox.apache.org/ ,&#xD;
-requires pdfbox jars on classpath, i.e. in custom or xar&#xD;
-tested with pdfbox-app-3.0.5.jar&#xD;
-</div><dl><dt title="1">See also</dt><dd><ul><li><span><a href="https://pdfbox.apache.org/download.cgi">https://pdfbox.apache.org/download.cgi</a></span></li></ul></dd></dl><dl><dt title="1">Authors</dt><dd><ul><li><span>Andy Bunce 2025</span></li></ul></dd></dl><dl><dt title="1">Custom</dt><dd><ul><li><span>Javadoc: <a href="https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.5/" target="_blank"><custom tag="javadoc">https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.5/</custom></a></span></li></ul></dd></dl><details><summary>Related documents</summary><table class="data"><thead><th>View</th><th>Description</th><th>Format</th></thead><tbody><tr><td><a href="xqdoc.xml" title="xqDoc xml file from the source module " class="badge badge-pill badge-light" style="margin-left:1em" target="_blank">xqdoc</a></td><td>xqDoc xml file from the source module</td><td>xml</td></tr><tr><td><a href="xqparse.xml" title="xqparse xml file from the source module " class="badge badge-pill badge-light" style="margin-left:1em" target="_blank">xqparse</a></td><td>xqparse xml file from the source module</td><td>xml</td></tr></tbody></table></details></section><section id="imports"><h2>Imports</h2><p>
+A BaseX 10.7+ interface to pdfbox3 https://pdfbox.apache.org/ ,&#xD;
+requires pdfbox jars on classpath, in lib/custom or xar&#xD;
+refer to the same concept. Also label and (page)range are used interchangably&#xD;
+</div><dl><dt title="1">See also</dt><dd><ul><li><span><a href="https://pdfbox.apache.org/download.cgi">https://pdfbox.apache.org/download.cgi</a></span></li></ul></dd></dl><dl><dt title="1">Authors</dt><dd><ul><li><span>Andy Bunce 2025</span></li></ul></dd></dl><dl><dt title="3">Custom</dt><dd><ul><li><span><span class="badge badge-pill badge-light">@note</span>:
+                            <span>following the java source the terms outline and bookmark</span></span></li><li><span><span class="badge badge-pill badge-light">@note</span>:
+                            <span>tested with pdfbox-app-3.0.5.jar</span></span></li><li><span>Javadoc: <a href="https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.5/" target="_blank"><custom tag="javadoc">https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.5/</custom></a></span></li></ul></dd></dl><details><summary>Related documents</summary><table class="data"><thead><th>View</th><th>Description</th><th>Format</th></thead><tbody><tr><td><a href="xqdoc.xml" title="xqDoc xml file from the source module " class="badge badge-pill badge-light" style="margin-left:1em" target="_blank">xqdoc</a></td><td>xqDoc xml file from the source module</td><td>xml</td></tr><tr><td><a href="xqparse.xml" title="xqparse xml file from the source module " class="badge badge-pill badge-light" style="margin-left:1em" target="_blank">xqparse</a></td><td>xqparse xml file from the source module</td><td>xml</td></tr></tbody></table></details></section><section id="imports"><h2>Imports</h2><p>
     This module is imported by
     <span class="badge badge-info">0</span> modules. It imports
     <span class="badge badge-info">0</span> modules.
@@ -14,12 +16,12 @@ tested with pdfbox-app-3.0.5.jar&#xD;
 property access map&#xD;
 keys are property names,&#xD;
 values are sequences of functions to get property from $pdf object&#xD;
-</dd><dt class="label">Type</dt><dd></dd></dl><details><summary>References 14 functions from 3 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getAuthor#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getCreationDate#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getCreator#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getKeywords#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getModificationDate#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getProducer#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getSubject#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getTitle#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}getDocumentInformation#1</span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}gregToISO#1" title="Pdfbox3.xqm">pdfbox:gregToISO#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}hasLabels#1" title="Pdfbox3.xqm">pdfbox:hasLabels#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}hasOutline#1" title="Pdfbox3.xqm">pdfbox:hasOutline#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}number-of-pages#1" title="Pdfbox3.xqm">pdfbox:number-of-pages#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}specification#1" title="Pdfbox3.xqm">pdfbox:specification#1</a></span></li></ul></details><details><summary>Annotations (1)</summary><table class="data"><tbody><tr><td><code class="function">%private</code></td><td><code class="arg">()</code></td></tr></tbody></table></details><details open="open"><summary>Source ( 35 lines)</summary><pre><code class="language-xquery" data-prismjs-copy="Copy to clipboard">variable $pdfbox:property-map:=map{&#xD;
-  "pageCount": pdfbox:number-of-pages#1,&#xD;
+</dd><dt class="label">Type</dt><dd></dd></dl><details><summary>References 15 functions from 3 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getAuthor#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getCreationDate#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getCreator#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getKeywords#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getModificationDate#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getProducer#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getSubject#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocumentInformation}getTitle#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}getDocumentInformation#1</span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}gregToISO#1" title="Pdfbox3.xqm">pdfbox:gregToISO#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}labels-as-strings#1" title="Pdfbox3.xqm">pdfbox:labels-as-strings#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}number-of-bookmarks#1" title="Pdfbox3.xqm">pdfbox:number-of-bookmarks#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}number-of-labels#1" title="Pdfbox3.xqm">pdfbox:number-of-labels#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}number-of-pages#1" title="Pdfbox3.xqm">pdfbox:number-of-pages#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}specification#1" title="Pdfbox3.xqm">pdfbox:specification#1</a></span></li></ul></details><details><summary>Annotations (1)</summary><table class="data"><tbody><tr><td><code class="function">%private</code></td><td><code class="arg">()</code></td></tr></tbody></table></details><details open="open"><summary>Source ( 36 lines)</summary><pre><code class="language-xquery" data-prismjs-copy="Copy to clipboard">variable $pdfbox:property-map:=map{&#xD;
+  "#pages": pdfbox:number-of-pages#1,&#xD;
 &#xD;
-  "hasOutline": pdfbox:hasOutline#1,&#xD;
+  "#bookmarks": pdfbox:number-of-bookmarks#1,&#xD;
 &#xD;
-  "hasLabels": pdfbox:hasLabels#1,&#xD;
+  "#labels": pdfbox:number-of-labels#1,&#xD;
 &#xD;
   "specification":pdfbox:specification#1,&#xD;
 &#xD;
@@ -47,7 +49,8 @@ values are sequences of functions to get property from $pdf object&#xD;
 &#xD;
   "modificationDate":  (PDDocument:getDocumentInformation#1,&#xD;
                         PDDocumentInformation:getModificationDate#1,&#xD;
-                        pdfbox:gregToISO#1)&#xD;
+                        pdfbox:gregToISO#1),&#xD;
+   "labels":      pdfbox:labels-as-strings#1                     &#xD;
 }</code></pre></details></div></section><section id="functions"><h2>Functions</h2><div class="div3"><h3><a id="pdfbox:binary"></a><a id="{org.expkg_zone58.Pdfbox3}binary#1"></a><a href="#pdfbox:binary">4.1 </a>pdfbox:binary</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}binary#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
 Create binary representation of $pdf object as xs:base64Binary</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:binary</code>
 		  ( 
@@ -58,7 +61,7 @@ as xs:base64Binary{&#xD;
    return  Q{java:java.io.ByteArrayOutputStream}toByteArray($bytes)&#xD;
          =&gt;convert:integers-to-base64()&#xD;
 }</code></pre></details></div><div class="div3"><h3><a id="pdfbox:bookmark"></a><a id="{org.expkg_zone58.Pdfbox3}bookmark#2"></a><a href="#pdfbox:bookmark">4.2 </a>pdfbox:bookmark</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}bookmark#2">#2</a><span style="margin-left:1em"><span class="badge badge-dark" title="Private">P</span></span></span></p><dt class="label">Summary</dt><dd>&#xD;
-return bookmark info for $bookmark&#xD;
+Return bookmark info for $bookmark&#xD;
 </dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:bookmark</code>
 		  ( 
 			<code class="arg">$bookmark</code><code class="as"> as </code><code class="type">item()</code>, <code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">map(*)</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>bookmark<code class="as"> as </code><code class="return-type">item()</code></li><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">map(*)</code> map{index:..,title:..,hasChildren:..}</li></ul></dd><details><summary>Referenced by 1 functions from 1 modules</summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}outline_#2" title="Pdfbox3.xqm">pdfbox:outline_#2</a></span></li></ul></details><details><summary>References 3 functions from 1 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem}findDestinationPage#2</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem}getTitle#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem}hasChildren#1</span></li></ul></details><details><summary>Annotations (1)</summary><table class="data"><tbody><tr><td><code class="function">%private</code></td><td><code class="arg">()</code></td></tr></tbody></table></details><details><summary>Source ( 10 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:bookmark($bookmark as item(),$pdf as item())&#xD;
@@ -71,7 +74,7 @@ as map(*)&#xD;
   "hasChildren": PDOutlineItem:hasChildren($bookmark)&#xD;
   }&#xD;
 }</code></pre></details></div><div class="div3"><h3><a id="pdfbox:bookmark-xml"></a><a id="{org.expkg_zone58.Pdfbox3}bookmark-xml#1"></a><a href="#pdfbox:bookmark-xml">4.3 </a>pdfbox:bookmark-xml</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}bookmark-xml#1">#1</a><span style="margin-left:1em"><span class="badge badge-dark" title="Private">P</span></span></span></p><dt class="label">Summary</dt><dd>&#xD;
-recursive ouutline map to XML</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:bookmark-xml</code>
+Convert outline map to XML</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:bookmark-xml</code>
 		  ( 
 			<code class="arg">$outline</code><code class="as"> as </code><code class="type">map(*)*</code> )<code class="as"> as </code><code class="type">element(bookmark)*</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>outline<code class="as"> as </code><code class="return-type">map(*)*</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">element(bookmark) *</code></li></ul></dd><details><summary>Referenced by 2 functions from 1 modules</summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}outline-xml#1" title="Pdfbox3.xqm">pdfbox:outline-xml#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}bookmark-xml#1" title="Pdfbox3.xqm">pdfbox:bookmark-xml#1</a></span></li></ul></details><details><summary>References 1 functions from 1 modules </summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}bookmark-xml#1" title="Pdfbox3.xqm">pdfbox:bookmark-xml#1</a></span></li></ul></details><details><summary>Annotations (1)</summary><table class="data"><tbody><tr><td><code class="function">%private</code></td><td><code class="arg">()</code></td></tr></tbody></table></details><details><summary>Source ( 8 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:bookmark-xml($outline as map(*)*)&#xD;
 as element(bookmark)*&#xD;
@@ -130,42 +133,78 @@ as item()?&#xD;
       =&gt;PDDocumentCatalog:getPages()&#xD;
       =&gt;PDPageTree:indexOf($page)&#xD;
 }</code></pre></details></div><div class="div3"><h3><a id="pdfbox:gregToISO"></a><a id="{org.expkg_zone58.Pdfbox3}gregToISO#1"></a><a href="#pdfbox:gregToISO">4.8 </a>pdfbox:gregToISO</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}gregToISO#1">#1</a><span style="margin-left:1em"><span class="badge badge-dark" title="Private">P</span></span></span></p><dt class="label">Summary</dt><dd>&#xD;
-convert date</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:gregToISO</code>
+Convert date</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:gregToISO</code>
 		  ( 
 			<code class="arg">$item</code><code class="as"> as </code><code class="type">item()?</code> )<code class="as"> as </code><code class="type">xs:string?</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>item<code class="as"> as </code><code class="return-type">item()?</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:string ?</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 2 functions from 2 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}exists#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:java.util.GregorianCalendar}toZonedDateTime#1</span></li></ul></details><details><summary>Annotations (1)</summary><table class="data"><tbody><tr><td><code class="function">%private</code></td><td><code class="arg">()</code></td></tr></tbody></table></details><details><summary>Source ( 6 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:gregToISO($item as item()?)&#xD;
 as xs:string?{&#xD;
  if(exists($item))&#xD;
  then Q{java:java.util.GregorianCalendar}toZonedDateTime($item)=&gt;string()&#xD;
  else ()&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:hasLabels"></a><a id="{org.expkg_zone58.Pdfbox3}hasLabels#1"></a><a href="#pdfbox:hasLabels">4.9 </a>pdfbox:hasLabels</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}hasLabels#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
-true if $pdf has Labels</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:hasLabels</code>
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:label-as-map"></a><a id="{org.expkg_zone58.Pdfbox3}label-as-map#2"></a><a href="#pdfbox:label-as-map">4.9 </a>pdfbox:label-as-map</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}label-as-map#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+express label/page-range for $page as map</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:label-as-map</code>
 		  ( 
-			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">xs:boolean</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:boolean</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 1 functions from 1 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}getDocumentCatalog#1</span></li></ul></details><details><summary>Source ( 6 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:hasLabels($pdf as item())&#xD;
-as xs:boolean{&#xD;
-  PDDocument:getDocumentCatalog($pdf)&#xD;
-  =&gt;PDDocumentCatalog:getPageLabels()&#xD;
-  =&gt;exists()&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:hasOutline"></a><a id="{org.expkg_zone58.Pdfbox3}hasOutline#1"></a><a href="#pdfbox:hasOutline">4.10 </a>pdfbox:hasOutline</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}hasOutline#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
-true if $pdf has an outline</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:hasOutline</code>
-		  ( 
-			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">xs:boolean</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:boolean</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 1 functions from 1 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}getDocumentCatalog#1</span></li></ul></details><details><summary>Source ( 6 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:hasOutline($pdf as item())&#xD;
-as xs:boolean{&#xD;
-  PDDocument:getDocumentCatalog($pdf)&#xD;
-  =&gt;PDDocumentCatalog:getDocumentOutline()&#xD;
-  =&gt;exists()&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:labels"></a><a id="{org.expkg_zone58.Pdfbox3}labels#1"></a><a href="#pdfbox:labels">4.11 </a>pdfbox:labels</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}labels#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
-pageLabel for every page or empty if none&#xD;
-</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:labels</code>
-		  ( 
-			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">xs:string*</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:string *</code></li></ul></dd><dl><dt title="2">Tags</dt><dd><ul><li><span><a href="https://www.w3.org/TR/WCAG20-TECHS/PDF17.html#PDF17-examples">https://www.w3.org/TR/WCAG20-TECHS/PDF17.html#PDF17-examples</a></span></li><li><span><a href="https://codereview.stackexchange.com/questions/286078/java-code-showing-page-labels-from-pdf-files">https://codereview.stackexchange.com/questions/286078/java-code-showing-page-labels-from-pdf-files</a></span></li></ul></dd></dl><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 3 functions from 3 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}exists#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}getDocumentCatalog#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.common.PDPageLabels}getLabelsByPageIndices#1</span></li></ul></details><details><summary>Source ( 9 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:labels($pdf as item())&#xD;
-as xs:string*&#xD;
+			<code class="arg">$pagelabels</code>, <code class="arg">$page</code><code class="as"> as </code><code class="type">xs:integer</code> )<code class="as"> as </code><code class="type">map(*)</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pagelabels<code class="as"> as </code><code class="return-type"></code></li><li>page<code class="as"> as </code><code class="return-type">xs:integer</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">map(*)</code></li></ul></dd><details><summary>Referenced by 1 functions from 1 modules</summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}labels-as-map#1" title="Pdfbox3.xqm">pdfbox:labels-as-map#1</a></span></li></ul></details><details><summary>References 5 functions from 3 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}empty#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.common.PDPageLabelRange}getPrefix#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.common.PDPageLabelRange}getStart#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.common.PDPageLabelRange}getStyle#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.common.PDPageLabels}getPageLabelRange#2</span></li></ul></details><details><summary>Source ( 13 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:label-as-map($pagelabels,$page as  xs:integer)&#xD;
+as map(*)&#xD;
 {&#xD;
+  let $label:=PDPageLabels:getPageLabelRange($pagelabels,$page)&#xD;
+  return if(empty($label))&#xD;
+  then ()&#xD;
+  else map{&#xD;
+      "index": $page,&#xD;
+      "prefix": PDPageLabelRange:getPrefix($label),&#xD;
+      "start":  PDPageLabelRange:getStart($label),&#xD;
+      "style":  PDPageLabelRange:getStyle($label)&#xD;
+      }&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:label-as-string"></a><a id="{org.expkg_zone58.Pdfbox3}label-as-string#2"></a><a href="#pdfbox:label-as-string">4.10 </a>pdfbox:label-as-string</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}label-as-string#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+label for $page formated as string</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:label-as-string</code>
+		  ( 
+			<code class="arg">$pagelabels</code>, <code class="arg">$page</code><code class="as"> as </code><code class="type">xs:integer</code> )<code class="as"> as </code><code class="type">xs:string?</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pagelabels<code class="as"> as </code><code class="return-type"></code></li><li>page<code class="as"> as </code><code class="return-type">xs:integer</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:string ?</code></li></ul></dd><details><summary>Referenced by 1 functions from 1 modules</summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}labels-as-strings#1" title="Pdfbox3.xqm">pdfbox:labels-as-strings#1</a></span></li></ul></details><details><summary>References 7 functions from 3 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}empty#1</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}exists#1</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}string-join#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.common.PDPageLabelRange}getPrefix#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.common.PDPageLabelRange}getStart#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.common.PDPageLabelRange}getStyle#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.common.PDPageLabels}getPageLabelRange#2</span></li></ul></details><details><summary>Source ( 15 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:label-as-string($pagelabels,$page as  xs:integer)&#xD;
+as xs:string?{&#xD;
+  let $label:=PDPageLabels:getPageLabelRange($pagelabels,$page)&#xD;
+  return  if(empty($label))&#xD;
+          then ()&#xD;
+          else&#xD;
+            let $start:=  PDPageLabelRange:getStart($label)&#xD;
+            let $style := PDPageLabelRange:getStyle($label)&#xD;
+            let $prefix:= PDPageLabelRange:getPrefix($label) &#xD;
+            return string-join(($page, &#xD;
+                                if(empty($style)) then "-" else $style,&#xD;
+                                if(($start eq 1)) then "" else $start,&#xD;
+                                if(exists($prefix)) then '*' || $prefix  (:TODO double " :)&#xD;
+                    ))&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:labels-as-map"></a><a id="{org.expkg_zone58.Pdfbox3}labels-as-map#1"></a><a href="#pdfbox:labels-as-map">4.11 </a>pdfbox:labels-as-map</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}labels-as-map#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+sequence of maps for each label in</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:labels-as-map</code>
+		  ( 
+			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">map(*)*</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">map(*) *</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 3 functions from 2 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}getDocumentCatalog#1</span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}label-as-map#2" title="Pdfbox3.xqm">pdfbox:label-as-map#2</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}number-of-pages#1" title="Pdfbox3.xqm">pdfbox:number-of-pages#1</a></span></li></ul></details><details><summary>Source ( 8 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:labels-as-map($pdf as item())&#xD;
+as map(*)*{&#xD;
   let $pagelabels:=PDDocument:getDocumentCatalog($pdf)&#xD;
                    =&gt;PDDocumentCatalog:getPageLabels()&#xD;
-  return if(exists($pagelabels))&#xD;
-         then PDPageLabels:getLabelsByPageIndices($pagelabels)&#xD;
-         else ()&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:metadata"></a><a id="{org.expkg_zone58.Pdfbox3}metadata#1"></a><a href="#pdfbox:metadata">4.12 </a>pdfbox:metadata</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}metadata#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+  return  $pagelabels&#xD;
+          !(0 to pdfbox:number-of-pages($pdf)-1)&#xD;
+          !pdfbox:label-as-map($pagelabels,.)&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:labels-as-strings"></a><a id="{org.expkg_zone58.Pdfbox3}labels-as-strings#1"></a><a href="#pdfbox:labels-as-strings">4.12 </a>pdfbox:labels-as-strings</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}labels-as-strings#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+sequence of label ranges defined in PDF as formatted strings</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:labels-as-strings</code>
+		  ( 
+			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">xs:string</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:string</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 3 functions from 2 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}getDocumentCatalog#1</span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}label-as-string#2" title="Pdfbox3.xqm">pdfbox:label-as-string#2</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}number-of-pages#1" title="Pdfbox3.xqm">pdfbox:number-of-pages#1</a></span></li></ul></details><details><summary>Source ( 9 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:labels-as-strings($pdf as item())&#xD;
+as xs:string{&#xD;
+  let $pagelabels:=PDDocument:getDocumentCatalog($pdf)&#xD;
+                   =&gt;PDDocumentCatalog:getPageLabels()&#xD;
+  return $pagelabels&#xD;
+         !(0 to pdfbox:number-of-pages($pdf)-1)&#xD;
+         !pdfbox:label-as-string($pagelabels,.)=&gt;string-join(",")&#xD;
+            &#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:labels-by-page"></a><a id="{org.expkg_zone58.Pdfbox3}labels-by-page#1"></a><a href="#pdfbox:labels-by-page">4.13 </a>pdfbox:labels-by-page</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}labels-by-page#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+pageLabel for every page from derived from page-ranges&#xD;
+The returned sequence will contain at MOST as much entries as the document has pages.&#xD;
+</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:labels-by-page</code>
+		  ( 
+			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">xs:string*</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:string *</code></li></ul></dd><dl><dt title="2">Tags</dt><dd><ul><li><span><a href="https://www.w3.org/TR/WCAG20-TECHS/PDF17.html#PDF17-examples">https://www.w3.org/TR/WCAG20-TECHS/PDF17.html#PDF17-examples</a></span></li><li><span><a href="https://codereview.stackexchange.com/questions/286078/java-code-showing-page-labels-from-pdf-files">https://codereview.stackexchange.com/questions/286078/java-code-showing-page-labels-from-pdf-files</a></span></li></ul></dd></dl><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 1 functions from 1 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}getDocumentCatalog#1</span></li></ul></details><details><summary>Source ( 7 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:labels-by-page($pdf as item())&#xD;
+as xs:string*&#xD;
+{&#xD;
+  PDDocument:getDocumentCatalog($pdf)&#xD;
+  =&gt;PDDocumentCatalog:getPageLabels()&#xD;
+  =&gt;PDPageLabels:getLabelsByPageIndices()&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:metadata"></a><a id="{org.expkg_zone58.Pdfbox3}metadata#1"></a><a href="#pdfbox:metadata">4.14 </a>pdfbox:metadata</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}metadata#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
 XMP metadata as "RDF" document&#xD;
 </dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:metadata</code>
 		  ( 
@@ -186,18 +225,37 @@ as document-node(element(*))?&#xD;
                         function($output,$pos) { $output?n eq -1 }     &#xD;
                      )?data=&gt;parse-xml()&#xD;
           else ()&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:number-of-pages"></a><a id="{org.expkg_zone58.Pdfbox3}number-of-pages#1"></a><a href="#pdfbox:number-of-pages">4.13 </a>pdfbox:number-of-pages</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}number-of-pages#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:number-of-bookmarks"></a><a id="{org.expkg_zone58.Pdfbox3}number-of-bookmarks#1"></a><a href="#pdfbox:number-of-bookmarks">4.15 </a>pdfbox:number-of-bookmarks</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}number-of-bookmarks#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+number of outline items</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:number-of-bookmarks</code>
+		  ( 
+			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">xs:integer</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:integer</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 2 functions from 2 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}count#1</span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}outline-xml#1" title="Pdfbox3.xqm">pdfbox:outline-xml#1</a></span></li></ul></details><details><summary>Source ( 5 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:number-of-bookmarks($pdf as item())&#xD;
+as xs:integer{&#xD;
+  let $xml:=pdfbox:outline-xml($pdf)&#xD;
+  return count($xml//bookmark)&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:number-of-labels"></a><a id="{org.expkg_zone58.Pdfbox3}number-of-labels#1"></a><a href="#pdfbox:number-of-labels">4.16 </a>pdfbox:number-of-labels</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}number-of-labels#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+The number of labels defined in PDF</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:number-of-labels</code>
+		  ( 
+			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">xs:integer</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:integer</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 3 functions from 3 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}exists#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}getDocumentCatalog#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.common.PDPageLabels}getPageRangeCount#1</span></li></ul></details><details><summary>Source ( 9 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:number-of-labels($pdf as item())&#xD;
+as xs:integer&#xD;
+{&#xD;
+  let $labels:=PDDocument:getDocumentCatalog($pdf)&#xD;
+               =&gt;PDDocumentCatalog:getPageLabels()&#xD;
+  return if(exists($labels)) &#xD;
+         then PDPageLabels:getPageRangeCount($labels)&#xD;
+         else 0&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:number-of-pages"></a><a id="{org.expkg_zone58.Pdfbox3}number-of-pages#1"></a><a href="#pdfbox:number-of-pages">4.17 </a>pdfbox:number-of-pages</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}number-of-pages#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
 Number of pages in PDF</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:number-of-pages</code>
 		  ( 
-			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">xs:integer</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:integer</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 1 functions from 1 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}getNumberOfPages#1</span></li></ul></details><details><summary>Source ( 4 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:number-of-pages($pdf as item())&#xD;
+			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">xs:integer</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:integer</code></li></ul></dd><details><summary>Referenced by 2 functions from 1 modules</summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}labels-as-strings#1" title="Pdfbox3.xqm">pdfbox:labels-as-strings#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}labels-as-map#1" title="Pdfbox3.xqm">pdfbox:labels-as-map#1</a></span></li></ul></details><details><summary>References 1 functions from 1 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}getNumberOfPages#1</span></li></ul></details><details><summary>Source ( 4 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:number-of-pages($pdf as item())&#xD;
 as xs:integer{&#xD;
   PDDocument:getNumberOfPages($pdf)&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:open"></a><a id="{org.expkg_zone58.Pdfbox3}open#1"></a><a id="{org.expkg_zone58.Pdfbox3}open#2"></a><a href="#pdfbox:open">4.14 </a>pdfbox:open</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}open#1">#1</a><span style="margin-left:1em"></span></span><span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}open#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:open"></a><a id="{org.expkg_zone58.Pdfbox3}open#1"></a><a id="{org.expkg_zone58.Pdfbox3}open#2"></a><a href="#pdfbox:open">4.18 </a>pdfbox:open</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}open#1">#1</a><span style="margin-left:1em"></span></span><span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}open#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
 open pdf using fetch:binary, returns pdf object</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:open</code>
 		  ( 
 			<code class="arg">$pdfsrc</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">item()</code></div><div class="proto"><code class="function">pdfbox:open</code>
 		  ( 
-			<code class="arg">$pdfsrc</code><code class="as"> as </code><code class="type">item()</code>, <code class="arg">$opts</code><code class="as"> as </code><code class="type">map(*)</code> )<code class="as"> as </code><code class="type">item()</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdfsrc<code class="as"> as </code><code class="return-type">item()</code> a fetchable url or filepath, or xs:base64Binary item</li><li>opts<code class="as"> as </code><code class="return-type">map(*)</code> options otionally with map {"password":}</li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">item()</code></li></ul></dd><details><summary>Referenced by 3 functions from 1 modules</summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}with-pdf#2" title="Pdfbox3.xqm">pdfbox:with-pdf#2</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}open#1" title="Pdfbox3.xqm">pdfbox:open#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}report#2" title="Pdfbox3.xqm">pdfbox:report#2</a></span></li></ul></details><details><summary>References 8 functions from 6 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://basex.org/modules/fetch}binary#1</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2001/XMLSchema}QName#1</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}error#2</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}starts-with#2</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}string#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.Loader}loadPDF#2</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.io.RandomAccessReadBufferedFile}new#1</span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}open#2" title="Pdfbox3.xqm">pdfbox:open#2</a></span></li></ul></details><details><summary>Source ( 21 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:open($pdfsrc as item())&#xD;
+			<code class="arg">$pdfsrc</code><code class="as"> as </code><code class="type">item()</code>, <code class="arg">$opts</code><code class="as"> as </code><code class="type">map(*)</code> )<code class="as"> as </code><code class="type">item()</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdfsrc<code class="as"> as </code><code class="return-type">item()</code> a fetchable url or filepath, or xs:base64Binary item</li><li>opts<code class="as"> as </code><code class="return-type">map(*)</code> options options include map {"password":}</li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">item()</code></li></ul></dd><dl><dt title="1">Tags</dt><dd><ul><li><span><span class="badge badge-pill badge-light">@note</span>:
+                            <span>fetch:binary for https will use a lot of memory here</span></span></li></ul></dd></dl><details><summary>Referenced by 3 functions from 1 modules</summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}with-pdf#2" title="Pdfbox3.xqm">pdfbox:with-pdf#2</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}open#1" title="Pdfbox3.xqm">pdfbox:open#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}report#2" title="Pdfbox3.xqm">pdfbox:report#2</a></span></li></ul></details><details><summary>References 8 functions from 6 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://basex.org/modules/fetch}binary#1</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2001/XMLSchema}QName#1</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}error#2</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}starts-with#2</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}string#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.Loader}loadPDF#2</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.io.RandomAccessReadBufferedFile}new#1</span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}open#2" title="Pdfbox3.xqm">pdfbox:open#2</a></span></li></ul></details><details><summary>Source ( 21 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:open($pdfsrc as item())&#xD;
 as item(){&#xD;
 pdfbox:open($pdfsrc, map{})&#xD;
 }</code></pre><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:open($pdfsrc as item(), $opts as map(*))&#xD;
@@ -216,7 +274,7 @@ as item(){&#xD;
               else $pdfsrc&#xD;
     return error(xs:QName("pdfbox:open"),"Failed PDF load " || $loc || " " || $err:description)&#xD;
 }&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:outline"></a><a id="{org.expkg_zone58.Pdfbox3}outline#1"></a><a id="{org.expkg_zone58.Pdfbox3}outline#2"></a><a href="#pdfbox:outline">4.15 </a>pdfbox:outline</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}outline#1">#1</a><span style="margin-left:1em"></span></span><span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}outline#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:outline"></a><a id="{org.expkg_zone58.Pdfbox3}outline#1"></a><a id="{org.expkg_zone58.Pdfbox3}outline#2"></a><a href="#pdfbox:outline">4.19 </a>pdfbox:outline</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}outline#1">#1</a><span style="margin-left:1em"></span></span><span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}outline#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
 outline for $pdf as map()*</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:outline</code>
 		  ( 
 			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">map(*)*</code></div><div class="proto"><code class="function">pdfbox:outline</code>
@@ -235,16 +293,16 @@ as map(*)*{&#xD;
 as map(*)*{&#xD;
   let $find as map(*):=pdfbox:outline_($pdf ,$outlineItem)&#xD;
   return map:get($find,"list")&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:outline-xml"></a><a id="{org.expkg_zone58.Pdfbox3}outline-xml#1"></a><a href="#pdfbox:outline-xml">4.16 </a>pdfbox:outline-xml</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}outline-xml#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:outline-xml"></a><a id="{org.expkg_zone58.Pdfbox3}outline-xml#1"></a><a href="#pdfbox:outline-xml">4.20 </a>pdfbox:outline-xml</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}outline-xml#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
 PDF outline in xml format</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:outline-xml</code>
 		  ( 
-			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">element(outline)?</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">element(outline) ?</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 3 functions from 2 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}exists#1</span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}bookmark-xml#1" title="Pdfbox3.xqm">pdfbox:bookmark-xml#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}outline#1" title="Pdfbox3.xqm">pdfbox:outline#1</a></span></li></ul></details><details><summary>Source ( 7 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:outline-xml($pdf as item())&#xD;
+			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">element(outline)?</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">element(outline) ?</code></li></ul></dd><details><summary>Referenced by 1 functions from 1 modules</summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}number-of-bookmarks#1" title="Pdfbox3.xqm">pdfbox:number-of-bookmarks#1</a></span></li></ul></details><details><summary>References 3 functions from 2 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}exists#1</span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}bookmark-xml#1" title="Pdfbox3.xqm">pdfbox:bookmark-xml#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}outline#1" title="Pdfbox3.xqm">pdfbox:outline#1</a></span></li></ul></details><details><summary>Source ( 7 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:outline-xml($pdf as item())&#xD;
 as element(outline)?{&#xD;
  let $outline:=pdfbox:outline($pdf)&#xD;
   return if(exists($outline))&#xD;
          then &lt;outline&gt;{$outline!pdfbox:bookmark-xml(.)}&lt;/outline&gt;&#xD;
          else ()&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:outline_"></a><a id="{org.expkg_zone58.Pdfbox3}outline_#2"></a><a href="#pdfbox:outline_">4.17 </a>pdfbox:outline_</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}outline_#2">#2</a><span style="margin-left:1em"><span class="badge badge-dark" title="Private">P</span></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:outline_"></a><a id="{org.expkg_zone58.Pdfbox3}outline_#2"></a><a href="#pdfbox:outline_">4.21 </a>pdfbox:outline_</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}outline_#2">#2</a><span style="margin-left:1em"><span class="badge badge-dark" title="Private">P</span></span></span></p><dt class="label">Summary</dt><dd>&#xD;
 BaseX bug 10.7? error if inlined in outline</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:outline_</code>
 		  ( 
 			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code>, <code class="arg">$outlineItem</code><code class="as"> as </code><code class="type">item()?</code> )<code class="as"> as </code><code class="type">map(*)</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li><li>outlineItem<code class="as"> as </code><code class="return-type">item()?</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">map(*)</code></li></ul></dd><details><summary>Referenced by 1 functions from 1 modules</summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}outline#2" title="Pdfbox3.xqm">pdfbox:outline#2</a></span></li></ul></details><details><summary>References 8 functions from 4 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions/map}entry#2</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions/map}merge#1</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}empty#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem}getFirstChild#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem}getNextSibling#1</span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}bookmark#2" title="Pdfbox3.xqm">pdfbox:bookmark#2</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}do-until#3" title="Pdfbox3.xqm">pdfbox:do-until#3</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}outline#2" title="Pdfbox3.xqm">pdfbox:outline#2</a></span></li></ul></details><details><summary>Annotations (1)</summary><table class="data"><tbody><tr><td><code class="function">%private</code></td><td><code class="arg">()</code></td></tr></tbody></table></details><details><summary>Source ( 20 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:outline_($pdf as item(),$outlineItem as item()?)&#xD;
@@ -266,8 +324,15 @@ as map(*){&#xD;
 &#xD;
      function($output,$pos) { empty($output?this) }                      &#xD;
   )&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:page-media-box"></a><a id="{org.expkg_zone58.Pdfbox3}page-media-box#2"></a><a href="#pdfbox:page-media-box">4.18 </a>pdfbox:page-media-box</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}page-media-box#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
-return size of $pageNo (zero based)&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:page-labels"></a><a id="{org.expkg_zone58.Pdfbox3}page-labels#1"></a><a href="#pdfbox:page-labels">4.22 </a>pdfbox:page-labels</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}page-labels#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+get pagelabels exist</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:page-labels</code>
+		  ( 
+			<code class="arg">$pdf</code> )</div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type"></code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type"></code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 1 functions from 1 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}getDocumentCatalog#1</span></li></ul></details><details><summary>Source ( 5 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:page-labels($pdf)&#xD;
+{&#xD;
+  PDDocument:getDocumentCatalog($pdf)&#xD;
+  =&gt;PDDocumentCatalog:getPageLabels()&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:page-media-box"></a><a id="{org.expkg_zone58.Pdfbox3}page-media-box#2"></a><a href="#pdfbox:page-media-box">4.23 </a>pdfbox:page-media-box</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}page-media-box#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+Return size of $pageNo (zero based)&#xD;
 </dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:page-media-box</code>
 		  ( 
 			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code>, <code class="arg">$pageNo</code><code class="as"> as </code><code class="type">xs:integer</code> )<code class="as"> as </code><code class="type">xs:string</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li><li>pageNo<code class="as"> as </code><code class="return-type">xs:integer</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:string</code></li></ul></dd><dl><dt title="1">Tags</dt><dd><ul><li><span><span class="badge badge-pill badge-light">@result</span>:
@@ -276,20 +341,21 @@ as xs:string{&#xD;
   PDDocument:getPage($pdf, $pageNo)&#xD;
   =&gt;PDPage:getMediaBox()&#xD;
   =&gt;PDRectangle:toString()&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:page-render"></a><a id="{org.expkg_zone58.Pdfbox3}page-render#3"></a><a href="#pdfbox:page-render">4.19 </a>pdfbox:page-render</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}page-render#3">#3</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:page-render"></a><a id="{org.expkg_zone58.Pdfbox3}page-render#3"></a><a href="#pdfbox:page-render">4.24 </a>pdfbox:page-render</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}page-render#3">#3</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
 Pdf page as image (zero is cover)&#xD;
 options.format="bmp jpg png gif" etc, options.scale= 1 is 72 dpi??</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:page-render</code>
 		  ( 
-			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code>, <code class="arg">$pageNo</code><code class="as"> as </code><code class="type">xs:integer</code>, <code class="arg">$options</code><code class="as"> as </code><code class="type">map(*)</code> )<code class="as"> as </code><code class="type">xs:base64Binary</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li><li>pageNo<code class="as"> as </code><code class="return-type">xs:integer</code></li><li>options<code class="as"> as </code><code class="return-type">map(*)</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:base64Binary</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 5 functions from 4 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions/map}merge#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:java.io.ByteArrayOutputStream}new#0</span></li><li><span class="badge badge-warning" title="Externally defined">{java:java.io.ByteArrayOutputStream}toByteArray#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:javax.imageio.ImageIO}write#3</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.rendering.PDFRenderer}new#1</span></li></ul></details><details><summary>Source ( 10 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:page-render($pdf as item(),$pageNo as xs:integer,$options as map(*))&#xD;
+			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code>, <code class="arg">$pageNo</code><code class="as"> as </code><code class="type">xs:integer</code>, <code class="arg">$options</code><code class="as"> as </code><code class="type">map(*)</code> )<code class="as"> as </code><code class="type">xs:base64Binary</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li><li>pageNo<code class="as"> as </code><code class="return-type">xs:integer</code></li><li>options<code class="as"> as </code><code class="return-type">map(*)</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:base64Binary</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 5 functions from 4 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions/map}merge#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:java.io.ByteArrayOutputStream}new#0</span></li><li><span class="badge badge-warning" title="Externally defined">{java:java.io.ByteArrayOutputStream}toByteArray#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:javax.imageio.ImageIO}write#3</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.rendering.PDFRenderer}new#1</span></li></ul></details><details><summary>Source ( 11 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:page-render($pdf as item(),$pageNo as xs:integer,$options as map(*))&#xD;
 as xs:base64Binary{&#xD;
-  let $options:=map:merge(($options,map{"format":"jpg","scale":1}))&#xD;
-  let $bufferedImage:=PDFRenderer:new($pdf)=&gt;PDFRenderer:renderImage($pageNo,$options?scale)&#xD;
-  let $bytes:=Q{java:java.io.ByteArrayOutputStream}new()&#xD;
-  let $_:=Q{java:javax.imageio.ImageIO}write($bufferedImage ,$options?format,  $bytes)&#xD;
+  let $options := map:merge(($options,map{"format":"jpg","scale":1}))&#xD;
+  let $bufferedImage := PDFRenderer:new($pdf)&#xD;
+                      =&gt;PDFRenderer:renderImage($pageNo,$options?scale)&#xD;
+  let $bytes := Q{java:java.io.ByteArrayOutputStream}new()&#xD;
+  let $_ := Q{java:javax.imageio.ImageIO}write($bufferedImage ,$options?format,  $bytes)&#xD;
   return Q{java:java.io.ByteArrayOutputStream}toByteArray($bytes)&#xD;
          =&gt;convert:integers-to-base64()&#xD;
  &#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:page-text"></a><a id="{org.expkg_zone58.Pdfbox3}page-text#2"></a><a href="#pdfbox:page-text">4.20 </a>pdfbox:page-text</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}page-text#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:page-text"></a><a id="{org.expkg_zone58.Pdfbox3}page-text#2"></a><a href="#pdfbox:page-text">4.25 </a>pdfbox:page-text</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}page-text#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
 return text on $pageNo</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:page-text</code>
 		  ( 
 			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code>, <code class="arg">$pageNo</code><code class="as"> as </code><code class="type">xs:integer</code> )<code class="as"> as </code><code class="type">xs:string</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li><li>pageNo<code class="as"> as </code><code class="return-type">xs:integer</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:string</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 2 functions from 1 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.text.PDFTextStripper}getText#2</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.text.PDFTextStripper}new#0</span></li></ul></details><details><summary>Source ( 9 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:page-text($pdf as item(), $pageNo as xs:integer)&#xD;
@@ -300,7 +366,13 @@ as xs:string{&#xD;
          =&gt; PDFTextStripper:setEndPage($pageNo)&#xD;
        }&#xD;
   return (# db:checkstrings #) {PDFTextStripper:getText($tStripper,$pdf)}&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:property"></a><a id="{org.expkg_zone58.Pdfbox3}property#2"></a><a href="#pdfbox:property">4.21 </a>pdfbox:property</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}property#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:pdf-save"></a><a id="{org.expkg_zone58.Pdfbox3}pdf-save#2"></a><a href="#pdfbox:pdf-save">4.26 </a>pdfbox:pdf-save</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}pdf-save#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+Save pdf $pdf to filesystem at $savepath , returns $savepath</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:pdf-save</code>
+		  ( 
+			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code>, <code class="arg">$savepath</code><code class="as"> as </code><code class="type">xs:string</code> )<code class="as"> as </code><code class="type">xs:string</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li><li>savepath<code class="as"> as </code><code class="return-type">xs:string</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:string</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 2 functions from 2 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:java.io.File}new#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}save#2</span></li></ul></details><details><summary>Source ( 4 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:pdf-save($pdf as item(),$savepath as xs:string)&#xD;
+as xs:string{&#xD;
+   PDDocument:save($pdf, File:new($savepath)),$savepath&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:property"></a><a id="{org.expkg_zone58.Pdfbox3}property#2"></a><a href="#pdfbox:property">4.27 </a>pdfbox:property</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}property#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
 return value of $property for $pdf</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:property</code>
 		  ( 
 			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code>, <code class="arg">$property</code><code class="as"> as </code><code class="type">xs:string</code> )<code class="as"> as </code><code class="type">item()*</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li><li>property<code class="as"> as </code><code class="return-type">xs:string</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">item() *</code></li></ul></dd><details><summary>Referenced by 1 functions from 1 modules</summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}report#2" title="Pdfbox3.xqm">pdfbox:report#2</a></span></li></ul></details><details><summary>References 5 functions from 2 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2001/XMLSchema}QName#1</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}concat#3</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}error#2</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}exists#1</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}fold-left#3</span></li></ul></details><details><summary>Source ( 9 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:property($pdf as item(),$property as xs:string)&#xD;
@@ -309,15 +381,15 @@ as item()*{&#xD;
   return if(exists($fns))&#xD;
          then fold-left($fns, &#xD;
                         $pdf, &#xD;
-                        function($result,$this as function(*)){$this($result)})&#xD;
+                        function($result,$this as function(*)){$result!$this(.)})&#xD;
          else error(xs:QName('pdfbox:property'),concat("Property '",$property,"' not defined."))&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:property-names"></a><a id="{org.expkg_zone58.Pdfbox3}property-names#0"></a><a href="#pdfbox:property-names">4.22 </a>pdfbox:property-names</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}property-names#0">#0</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:property-names"></a><a id="{org.expkg_zone58.Pdfbox3}property-names#0"></a><a href="#pdfbox:property-names">4.28 </a>pdfbox:property-names</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}property-names#0">#0</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
 known property names sorted</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:property-names</code>
 		  ( 
-			)<code class="as"> as </code><code class="type">xs:string*</code></div></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:string *</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>Source ( 4 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:property-names() &#xD;
+			)<code class="as"> as </code><code class="type">xs:string*</code></div></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:string *</code></li></ul></dd><details><summary>Referenced by 1 functions from 1 modules</summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}report#1" title="Pdfbox3.xqm">pdfbox:report#1</a></span></li></ul></details><details><summary>Source ( 4 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:property-names() &#xD;
 as xs:string*{&#xD;
   $pdfbox:property-map=&gt;map:keys()=&gt;sort()&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:read-stream"></a><a id="{org.expkg_zone58.Pdfbox3}read-stream#2"></a><a href="#pdfbox:read-stream">4.23 </a>pdfbox:read-stream</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}read-stream#2">#2</a><span style="margin-left:1em"><span class="badge badge-dark" title="Private">P</span></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:read-stream"></a><a id="{org.expkg_zone58.Pdfbox3}read-stream#2"></a><a href="#pdfbox:read-stream">4.29 </a>pdfbox:read-stream</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}read-stream#2">#2</a><span style="margin-left:1em"><span class="badge badge-dark" title="Private">P</span></span></span></p><dt class="label">Summary</dt><dd>&#xD;
 read next block from XMP stream</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:read-stream</code>
 		  ( 
 			<code class="arg">$is</code>, <code class="arg">$read</code><code class="as"> as </code><code class="type">xs:string</code> )<code class="as"> as </code><code class="type">map(*)</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>is<code class="as"> as </code><code class="return-type"></code></li><li>read<code class="as"> as </code><code class="return-type">xs:string</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">map(*)</code></li></ul></dd><details><summary>Referenced by 1 functions from 1 modules</summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}metadata#1" title="Pdfbox3.xqm">pdfbox:metadata#1</a></span></li></ul></details><details><summary>References 6 functions from 5 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://basex.org/modules/convert}integers-to-base64#1</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2001/XMLSchema}byte#1</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2001/XMLSchema}int#1</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}subsequence#3</span></li><li><span class="badge badge-warning" title="Externally defined">{java:java.util.Arrays}copyOf#2</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.cos.COSInputStream}read#4</span></li></ul></details><details><summary>Annotations (1)</summary><table class="data"><tbody><tr><td><code class="function">%private</code></td><td><code class="arg">()</code></td></tr></tbody></table></details><details><summary>Source ( 8 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:read-stream($is,$read as xs:string)&#xD;
@@ -327,15 +399,15 @@ as map(*){&#xD;
   let $n:= COSInputStream:read($is,$buff,xs:int(0),xs:int($blen))&#xD;
   let $data:=convert:integers-to-base64(subsequence($buff,1,$n))=&gt;convert:binary-to-string()&#xD;
   return map{"n":$n, "data": $read || $data}&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:report"></a><a id="{org.expkg_zone58.Pdfbox3}report#1"></a><a id="{org.expkg_zone58.Pdfbox3}report#2"></a><a href="#pdfbox:report">4.24 </a>pdfbox:report</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}report#1">#1</a><span style="margin-left:1em"></span></span><span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}report#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:report"></a><a id="{org.expkg_zone58.Pdfbox3}report#1"></a><a id="{org.expkg_zone58.Pdfbox3}report#2"></a><a href="#pdfbox:report">4.30 </a>pdfbox:report</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}report#1">#1</a><span style="margin-left:1em"></span></span><span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}report#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
 summary CSV style info for all properties for $pdfpaths&#xD;
 </dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:report</code>
 		  ( 
 			<code class="arg">$pdfpaths</code><code class="as"> as </code><code class="type">xs:string*</code> )<code class="as"> as </code><code class="type">map(*)</code></div><div class="proto"><code class="function">pdfbox:report</code>
 		  ( 
-			<code class="arg">$pdfpaths</code><code class="as"> as </code><code class="type">item()*</code>, <code class="arg">$properties</code><code class="as"> as </code><code class="type">xs:string*</code> )<code class="as"> as </code><code class="type">map(*)</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdfpaths<code class="as"> as </code><code class="return-type">item()*</code></li><li>properties<code class="as"> as </code><code class="return-type">xs:string*</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">map(*)</code></li></ul></dd><dl><dt title="1">Tags</dt><dd><ul><li><span><a href="https://docs.basex.org/main/CSV_Functions#xquery">https://docs.basex.org/main/CSV_Functions#xquery</a></span></li></ul></dd></dl><details><summary>Referenced by 1 functions from 1 modules</summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}report#1" title="Pdfbox3.xqm">pdfbox:report#1</a></span></li></ul></details><details><summary>References 8 functions from 4 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions/array}append#2</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions/map}keys#1</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}fold-left#3</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}string#1</span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}close#1" title="Pdfbox3.xqm">pdfbox:close#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}open#1" title="Pdfbox3.xqm">pdfbox:open#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}property#2" title="Pdfbox3.xqm">pdfbox:property#2</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}report#2" title="Pdfbox3.xqm">pdfbox:report#2</a></span></li></ul></details><details><summary>Source ( 28 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:report($pdfpaths as xs:string*)&#xD;
+			<code class="arg">$pdfpaths</code><code class="as"> as </code><code class="type">item()*</code>, <code class="arg">$properties</code><code class="as"> as </code><code class="type">xs:string*</code> )<code class="as"> as </code><code class="type">map(*)</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdfpaths<code class="as"> as </code><code class="return-type">item()*</code></li><li>properties<code class="as"> as </code><code class="return-type">xs:string*</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">map(*)</code></li></ul></dd><dl><dt title="1">Tags</dt><dd><ul><li><span><a href="https://docs.basex.org/main/CSV_Functions#xquery">https://docs.basex.org/main/CSV_Functions#xquery</a></span></li></ul></dd></dl><details><summary>Referenced by 1 functions from 1 modules</summary><ul><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}report#1" title="Pdfbox3.xqm">pdfbox:report#1</a></span></li></ul></details><details><summary>References 8 functions from 3 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions/array}append#2</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}fold-left#3</span></li><li><span class="badge badge-warning" title="Externally defined">{http://www.w3.org/2005/xpath-functions}string#1</span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}close#1" title="Pdfbox3.xqm">pdfbox:close#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}open#1" title="Pdfbox3.xqm">pdfbox:open#1</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}property#2" title="Pdfbox3.xqm">pdfbox:property#2</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}property-names#0" title="Pdfbox3.xqm">pdfbox:property-names#0</a></span></li><li><span><a href="../../modules/F000001/index.html#{org.expkg_zone58.Pdfbox3}report#2" title="Pdfbox3.xqm">pdfbox:report#2</a></span></li></ul></details><details><summary>Source ( 28 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:report($pdfpaths as xs:string*)&#xD;
 as map(*){&#xD;
- pdfbox:report($pdfpaths,map:keys($pdfbox:property-map))&#xD;
+ pdfbox:report($pdfpaths,pdfbox:property-names())&#xD;
 }</code></pre><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:report($pdfpaths as item()*, $properties as xs:string*)&#xD;
 as map(*){&#xD;
   map{"names":   array{"path",$properties},&#xD;
@@ -359,13 +431,14 @@ as map(*){&#xD;
                  }&#xD;
                &#xD;
   }&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:save"></a><a id="{org.expkg_zone58.Pdfbox3}save#2"></a><a href="#pdfbox:save">4.25 </a>pdfbox:save</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}save#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
-Save pdf $pdf to filesystem at $savepath , returns $savepath</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:save</code>
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:report-save"></a><a id="{org.expkg_zone58.Pdfbox3}report-save#2"></a><a href="#pdfbox:report-save">4.31 </a>pdfbox:report-save</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}report-save#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+convenience function to save report() data to file</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:report-save</code>
 		  ( 
-			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code>, <code class="arg">$savepath</code><code class="as"> as </code><code class="type">xs:string</code> )<code class="as"> as </code><code class="type">xs:string</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li><li>savepath<code class="as"> as </code><code class="return-type">xs:string</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:string</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 2 functions from 2 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:java.io.File}new#1</span></li><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}save#2</span></li></ul></details><details><summary>Source ( 4 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:save($pdf as item(),$savepath as xs:string)&#xD;
-as xs:string{&#xD;
-   PDDocument:save($pdf, File:new($savepath)),$savepath&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:specification"></a><a id="{org.expkg_zone58.Pdfbox3}specification#1"></a><a href="#pdfbox:specification">4.26 </a>pdfbox:specification</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}specification#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+			<code class="arg">$data</code><code class="as"> as </code><code class="type">map(*)</code>, <code class="arg">$dest</code><code class="as"> as </code><code class="type">xs:string</code> )<code class="as"> as </code><code class="type">empty-sequence</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>data<code class="as"> as </code><code class="return-type">map(*)</code></li><li>dest<code class="as"> as </code><code class="return-type">xs:string</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">empty-sequence</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 2 functions from 2 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{http://basex.org/modules/csv}serialize#2</span></li><li><span class="badge badge-warning" title="Externally defined">{http://expath.org/ns/file}write-text#2</span></li></ul></details><details><summary>Source ( 5 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:report-save($data as map(*),$dest as xs:string)&#xD;
+as empty-sequence(){&#xD;
+  let $opts := map {  "format":"xquery", "header":"yes", "separator" : "," }&#xD;
+  return file:write-text($dest,csv:serialize($data,$opts))&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:specification"></a><a id="{org.expkg_zone58.Pdfbox3}specification#1"></a><a href="#pdfbox:specification">4.32 </a>pdfbox:specification</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}specification#1">#1</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
 The version of the PDF specification used by $pdf  e.g "1.4"&#xD;
 returned as string to avoid float rounding issues&#xD;
 </dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:specification</code>
@@ -373,14 +446,14 @@ returned as string to avoid float rounding issues&#xD;
 			<code class="arg">$pdf</code><code class="as"> as </code><code class="type">item()</code> )<code class="as"> as </code><code class="type">xs:string</code></div></dd><dt class="label">Parameters</dt><dd><ul><li>pdf<code class="as"> as </code><code class="return-type">item()</code></li></ul></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:string</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 1 functions from 1 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.pdmodel.PDDocument}getVersion#1</span></li></ul></details><details><summary>Source ( 4 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:specification($pdf as item())&#xD;
 as xs:string{&#xD;
  PDDocument:getVersion($pdf)=&gt;xs:decimal()=&gt;round(4)=&gt;string()&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:version"></a><a id="{org.expkg_zone58.Pdfbox3}version#0"></a><a href="#pdfbox:version">4.27 </a>pdfbox:version</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}version#0">#0</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
-version of Apache Pdfbox in use  e.g. "3.0.4"</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:version</code>
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:version"></a><a id="{org.expkg_zone58.Pdfbox3}version#0"></a><a href="#pdfbox:version">4.33 </a>pdfbox:version</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}version#0">#0</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+Version of Apache Pdfbox in use  e.g. "3.0.4"</dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:version</code>
 		  ( 
 			)<code class="as"> as </code><code class="type">xs:string</code></div></dd><dt class="label">Return</dt><dd><ul><li><code class="return-type">xs:string</code></li></ul></dd><details><summary>Referenced by 0 functions from 0 modules</summary><ul></ul></details><details><summary>References 1 functions from 1 modules </summary><ul><li><span class="badge badge-warning" title="Externally defined">{java:org.apache.pdfbox.util.Version}getVersion#0</span></li></ul></details><details><summary>Source ( 4 lines)</summary><pre class="no-line-numbers" style="white-space:pre-wrap;"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">function pdfbox:version()&#xD;
 as xs:string{&#xD;
   Q{java:org.apache.pdfbox.util.Version}getVersion()&#xD;
-}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:with-pdf"></a><a id="{org.expkg_zone58.Pdfbox3}with-pdf#2"></a><a href="#pdfbox:with-pdf">4.28 </a>pdfbox:with-pdf</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}with-pdf#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
-with-document pattern: open pdf,apply function, close pdf&#xD;
+}</code></pre></details></div><div class="div3"><h3><a id="pdfbox:with-pdf"></a><a id="{org.expkg_zone58.Pdfbox3}with-pdf#2"></a><a href="#pdfbox:with-pdf">4.34 </a>pdfbox:with-pdf</h3><p>Arities: <span style="margin-left:1em"><a href="#{org.expkg_zone58.Pdfbox3}with-pdf#2">#2</a><span style="margin-left:1em"></span></span></p><dt class="label">Summary</dt><dd>&#xD;
+"With-document" pattern: open pdf,apply $fn function, close pdf&#xD;
 creates a local pdfobject and ensures it is closed after use&#xD;
 e.g pdfbox:with-pdf("path...",pdfbox:page-text(?,5))&#xD;
 </dd><dt class="label">Signatures</dt><dd><div class="proto"><code class="function">pdfbox:with-pdf</code>
@@ -390,16 +463,18 @@ e.g pdfbox:with-pdf("path...",pdfbox:page-text(?,5))&#xD;
 as item()*{&#xD;
  let $pdf:=pdfbox:open($src)&#xD;
  return try{&#xD;
-        $fn($pdf),pdfbox:close($pdf)&#xD;
+            $fn($pdf),pdfbox:close($pdf)&#xD;
         } catch *{&#xD;
-          pdfbox:close($pdf),fn:error($err:code,$src || " " || $err:description)&#xD;
+            pdfbox:close($pdf),fn:error($err:code,$src || " " || $err:description)&#xD;
         }&#xD;
 &#xD;
-}</code></pre></details></div></section><section id="namespaces"><h2>Namespaces</h2><p>The following namespaces are defined:</p><table class="data" style="float:none"><thead><tr><th>Prefix <span>-</span></th><th>Uri <span>-</span></th></tr></thead><tbody><tr><td>array</td><td><span class="badge badge-warning" title="Externally defined">http://www.w3.org/2005/xpath-functions/array</span></td></tr><tr><td>convert</td><td><span class="badge badge-warning" title="Externally defined">http://basex.org/modules/convert</span></td></tr><tr><td>COSInputStream</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.cos.COSInputStream</span></td></tr><tr><td>db</td><td><span class="badge badge-warning" title="Externally defined">http://basex.org/modules/db</span></td></tr><tr><td>err</td><td><span class="badge badge-warning" title="Externally defined">http://www.w3.org/2005/xqt-errors</span></td></tr><tr><td>fetch</td><td><span class="badge badge-warning" title="Externally defined">http://basex.org/modules/fetch</span></td></tr><tr><td>File</td><td><span class="badge badge-warning" title="Externally defined">java:java.io.File</span></td></tr><tr><td>fn</td><td><span class="badge badge-warning" title="Externally defined">http://www.w3.org/2005/xpath-functions</span></td></tr><tr><td>Loader</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.Loader</span></td></tr><tr><td>map</td><td><span class="badge badge-warning" title="Externally defined">http://www.w3.org/2005/xpath-functions/map</span></td></tr><tr><td>PageExtractor</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.multipdf.PageExtractor</span></td></tr><tr><td>PDDocument</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.PDDocument</span></td></tr><tr><td>PDDocumentCatalog</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.PDDocumentCatalog</span></td></tr><tr><td>PDDocumentInformation</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.PDDocumentInformation</span></td></tr><tr><td>PDDocumentOutline</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline</span></td></tr><tr><td>pdfbox</td><td><span><a href="../../modules/F000001/index.html" title="Pdfbox3.xqm">org.expkg_zone58.Pdfbox3</a></span></td></tr><tr><td>PDFRenderer</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.rendering.PDFRenderer</span></td></tr><tr><td>PDFTextStripper</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.text.PDFTextStripper</span></td></tr><tr><td>PDMetadata</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.common.PDMetadata</span></td></tr><tr><td>PDOutlineItem</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem</span></td></tr><tr><td>PDPage</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.PDPage</span></td></tr><tr><td>PDPageLabels</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.common.PDPageLabels</span></td></tr><tr><td>PDPageTree</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.PDPageTree</span></td></tr><tr><td>PDRectangle</td><td><span class="badge badge-warning" title="Externally defined">org.apache.pdfbox.pdmodel.common.PDRectangle</span></td></tr><tr><td>RandomAccessReadBuffer</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.io.RandomAccessReadBuffer</span></td></tr><tr><td>RandomAccessReadBufferedFile</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.io.RandomAccessReadBufferedFile</span></td></tr><tr><td>rdf</td><td><span class="badge badge-warning" title="Externally defined">http://www.w3.org/1999/02/22-rdf-syntax-ns#</span></td></tr><tr><td>xs</td><td><span class="badge badge-warning" title="Externally defined">http://www.w3.org/2001/XMLSchema</span></td></tr></tbody></table></section><div class="div2"><h2><a id="restxq"></a>6 RestXQ</h2><p>None</p></div><section id="source"><h2>Source Code</h2><pre style="white-space:pre-wrap;" class="line-numbers" data-src="plugins/line-numbers/index.html"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">xquery version '3.1';&#xD;
+}</code></pre></details></div></section><section id="namespaces"><h2>Namespaces</h2><p>The following namespaces are defined:</p><table class="data" style="float:none"><thead><tr><th>Prefix <span>-</span></th><th>Uri <span>-</span></th></tr></thead><tbody><tr><td>array</td><td><span class="badge badge-warning" title="Externally defined">http://www.w3.org/2005/xpath-functions/array</span></td></tr><tr><td>convert</td><td><span class="badge badge-warning" title="Externally defined">http://basex.org/modules/convert</span></td></tr><tr><td>COSInputStream</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.cos.COSInputStream</span></td></tr><tr><td>csv</td><td><span class="badge badge-warning" title="Externally defined">http://basex.org/modules/csv</span></td></tr><tr><td>db</td><td><span class="badge badge-warning" title="Externally defined">http://basex.org/modules/db</span></td></tr><tr><td>err</td><td><span class="badge badge-warning" title="Externally defined">http://www.w3.org/2005/xqt-errors</span></td></tr><tr><td>fetch</td><td><span class="badge badge-warning" title="Externally defined">http://basex.org/modules/fetch</span></td></tr><tr><td>File</td><td><span class="badge badge-warning" title="Externally defined">java:java.io.File</span></td></tr><tr><td>file</td><td><span class="badge badge-warning" title="Externally defined">http://expath.org/ns/file</span></td></tr><tr><td>fn</td><td><span class="badge badge-warning" title="Externally defined">http://www.w3.org/2005/xpath-functions</span></td></tr><tr><td>Loader</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.Loader</span></td></tr><tr><td>map</td><td><span class="badge badge-warning" title="Externally defined">http://www.w3.org/2005/xpath-functions/map</span></td></tr><tr><td>PageExtractor</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.multipdf.PageExtractor</span></td></tr><tr><td>PDDocument</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.PDDocument</span></td></tr><tr><td>PDDocumentCatalog</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.PDDocumentCatalog</span></td></tr><tr><td>PDDocumentInformation</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.PDDocumentInformation</span></td></tr><tr><td>PDDocumentOutline</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline</span></td></tr><tr><td>pdfbox</td><td><span><a href="../../modules/F000001/index.html" title="Pdfbox3.xqm">org.expkg_zone58.Pdfbox3</a></span></td></tr><tr><td>PDFRenderer</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.rendering.PDFRenderer</span></td></tr><tr><td>PDFTextStripper</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.text.PDFTextStripper</span></td></tr><tr><td>PDMetadata</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.common.PDMetadata</span></td></tr><tr><td>PDOutlineItem</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem</span></td></tr><tr><td>PDPage</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.PDPage</span></td></tr><tr><td>PDPageLabelRange</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.common.PDPageLabelRange</span></td></tr><tr><td>PDPageLabels</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.common.PDPageLabels</span></td></tr><tr><td>PDPageTree</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.pdmodel.PDPageTree</span></td></tr><tr><td>PDRectangle</td><td><span class="badge badge-warning" title="Externally defined">org.apache.pdfbox.pdmodel.common.PDRectangle</span></td></tr><tr><td>RandomAccessReadBuffer</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.io.RandomAccessReadBuffer</span></td></tr><tr><td>RandomAccessReadBufferedFile</td><td><span class="badge badge-warning" title="Externally defined">java:org.apache.pdfbox.io.RandomAccessReadBufferedFile</span></td></tr><tr><td>rdf</td><td><span class="badge badge-warning" title="Externally defined">http://www.w3.org/1999/02/22-rdf-syntax-ns#</span></td></tr><tr><td>xs</td><td><span class="badge badge-warning" title="Externally defined">http://www.w3.org/2001/XMLSchema</span></td></tr></tbody></table></section><div class="div2"><h2><a id="restxq"></a>6 RestXQ</h2><p>None</p></div><section id="source"><h2>Source Code</h2><pre style="white-space:pre-wrap;" class="line-numbers" data-src="plugins/line-numbers/index.html"><code class="language-xquery" data-prismjs-copy="Copy to clipboard">xquery version '3.1';&#xD;
 (:~ &#xD;
-A BaseX 10.7+ interface to pdfbox 3.0 https://pdfbox.apache.org/ , &#xD;
-requires pdfbox jars on classpath, i.e. in custom or xar&#xD;
-tested with pdfbox-app-3.0.5.jar&#xD;
+A BaseX 10.7+ interface to pdfbox3 https://pdfbox.apache.org/ , &#xD;
+requires pdfbox jars on classpath, in lib/custom or xar&#xD;
+@note following the java source the terms outline and bookmark&#xD;
+refer to the same concept. Also label and (page)range are used interchangably&#xD;
+@note tested with pdfbox-app-3.0.5.jar&#xD;
 @see https://pdfbox.apache.org/download.cgi&#xD;
 @javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.5/&#xD;
 @author Andy Bunce 2025&#xD;
@@ -412,6 +487,8 @@ declare namespace PDFTextStripper = "java:org.apache.pdfbox.text.PDFTextStripper
 declare namespace PDDocument ="java:org.apache.pdfbox.pdmodel.PDDocument";&#xD;
 declare namespace PDDocumentCatalog ="java:org.apache.pdfbox.pdmodel.PDDocumentCatalog";&#xD;
 declare namespace PDPageLabels ="java:org.apache.pdfbox.pdmodel.common.PDPageLabels";&#xD;
+declare namespace PDPageLabelRange="java:org.apache.pdfbox.pdmodel.common.PDPageLabelRange";&#xD;
+&#xD;
 declare namespace PageExtractor ="java:org.apache.pdfbox.multipdf.PageExtractor";&#xD;
 declare namespace PDPage ="java:org.apache.pdfbox.pdmodel.PDPage";&#xD;
 declare namespace PDPageTree ="java:org.apache.pdfbox.pdmodel.PDPageTree";&#xD;
@@ -421,6 +498,7 @@ declare namespace PDOutlineItem="java:org.apache.pdfbox.pdmodel.interactive.docu
 declare namespace PDFRenderer="java:org.apache.pdfbox.rendering.PDFRenderer";&#xD;
 declare namespace PDMetadata="java:org.apache.pdfbox.pdmodel.common.PDMetadata";&#xD;
 declare namespace COSInputStream="java:org.apache.pdfbox.cos.COSInputStream";&#xD;
+&#xD;
 &#xD;
 declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";&#xD;
 &#xD;
@@ -433,7 +511,7 @@ declare namespace File ="java:java.io.File";&#xD;
 &#xD;
 &#xD;
 &#xD;
-(:~ with-document pattern: open pdf,apply function, close pdf&#xD;
+(:~ "With-document" pattern: open pdf,apply $fn function, close pdf&#xD;
  creates a local pdfobject and ensures it is closed after use&#xD;
 e.g pdfbox:with-pdf("path...",pdfbox:page-text(?,5))&#xD;
 :)&#xD;
@@ -442,9 +520,9 @@ declare function pdfbox:with-pdf($src as xs:string,&#xD;
 as item()*{&#xD;
  let $pdf:=pdfbox:open($src)&#xD;
  return try{&#xD;
-        $fn($pdf),pdfbox:close($pdf)&#xD;
+            $fn($pdf),pdfbox:close($pdf)&#xD;
         } catch *{&#xD;
-          pdfbox:close($pdf),fn:error($err:code,$src || " " || $err:description)&#xD;
+            pdfbox:close($pdf),fn:error($err:code,$src || " " || $err:description)&#xD;
         }&#xD;
 &#xD;
 };&#xD;
@@ -458,7 +536,8 @@ pdfbox:open($pdfsrc, map{})&#xD;
 &#xD;
 (:~ open pdf from file/url/binary, opts may have password , returns pdf object &#xD;
 @param $pdfsrc a fetchable url or filepath, or xs:base64Binary item&#xD;
-@param $opts options otionally with map {"password":} &#xD;
+@param $opts options options include map {"password":}&#xD;
+@note fetch:binary for https will use a lot of memory here&#xD;
 :)&#xD;
 declare function pdfbox:open($pdfsrc as item(), $opts as map(*))&#xD;
 as item(){&#xD;
@@ -487,7 +566,7 @@ as xs:string{&#xD;
 };&#xD;
 &#xD;
 (:~ Save pdf $pdf to filesystem at $savepath , returns $savepath :)&#xD;
-declare function pdfbox:save($pdf as item(),$savepath as xs:string)&#xD;
+declare function pdfbox:pdf-save($pdf as item(),$savepath as xs:string)&#xD;
 as xs:string{&#xD;
    PDDocument:save($pdf, File:new($savepath)),$savepath&#xD;
 };&#xD;
@@ -519,10 +598,11 @@ as xs:integer{&#xD;
 options.format="bmp jpg png gif" etc, options.scale= 1 is 72 dpi?? :)&#xD;
 declare function pdfbox:page-render($pdf as item(),$pageNo as xs:integer,$options as map(*))&#xD;
 as xs:base64Binary{&#xD;
-  let $options:=map:merge(($options,map{"format":"jpg","scale":1}))&#xD;
-  let $bufferedImage:=PDFRenderer:new($pdf)=&gt;PDFRenderer:renderImage($pageNo,$options?scale)&#xD;
-  let $bytes:=Q{java:java.io.ByteArrayOutputStream}new()&#xD;
-  let $_:=Q{java:javax.imageio.ImageIO}write($bufferedImage ,$options?format,  $bytes)&#xD;
+  let $options := map:merge(($options,map{"format":"jpg","scale":1}))&#xD;
+  let $bufferedImage := PDFRenderer:new($pdf)&#xD;
+                      =&gt;PDFRenderer:renderImage($pageNo,$options?scale)&#xD;
+  let $bytes := Q{java:java.io.ByteArrayOutputStream}new()&#xD;
+  let $_ := Q{java:javax.imageio.ImageIO}write($bufferedImage ,$options?format,  $bytes)&#xD;
   return Q{java:java.io.ByteArrayOutputStream}toByteArray($bytes)&#xD;
          =&gt;convert:integers-to-base64()&#xD;
  &#xD;
@@ -534,11 +614,11 @@ as xs:base64Binary{&#xD;
    values are sequences of functions to get property from $pdf object&#xD;
 :)&#xD;
 declare %private variable $pdfbox:property-map:=map{&#xD;
-  "pageCount": pdfbox:number-of-pages#1,&#xD;
+  "#pages": pdfbox:number-of-pages#1,&#xD;
 &#xD;
-  "hasOutline": pdfbox:hasOutline#1,&#xD;
+  "#bookmarks": pdfbox:number-of-bookmarks#1,&#xD;
 &#xD;
-  "hasLabels": pdfbox:hasLabels#1,&#xD;
+  "#labels": pdfbox:number-of-labels#1,&#xD;
 &#xD;
   "specification":pdfbox:specification#1,&#xD;
 &#xD;
@@ -566,7 +646,8 @@ declare %private variable $pdfbox:property-map:=map{&#xD;
 &#xD;
   "modificationDate":  (PDDocument:getDocumentInformation#1,&#xD;
                         PDDocumentInformation:getModificationDate#1,&#xD;
-                        pdfbox:gregToISO#1)&#xD;
+                        pdfbox:gregToISO#1),&#xD;
+   "labels":      pdfbox:labels-as-strings#1                     &#xD;
 };&#xD;
 &#xD;
 (:~ known property names sorted :)&#xD;
@@ -582,7 +663,7 @@ as item()*{&#xD;
   return if(exists($fns))&#xD;
          then fold-left($fns, &#xD;
                         $pdf, &#xD;
-                        function($result,$this as function(*)){$this($result)})&#xD;
+                        function($result,$this as function(*)){$result!$this(.)})&#xD;
          else error(xs:QName('pdfbox:property'),concat("Property '",$property,"' not defined."))&#xD;
 };&#xD;
 &#xD;
@@ -590,7 +671,7 @@ as item()*{&#xD;
 :)&#xD;
 declare function pdfbox:report($pdfpaths as xs:string*)&#xD;
 as map(*){&#xD;
- pdfbox:report($pdfpaths,map:keys($pdfbox:property-map))&#xD;
+ pdfbox:report($pdfpaths,pdfbox:property-names())&#xD;
 };&#xD;
 &#xD;
 (:~ summary CSV style info for named properties for $pdfpaths &#xD;
@@ -621,20 +702,18 @@ as map(*){&#xD;
   }&#xD;
 };&#xD;
 &#xD;
-(:~ true if $pdf has an outline :)&#xD;
-declare function pdfbox:hasOutline($pdf as item())&#xD;
-as xs:boolean{&#xD;
-  PDDocument:getDocumentCatalog($pdf)&#xD;
-  =&gt;PDDocumentCatalog:getDocumentOutline()&#xD;
-  =&gt;exists()&#xD;
+(:~ convenience function to save report() data to file :)&#xD;
+declare function pdfbox:report-save($data as map(*),$dest as xs:string)&#xD;
+as empty-sequence(){&#xD;
+  let $opts := map {  "format":"xquery", "header":"yes", "separator" : "," }&#xD;
+  return file:write-text($dest,csv:serialize($data,$opts))&#xD;
 };&#xD;
 &#xD;
-(:~ true if $pdf has Labels :)&#xD;
-declare function pdfbox:hasLabels($pdf as item())&#xD;
-as xs:boolean{&#xD;
-  PDDocument:getDocumentCatalog($pdf)&#xD;
-  =&gt;PDDocumentCatalog:getPageLabels()&#xD;
-  =&gt;exists()&#xD;
+(:~ number of outline items :)&#xD;
+declare function pdfbox:number-of-bookmarks($pdf as item())&#xD;
+as xs:integer{&#xD;
+  let $xml:=pdfbox:outline-xml($pdf)&#xD;
+  return count($xml//bookmark)&#xD;
 };&#xD;
 &#xD;
 (:~ XMP metadata as "RDF" document&#xD;
@@ -719,7 +798,7 @@ as element(outline)?{&#xD;
          else ()&#xD;
 };&#xD;
 &#xD;
-(:~ recursive ouutline map to XML :)&#xD;
+(:~ Convert outline map to XML :)&#xD;
 declare %private function pdfbox:bookmark-xml($outline as map(*)*)&#xD;
 as element(bookmark)*&#xD;
 {&#xD;
@@ -729,7 +808,7 @@ as element(bookmark)*&#xD;
   &lt;/bookmark&gt;&#xD;
 };&#xD;
 &#xD;
-(:~ return bookmark info for $bookmark&#xD;
+(:~ Return bookmark info for $bookmark&#xD;
 @return map{index:..,title:..,hasChildren:..}&#xD;
 :)&#xD;
 declare %private function pdfbox:bookmark($bookmark as item(),$pdf as item())&#xD;
@@ -768,20 +847,91 @@ as xs:base64Binary&#xD;
     return (pdfbox:binary($a),pdfbox:close($a)) &#xD;
 };&#xD;
 &#xD;
+(:~ The number of labels defined in PDF  :)&#xD;
+declare function pdfbox:number-of-labels($pdf as item())&#xD;
+as xs:integer&#xD;
+{&#xD;
+  let $labels:=PDDocument:getDocumentCatalog($pdf)&#xD;
+               =&gt;PDDocumentCatalog:getPageLabels()&#xD;
+  return if(exists($labels)) &#xD;
+         then PDPageLabels:getPageRangeCount($labels)&#xD;
+         else 0&#xD;
+};&#xD;
 &#xD;
-(:~   pageLabel for every page or empty if none&#xD;
+(:~   pageLabel for every page from derived from page-ranges&#xD;
+The returned sequence will contain at MOST as much entries as the document has pages.&#xD;
 @see https://www.w3.org/TR/WCAG20-TECHS/PDF17.html#PDF17-examples&#xD;
 @see https://codereview.stackexchange.com/questions/286078/java-code-showing-page-labels-from-pdf-files&#xD;
 :)&#xD;
-declare function pdfbox:labels($pdf as item())&#xD;
+declare function pdfbox:labels-by-page($pdf as item())&#xD;
 as xs:string*&#xD;
 {&#xD;
+  PDDocument:getDocumentCatalog($pdf)&#xD;
+  =&gt;PDDocumentCatalog:getPageLabels()&#xD;
+  =&gt;PDPageLabels:getLabelsByPageIndices()&#xD;
+};&#xD;
+&#xD;
+(:~ sequence of label ranges defined in PDF as formatted strings :)&#xD;
+declare function pdfbox:labels-as-strings($pdf as item())&#xD;
+as xs:string{&#xD;
   let $pagelabels:=PDDocument:getDocumentCatalog($pdf)&#xD;
                    =&gt;PDDocumentCatalog:getPageLabels()&#xD;
-  return if(exists($pagelabels))&#xD;
-         then PDPageLabels:getLabelsByPageIndices($pagelabels)&#xD;
-         else ()&#xD;
+  return $pagelabels&#xD;
+         !(0 to pdfbox:number-of-pages($pdf)-1)&#xD;
+         !pdfbox:label-as-string($pagelabels,.)=&gt;string-join(",")&#xD;
+            &#xD;
 };&#xD;
+&#xD;
+(:~ get pagelabels exist :)&#xD;
+declare function pdfbox:page-labels($pdf)&#xD;
+{&#xD;
+  PDDocument:getDocumentCatalog($pdf)&#xD;
+  =&gt;PDDocumentCatalog:getPageLabels()&#xD;
+};&#xD;
+&#xD;
+(:~ label for $page formated as string :)&#xD;
+declare function pdfbox:label-as-string($pagelabels,$page as  xs:integer)&#xD;
+as xs:string?{&#xD;
+  let $label:=PDPageLabels:getPageLabelRange($pagelabels,$page)&#xD;
+  return  if(empty($label))&#xD;
+          then ()&#xD;
+          else&#xD;
+            let $start:=  PDPageLabelRange:getStart($label)&#xD;
+            let $style := PDPageLabelRange:getStyle($label)&#xD;
+            let $prefix:= PDPageLabelRange:getPrefix($label) &#xD;
+            return string-join(($page, &#xD;
+                                if(empty($style)) then "-" else $style,&#xD;
+                                if(($start eq 1)) then "" else $start,&#xD;
+                                if(exists($prefix)) then '*' || $prefix  (:TODO double " :)&#xD;
+                    ))&#xD;
+};&#xD;
+&#xD;
+(:~ sequence of maps for each label in :)&#xD;
+declare function pdfbox:labels-as-map($pdf as item())&#xD;
+as map(*)*{&#xD;
+  let $pagelabels:=PDDocument:getDocumentCatalog($pdf)&#xD;
+                   =&gt;PDDocumentCatalog:getPageLabels()&#xD;
+  return  $pagelabels&#xD;
+          !(0 to pdfbox:number-of-pages($pdf)-1)&#xD;
+          !pdfbox:label-as-map($pagelabels,.)&#xD;
+};&#xD;
+&#xD;
+(:~ express label/page-range for $page as map :)&#xD;
+declare function pdfbox:label-as-map($pagelabels,$page as  xs:integer)&#xD;
+as map(*)&#xD;
+{&#xD;
+  let $label:=PDPageLabels:getPageLabelRange($pagelabels,$page)&#xD;
+  return if(empty($label))&#xD;
+  then ()&#xD;
+  else map{&#xD;
+      "index": $page,&#xD;
+      "prefix": PDPageLabelRange:getPrefix($label),&#xD;
+      "start":  PDPageLabelRange:getStart($label),&#xD;
+      "style":  PDPageLabelRange:getStyle($label)&#xD;
+      }&#xD;
+};&#xD;
+&#xD;
+&#xD;
 &#xD;
 (:~ return text on $pageNo :)&#xD;
 declare function pdfbox:page-text($pdf as item(), $pageNo as xs:integer)&#xD;
@@ -794,7 +944,7 @@ as xs:string{&#xD;
   return (# db:checkstrings #) {PDFTextStripper:getText($tStripper,$pdf)}&#xD;
 };&#xD;
 &#xD;
-(:~ return size of $pageNo (zero based)&#xD;
+(:~ Return size of $pageNo (zero based)&#xD;
 @result e.g. [0.0,0.0,168.0,239.52]&#xD;
  :)&#xD;
 declare function pdfbox:page-media-box($pdf as item(), $pageNo as xs:integer)&#xD;
@@ -804,13 +954,13 @@ as xs:string{&#xD;
   =&gt;PDRectangle:toString()&#xD;
 };&#xD;
 &#xD;
-(:~  version of Apache Pdfbox in use  e.g. "3.0.4" :)&#xD;
+(:~  Version of Apache Pdfbox in use  e.g. "3.0.4" :)&#xD;
 declare function pdfbox:version()&#xD;
 as xs:string{&#xD;
   Q{java:org.apache.pdfbox.util.Version}getVersion()&#xD;
 };&#xD;
 &#xD;
-(:~ convert date :)&#xD;
+(:~ Convert date :)&#xD;
 declare %private&#xD;
 function pdfbox:gregToISO($item as item()?)&#xD;
 as xs:string?{&#xD;
@@ -839,4 +989,4 @@ declare %private function pdfbox:do-until(&#xD;
 };&#xD;
 </code></pre></section></div></div><div class="footer"><p style="text-align:right">Generated by 
             <a href="https://github.com/Quodatum/xqdoca" target="_blank">xqDocA <span>0.9.1</span></a>
-               on <span title="2025-06-01T21:16:07.687+01:00">Sunday, 1st June 2025</span></p></div><script src="../../resources/prism/1.29.0/prism.js" type="text/javascript"></script><script src="../../resources/xqdoca.js" type="text/javascript"></script></body></html>
+               on <span title="2025-06-03T22:34:04.782+01:00">Tuesday, 3rd June 2025</span></p></div><script src="../../resources/prism/1.29.0/prism.js" type="text/javascript"></script><script src="../../resources/xqdoca.js" type="text/javascript"></script></body></html>

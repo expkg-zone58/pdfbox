@@ -1,3 +1,7 @@
+# 0.4.0 2025-06-04
+* ADD Label access
+* various renames
+* Doc updates
 # 0.3.6 2025-05-31
 * Add metadata function
 * rename page-size->page-media-box

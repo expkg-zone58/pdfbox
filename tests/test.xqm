@@ -51,7 +51,7 @@ declare %unit:test
 function test:labels(){
   let $pdf:=test:open("samples.pdf/BaseX100.pdf")
 
- let $labels:=pdfbox:labels($pdf) 
+ let $labels:=pdfbox:labels-by-page($pdf) 
  return (
    unit:assert-equals(count($labels),pdfbox:number-of-pages($pdf)),
    unit:assert($labels[1]="i") ,
@@ -125,7 +125,7 @@ declare %unit:test
 function test:save(){
     let $pdf:=test:open("samples.pdf/BaseX100.pdf")
     let $dest:=file:create-temp-file("test-save",".pdf")
-    let $savedPath:=pdfbox:save($pdf, $dest)
+    let $savedPath:=pdfbox:pdf-save($pdf, $dest)
     return unit:assert-equals($savedPath, $dest)
 };
 
@@ -133,7 +133,7 @@ function test:save(){
 declare %unit:test
 function test:property(){
     let $pdf:=test:open("samples.pdf/BaseX100.pdf")
-    let $pages:=pdfbox:property($pdf, "pageCount")
+    let $pages:=pdfbox:property($pdf, "#pages")
     return unit:assert(true())
 };
 
@@ -141,8 +141,8 @@ function test:property(){
 declare %unit:test("expected", "pdfbox:property")
 function test:property-bad(){
     let $pdf:=test:open("samples.pdf/BaseX100.pdf")
-    let $title:=pdfbox:property($pdf, "badname")
-    return unit:assert(exists($title))
+    let $p:=pdfbox:property($pdf, "badname")
+    return unit:assert(exists($p))
 };
 (:~ Test for pdfbox:property-names function :)
 declare %unit:test
@@ -164,16 +164,16 @@ function test:report(){
 declare %unit:test
 function test:hasOutline(){
     let $pdf:=test:open("samples.pdf/BaseX100.pdf")
-    let $hasOutline:=pdfbox:hasOutline($pdf)
-    return unit:assert(not($hasOutline))
+    let $marks:=pdfbox:number-of-bookmarks($pdf)
+    return unit:assert-equals($marks,0)
 };
 
 (:~ Test for pdfbox:hasLabels function :)
 declare %unit:test
 function test:hasLabels(){
     let $pdf:=test:open("samples.pdf/BaseX100.pdf")
-    let $hasLabels:=pdfbox:hasLabels($pdf)
-    return unit:assert($hasLabels)
+    let $labels:=pdfbox:number-of-labels($pdf)
+    return unit:assert-equals($labels,302)
 };
 
 

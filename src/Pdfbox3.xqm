@@ -139,9 +139,9 @@ as xs:base64Binary{
 };
 
 
-(:~ property access map
-   keys are property names, 
-   values are sequences of functions to get property from $pdf object
+(:~ Defines a map from property names to evaluation method.
+   Keys are property names, 
+   values are sequences of functions to get property value starting from a $pdf object.
 :)
 declare %private variable $pdfbox:property-map:=map{
   "#pages": pdfbox:number-of-pages#1,
@@ -180,13 +180,13 @@ declare %private variable $pdfbox:property-map:=map{
    "labels":      pdfbox:labels-as-strings#1                     
 };
 
-(:~ known property names sorted :)
+(:~ Defined property names, sorted :)
 declare function pdfbox:property-names() 
 as xs:string*{
   $pdfbox:property-map=>map:keys()=>sort()
 };
 
-(:~  return value of $property for $pdf :)
+(:~  Return the value of $property for $pdf :)
 declare function pdfbox:property($pdf as item(),$property as xs:string)
 as item()*{
   let $fns:= $pdfbox:property-map($property)
@@ -204,7 +204,7 @@ as map(*){
  pdfbox:report($pdfpaths,pdfbox:property-names())
 };
 
-(:~ summary CSV style info for named properties for $pdfpaths 
+(:~ summary CSV style info for named $properties for PDFs in $pdfpaths 
 @see https://docs.basex.org/main/CSV_Functions#xquery
 :)
 declare function pdfbox:report($pdfpaths as item()*, $properties as xs:string*)
@@ -232,14 +232,14 @@ as map(*){
   }
 };
 
-(:~ convenience function to save report() data to file :)
+(:~ Convenience function to save report() data to file :)
 declare function pdfbox:report-save($data as map(*),$dest as xs:string)
 as empty-sequence(){
   let $opts := map {  "format":"xquery", "header":"yes", "separator" : "," }
   return file:write-text($dest,csv:serialize($data,$opts))
 };
 
-(:~ number of outline items :)
+(:~ The number of outline items defined in $pdf :)
 declare function pdfbox:number-of-bookmarks($pdf as item())
 as xs:integer{
   let $xml:=pdfbox:outline-xml($pdf)
@@ -277,7 +277,7 @@ as map(*){
   return map{"n":$n, "data": $read || $data}
 };
 
-(:~ outline for $pdf as map()* :)
+(:~ Return outline for $pdf as map()* :)
 declare function pdfbox:outline($pdf as item())
 as map(*)*{
   (# db:wrapjava some #) {
@@ -291,13 +291,13 @@ as map(*)*{
 };
 
 (:~ return bookmark info for children of $outlineItem as seq of maps :)
-declare function pdfbox:outline($pdf as item(),$outlineItem as item()?)
+declare %private function pdfbox:outline($pdf as item(),$outlineItem as item()?)
 as map(*)*{
   let $find as map(*):=pdfbox:outline_($pdf ,$outlineItem)
   return map:get($find,"list")
 };
 
-(:~ BaseX bug 10.7? error if inlined in outline :)
+(:~ outline helper. BaseX bug 10.7? error if inlined in outline :)
 declare %private function pdfbox:outline_($pdf as item(),$outlineItem as item()?)
 as map(*){
   pdfbox:do-until(
@@ -401,14 +401,16 @@ as xs:string*
   =>PDPageLabels:getLabelsByPageIndices()
 };
 
-(:~ sequence of label ranges defined in PDF as formatted strings :)
-declare function pdfbox:labels-as-strings($pdf as item())
+(:~ sequence of label ranges defined in PDF as formatted strings
+@return a custom representation of the labels e.g "0-*Cover,1r,11D" 
+:)
+declare function pdfbox:labels-as-string($pdf as item())
 as xs:string{
   let $pagelabels:=PDDocument:getDocumentCatalog($pdf)
                    =>PDDocumentCatalog:getPageLabels()
   return $pagelabels
          !(0 to pdfbox:number-of-pages($pdf)-1)
-         !pdfbox:label-as-string($pagelabels,.)=>string-join(",")
+         !pdfbox:label-as-string($pagelabels,.)=>string-join("&#10;")
             
 };
 
@@ -419,7 +421,7 @@ declare function pdfbox:page-labels($pdf)
   =>PDDocumentCatalog:getPageLabels()
 };
 
-(:~ label for $page formated as string :)
+(:~ label for $page formated as string, empty if none :)
 declare function pdfbox:label-as-string($pagelabels,$page as  xs:integer)
 as xs:string?{
   let $label:=PDPageLabels:getPageLabelRange($pagelabels,$page)
@@ -436,7 +438,7 @@ as xs:string?{
                     ))
 };
 
-(:~ sequence of maps for each label in :)
+(:~ sequence of maps for each label/page range defined in $pdf:)
 declare function pdfbox:labels-as-map($pdf as item())
 as map(*)*{
   let $pagelabels:=PDDocument:getDocumentCatalog($pdf)
@@ -446,7 +448,7 @@ as map(*)*{
           !pdfbox:label-as-map($pagelabels,.)
 };
 
-(:~ express label/page-range for $page as map :)
+(:~ label/page-range for $page as map :)
 declare function pdfbox:label-as-map($pagelabels,$page as  xs:integer)
 as map(*)
 {
@@ -475,7 +477,7 @@ as xs:string{
 };
 
 (:~ Return size of $pageNo (zero based)
-@result e.g. [0.0,0.0,168.0,239.52]
+@return e.g. [0.0,0.0,168.0,239.52]
  :)
 declare function pdfbox:page-media-box($pdf as item(), $pageNo as xs:integer)
 as xs:string{

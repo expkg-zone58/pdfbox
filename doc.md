@@ -45,16 +45,10 @@ import module namespace pdfbox="org.expkg_zone58.Pdfbox3";
 ---
 
 ### Opening a PDF Document
-To open a PDF document, use the `pdfbox:open` function. This function can handle local files, URLs, or binary data.
+To open a PDF document, use the `pdfbox:open` function. This function can handle local files, URLs, or binary data. 
 
 ```xquery
 let $pdf := pdfbox:open("path/to/document.pdf")
-```
-
-If the PDF is encrypted, you can provide a password:
-
-```xquery
-let $pdf := pdfbox:open("path/to/encrypted.pdf", map{"password": "your_password"})
 ```
 
 ---
@@ -109,15 +103,19 @@ let $author := pdfbox:property($pdf, "author")
 ```
 
 Supported properties include:
-- `pageCount`: Number of pages.
-- `title`: Document title.
+- `#bookmarks` :Number of bookmarks
+- `#labels` :Number of labels
+- `#pages` : Number of pages
 - `author`: Document author.
-- `creator`: Document creator.
-- `producer`: Document producer.
-- `subject`: Document subject.
-- `keywords`: Document keywords.
 - `creationDate`: Document creation date.
-- `modificationDate`: Document modification date.
+- `creator`: Document creator.
+- `keywords`: Document keywords.
+- `labels`: Document  labels formated as a string.
+ `modificationDate`: Document modification date.
+- `producer`: Document producer.
+- `specification` PDF spec version used in the document.
+- `subject`: Document subject.
+- `title`: Document title.
 
 ---
 
@@ -133,22 +131,15 @@ The outline is returned as a sequence of maps, where each map represents a bookm
 ---
 
 ### Saving a PDF Document
-To save a PDF document to the filesystem, use the `pdfbox:save` function.
+To save a PDF document to the filesystem, use the `pdfbox:pdf-save` function.
 
 ```xquery
-let $savedPath := pdfbox:save($pdf, "path/to/save/document.pdf")
+let $savedPath := pdfbox:pdf-save($pdf, "path/to/save/document.pdf")
 ```
 
 ---
 
-## Advanced Usage
 
-### Handling Encrypted PDFs
-If the PDF is encrypted, you can provide a password when opening the document.
-
-```xquery
-let $pdf := pdfbox:open("path/to/encrypted.pdf", map{"password": "your_password"})
-```
 
 ---
 
@@ -165,7 +156,7 @@ let $labels := pdfbox:labels($pdf)
 To get the size of a specific page, use the `pdfbox:page-media-box` function.
 
 ```xquery
-let $size := pdfbox:page-media-box($pdf, 1)  (: Get size of page 1 :)
+let $size := pdfbox:page-media-box($pdf, 1)  (: Get size of page 0, the cover :)
 ```
 
 ---
@@ -177,10 +168,17 @@ You can generate a CSV-style report of properties for multiple PDFs using the `p
 let $report := pdfbox:report(("path/to/doc1.pdf", "path/to/doc2.pdf"))
 ```
 
-The report includes properties like `title`, `author`, `pageCount`, etc., for each PDF.
+The report includes all properties by default, such as `title`, `author`, `#pages` , etc., for each PDF. 
 
 ---
+## Advanced Usage
 
+### Handling Encrypted PDFs
+If the PDF is encrypted, you can provide a password when opening the document.
+
+```xquery
+let $pdf := pdfbox:open("path/to/encrypted.pdf", map{"password": "your_password"})
+```
 ## Error Handling
 The library includes error handling to manage issues such as failed PDF loads or unsupported operations. Errors are thrown with descriptive messages to help diagnose problems.
 
@@ -194,12 +192,3 @@ try {
 ```
 
 ---
-
-## Conclusion
-The `Pdfbox3.xqm` library, distributed as a XAR file with included PDFBox JAR files, provides a comprehensive interface for working with PDF documents in XQuery. By leveraging Apache PDFBox, it offers powerful features for text extraction, image rendering, and document manipulation. With this guide, you should be able to integrate PDF processing into your XQuery applications effectively.
-
-For more detailed information, refer to the [Apache PDFBox documentation](https://pdfbox.apache.org/docs/3.0.0/javadocs/) and the [BaseX documentation](https://docs.basex.org/).
-
---- 
-
-This user guide provides a starting point for using the `Pdfbox3.xqm` library. For further assistance, consult the official documentation or reach out to the community for support.

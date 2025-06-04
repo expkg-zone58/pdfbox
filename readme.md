@@ -51,6 +51,11 @@ pdfbox:with-pdf("...path/to/pdf.pdf",
 * `scripts/make-xar.xq` packages the required `jar`s and `xqm` files to a `xar` file in the `dist` folder.
 
 The `package.json` is (ab)used as a configuration source. Non standard information is held in the `expkg_zone58` section. This is experimental and may change.
+
+`package.json` contains script to run
+1. The XAR build.
+2. The tests
+3. The documentation
 ### Action support
 
 The workflow `ci-basex.yaml` builds and tests the package. This can be used as an action on [github](https://github.com/features/actions), or on a local [gitea](https://docs.gitea.com/usage/actions/overview) or [forgejo](https://forgejo.org/) installation.

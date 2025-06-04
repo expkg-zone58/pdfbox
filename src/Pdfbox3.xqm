@@ -177,7 +177,8 @@ declare %private variable $pdfbox:property-map:=map{
   "modificationDate":  (PDDocument:getDocumentInformation#1,
                         PDDocumentInformation:getModificationDate#1,
                         pdfbox:gregToISO#1),
-   "labels":      pdfbox:labels-as-strings#1                     
+
+   "labels":      pdfbox:labels-as-string#1                     
 };
 
 (:~ Defined property names, sorted :)

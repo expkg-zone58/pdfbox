@@ -2,7 +2,11 @@
 
 ## Introduction
 
-The `Pdfbox3.xqm` library is an XQuery module designed to interface with **Apache PDFBox 3.0**, a powerful Java library for working with PDF documents. This module allows you to perform various operations on PDF files, such as extracting text, rendering pages as images, managing outlines, and more. The library is distributed as a **XAR (XQuery Archive) file**, which includes the necessary PDFBox JAR files, making it easy to install and use in BaseX 10.7+.
+The `Pdfbox3.xqm` XQuery library module enables features from **Apache PDFBox 3.0** to be called from `BaseX`.
+
+>The [Apache PDFBox®](https://pdfbox.apache.org/) library is an open source Java tool for working with PDF documents. This project allows creation of new PDF documents, manipulation of existing documents and the ability to extract content from documents.
+
+The library is distributed as a **XAR (XQuery Archive) file**, which includes the necessary PDFBox JAR files, making it easy to install and use in BaseX 10.7+.
 
 ---
 
@@ -12,18 +16,13 @@ The `Pdfbox3.xqm` library is an XQuery module designed to interface with **Apach
 The library is distributed as a XAR file that includes the required PDFBox JAR files. You can obtain the XAR file from the distribution source (e.g., a repository or a shared location).
 
 ### 2. Install the XAR File in BaseX
-To install the XAR file in BaseX, follow these steps:
+The latest version is avaiable at https://github.com/expkg-zone58/pdfbox/releases.
+The `XAR` can be installed into the repository. For example:
 
-1. Open the BaseX GUI or command-line interface.
-2. Use the `REPO INSTALL` command to install the XAR file:
-
-   ```xquery
-   REPO INSTALL path/to/pdfbox3.xar
-   ```
-
-   Replace `path/to/pdfbox3.xar` with the actual path to the XAR file.
-
-3. Verify the installation by listing the installed packages:
+```
+REPO INSTALL https://github.com/expkg-zone58/pdfbox/releases/download/v0.4.0/pdfbox-0.4.0.xar
+```
+### 3. Verify the installation by listing the installed packages:
 
    ```xquery
    REPO LIST

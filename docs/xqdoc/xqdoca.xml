@@ -1,4 +1,4 @@
-<xqdoca created="2025-06-04T16:17:13.527+01:00"><xqdoca>0.9.1</xqdoca><target>docs/xqdoc/</target><outputs><global>
+<xqdoca created="2025-06-09T21:09:05.833+01:00"><xqdoca>0.9.1</xqdoca><target>docs/xqdoc/</target><outputs><global>
             report
             restxq
             imports
@@ -10,4 +10,4 @@
             module 
             xqdoc 
             xqparse
-        </module></outputs><platform>basex</platform><extensions>*.xqm,*.xq,*.xquery</extensions><project>src</project><source>src/</source><xqdoc><refs>true</refs><body-items>true</body-items><version>1.1</version><body-full>true</body-full></xqdoc></xqdoca>
+        </module></outputs><platform>basex</platform><show-private>true</show-private><extensions>*.xqm,*.xq,*.xquery</extensions><project>src</project><source>src/</source><xqdoc><refs>true</refs><body-items>true</body-items><version>1.1</version><body-full>true</body-full></xqdoc></xqdoca>

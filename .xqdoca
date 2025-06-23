@@ -1,4 +1,5 @@
 <xqdoca xmlns="urn:quodatum:xqdoca" version="1.0">
     <source>src/</source>
     <target>docs/xqdoc/</target>
+    <show-private>true</show-private>
 </xqdoca>

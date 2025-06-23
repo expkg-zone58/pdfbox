@@ -1,3 +1,5 @@
+# 0.5.0 2025-06-08
+* remove `hasChildren` from outline map
 # 0.4.0 2025-06-04
 * ADD Label access
 * various renames

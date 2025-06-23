@@ -1,6 +1,6 @@
 {
   "name": "pdfbox",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A BaseX interface to Apache Pdfbox version 3",
   "main": "src/Pdfbox3.xqm",
   "homepage": "https://github.com/expkg-zone58/pdfbox#readme",
@@ -8,9 +8,9 @@
     "doc": "docs"
   },
   "scripts": {
+    "xar build": "%BASEX10%/bin/basex scripts/make-xar.xq",
     "test": "%BASEX10%/bin/basex  -Wt tests",
-    "docs": "xqdoca",
-    "build": "%BASEX10%/bin/basex scripts/make-xar.xq"
+    "docs build": "xqdoca"
   },
   "keywords": [
     "pdf",

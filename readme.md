@@ -29,7 +29,7 @@ The features focus on extracting information from PDFs rather than creation or e
 * Form processing
 
 ## Documentation
-* Function [documentation](doc.md)  
+* Function [documentation](docs/guide.md)  
 * The Apache Pdfbox 3 [FAQ](https://pdfbox.apache.org/3.0/faq.html) may be useful.
 
 # Install

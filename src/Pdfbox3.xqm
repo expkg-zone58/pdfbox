@@ -1,9 +1,21 @@
 xquery version '3.1';
 (:~ 
-A BaseX 10.7+ interface to pdfbox3 https://pdfbox.apache.org/ , 
-requires pdfbox jars on classpath, in lib/custom or xar
-@note following the java source the terms outline and bookmark
-refer to the same concept. Also label and (page)range are used interchangably
+A BaseX 10.7+ interface for <a href="https://pdfbox.apache.org/" target="_blank">Apache PDFBox®</a> - A Java PDF Library, 
+It requires the Pdfbox jars to be on the classpath, or a EXPath package (xar) installation.
+<h3>Terms</h3>
+The following terms are used:
+<dl>
+
+<dt>bookmark</dt>
+<dd>A bookmark has a title and a pageindex. It may contain nested bookmarks.</dd>
+<dt>outline</dt>
+<dd>The outline is the tree of bookmarks defined in the PDF. It may be empty.</dd>
+<dt>page range</dt>
+<dd>A page range defines the page numbering schema in operation from a certain pageIndex until a subsequent range is set. </dd>
+<dt>page label</dt>
+<dd>A page label defines <code>style</code>: Roman, Decimal etc, <code>start</code>: the index to start from (default 1) and <code>prefix</code>: an optional string to prefix to the page label e.g "Vol1:"</dd>
+</dl>
+
 @note tested with pdfbox-app-3.0.5.jar
 @see https://pdfbox.apache.org/download.cgi
 @javadoc https://javadoc.io/static/org.apache.pdfbox/pdfbox/3.0.5/
@@ -29,19 +41,16 @@ declare namespace PDFRenderer="java:org.apache.pdfbox.rendering.PDFRenderer";
 declare namespace PDMetadata="java:org.apache.pdfbox.pdmodel.common.PDMetadata";
 declare namespace COSInputStream="java:org.apache.pdfbox.cos.COSInputStream";
 
-
-declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
-
-
 declare namespace RandomAccessReadBuffer="java:org.apache.pdfbox.io.RandomAccessReadBuffer";
 declare namespace RandomAccessReadBufferedFile = "java:org.apache.pdfbox.io.RandomAccessReadBufferedFile";
 declare namespace PDRectangle="java:org.apache.pdfbox.pdmodel.common.PDRectangle";
 
 declare namespace File ="java:java.io.File";
 
+declare namespace rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#";
 
 
-(:~ "With-document" pattern: open pdf,apply $fn function, close pdf
+(:~ open $pdf,apply $fn function, close pdf ("With-document" pattern)
  creates a local pdfobject and ensures it is closed after use
 e.g pdfbox:with-pdf("path...",pdfbox:page-text(?,5))
 :)
@@ -103,7 +112,11 @@ as xs:string{
    PDDocument:save($pdf, File:new($savepath)),$savepath
 };
 
-(:~ Create binary representation (xs:base64Binary) of <code>$pdf</code> object  :)
+(:~ Create binary representation (<code>xs:base64Binary</code>) of <code>$pdf</code> object  
+@param $pdf pdf object, created by pdfbox:open
+@see #pdfbox:open
+@see #pdfbox:with-pdf
+:)
 declare function pdfbox:binary($pdf as item())
 as xs:base64Binary{
    let $bytes:=Q{java:java.io.ByteArrayOutputStream}new()
@@ -290,7 +303,8 @@ as map(*)*{
                 =>PDDocumentCatalog:getDocumentOutline()
  
   return  if(exists($outline))
-          then pdfbox:outline($pdf,PDOutlineItem:getFirstChild($outline)) 
+          then pdfbox:outline($pdf,PDOutlineItem:getFirstChild($outline))
+          else () 
   }
 };
 
@@ -357,6 +371,7 @@ as item()?
   then PDDocument:getDocumentCatalog($pdf)
       =>PDDocumentCatalog:getPages()
       =>PDPageTree:indexOf($page)
+  else ()
 };            
 
 (:~  Return new  PDF doc with pages from $start to $end as xs:base64Binary, (1 based)  
@@ -428,7 +443,7 @@ as xs:string?{
             return string-join(($page, 
                                 if(empty($style)) then "-" else $style,
                                 if(($start eq 1)) then "" else $start,
-                                if(exists($prefix)) then '*' || $prefix  (:TODO double " :)
+                                if(exists($prefix)) then '*' || $prefix else "" (:TODO double " :)
                     ))
 };
 
@@ -509,7 +524,7 @@ declare %private function pdfbox:do-until(
          then $fn($input,$action,$predicate)
          else let $hof:=function-lookup(QName('http://basex.org/modules/hof','until'), 3)
               return if(exists($hof))
-                      then $hof($predicate(?,0),$action(?,0),$input)
-                      else error(xs:QName('pdfbox:do-until'),"No implementation do-until found")
+                     then $hof($predicate(?,0),$action(?,0),$input)
+                     else error(xs:QName('pdfbox:do-until'),"No implementation do-until found")
 
 };
